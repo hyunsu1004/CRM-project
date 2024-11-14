@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./styles/main.module.css";
+import "./styles/grid.css";
 import { ReactComponent as UserImg } from "./img/person.svg";
 import { ReactComponent as ChgId } from "./img/sync_alt.svg";
 import { ReactComponent as LeftArrow } from "./img/double_arrow_left.svg";
@@ -76,6 +77,11 @@ const GridExample = () => {
       curState: "대기",
     },
   ]);
+  const defaultColDef = useMemo(() => {
+    return {
+      editable: true,
+    };
+  }, []);
   const [columnDefs, setColumnDefs] = useState([
     {
       headerName: "이름(회사명)",
@@ -85,12 +91,31 @@ const GridExample = () => {
     { headerName: "분야", field: "domain", flex: 1 },
     { headerName: "설명", field: "desc", flex: 1.5 },
     { headerName: "담당자", field: "manager", flex: 1 },
-    { headerName: "진행 상태", field: "curState", flex: 1 },
+    {
+      headerName: "진행 상태",
+      field: "curState",
+      flex: 1,
+      cellEditor: "agSelectCellEditor",
+      cellEditorParams: {
+        values: ["대기", "진행 중", "완료"],
+      },
+      cellClassRules: {
+        'gray-background': 'value === "대기"',
+        'blue-background': 'value === "진행 중"',
+        'green-background': 'value === "완료"',
+      }
+    },
     {
       headerName: "딜 횟수",
       field: "dealCnt",
       valueFormatter: (p) => Math.floor(p.value).toLocaleString() + " 회",
       flex: 0.5,
+      cellEditor: "agNumberCellEditor",
+      cellEditorParams: {
+        precision: 2,
+        step: 1,
+        showStepperButtons: true,
+      },
     },
     { field: "속성 추가", cellRenderer: CustomButtonComponent, flex: 0.5 },
   ]);
@@ -123,13 +148,6 @@ const GridExample = () => {
     saveToLocalStorage(updatedRowData); // 로컬 저장
   };
 
-  // 수정된 데이터 저장
-  const onCellValueChanged = (params) => {
-    const updatedRowData = [...params.api.getRowData()];
-    setRowData(updatedRowData);
-    saveToLocalStorage(updatedRowData); // 수정 후 로컬 저장
-  };
-
   return (
     <div
       style={{ width: "100%", height: "350px" }}
@@ -138,7 +156,7 @@ const GridExample = () => {
       <AgGridReact
         rowData={rowData}
         columnDefs={columnDefs}
-        onCellValueChanged={onCellValueChanged}
+        defaultColDef={defaultColDef}
       />
     </div>
   );
