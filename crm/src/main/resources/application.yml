@@ -1,0 +1,39 @@
+#기본적인 설정파일
+#spring:
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/jpashop
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create #이 옵션은 애플리케이션 실행 시점에 내가 가지고 있는 테이블 다 지우고 내가 가지고 있는 엔티티정보를 보고 테이블을 다시 생성
+#    properties:
+#      hibernate:
+#        #        show_sql: true 얘는 system.out으로 디버깅 출력해주기에 운영환경에서는 안 씀
+#        format_sql: true # 얘는 로거를 통해서 찍어줌
+
+#logging:
+#  level:
+#    org.hibernate.SQL: debug #로그들을 디버깅할때, 날리는 SQL들을 다 보여줌
+#    org.hibernate.type: trace
+
+# 메일 인증
+spring:
+  mail:
+    host: smtp.gmail.com        # SMTP 서버 호스트
+    port: 587                   # SMTP 서버 포트
+    username: 1479242           # SMTP 서버 로그인 아이디
+    password: sdhedwxbjmpughqz  # SMTP 서버 로그인 비밀번호
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+      auth-code-expiration-millis: 1800000

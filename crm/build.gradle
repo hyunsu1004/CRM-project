@@ -36,6 +36,18 @@ dependencies {
 	testImplementation("org.junit.vintage:junit-vintage-engine") {
 		exclude group: "org.hamcrest", module: "hamcrest-core"
 	}
+
+	// 이메일 인증
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// 예제에서 확인을 위한 타임리프 추가 (필요하지 않다면 넣지 않아도 됨)
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	// validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
