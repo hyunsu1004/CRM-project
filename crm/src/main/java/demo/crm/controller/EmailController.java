@@ -1,5 +1,6 @@
 package demo.crm.controller;
 
+import demo.crm.dto.EmailCheckDto;
 import demo.crm.dto.EmailRequestDto;
 import demo.crm.service.EmailSendService;
 import jakarta.validation.Valid;
@@ -31,6 +32,20 @@ public class EmailController {
         response.put("code", code);
 
         return response;
+    }
+
+    /**
+     * Email Auth: 인증번호 입력 후 인증 버튼 click
+     */
+    @PostMapping("/signup/emailAuth")
+    public String authCheck(@RequestBody @Valid EmailCheckDto emailCheckDto) {
+        Boolean checked = emailSendService.checkAuthNum(emailCheckDto.getEmail(), emailCheckDto.getAuthNum());
+        if (checked) {
+            return "이메일 인증 성공!";
+        }
+        else {
+            throw new NullPointerException("이메일 인증 실패!");
+        }
     }
 
 }

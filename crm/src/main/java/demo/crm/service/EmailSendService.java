@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -74,4 +75,14 @@ public class EmailSendService { // 랜덤 인증번호 생성 및 이메일 작�
         return Integer.toString(authNumber);
     }
 
+    /**
+     * 인증번호 확인
+     */
+    public Boolean checkAuthNum(String email, String authNum) {
+        ValueOperations<String, String> valOperations = redisConfig.redisTemplate().opsForValue();
+        String code = valOperations.get(email);
+        if (Objects.equals(code, authNum)) {
+            return true;
+        } else return false;
+    }
 }
