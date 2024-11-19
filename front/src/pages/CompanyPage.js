@@ -206,16 +206,16 @@ export const CompanyGrid = () => {
   }, []);
 
   // Ver1. 그리드 준비 시 데이터 가져오기 (백엔드 협업)
-  const onGridReady = useCallback(() => {
-    fetchGridData(); // 그리드가 준비되면 데이터 로드
-  }, [fetchGridData]);
+  // const onGridReady = useCallback(() => {
+  //   fetchGridData(); // 그리드가 준비되면 데이터 로드
+  // }, [fetchGridData]);
 
   // Ver2. 그리드에 데이터 받아와서 매핑 (public/json/company.json 파일)
-  // const onGridReady = useCallback((params) => {
-  //   fetch("/json/company.json")
-  //     .then((resp) => resp.json())
-  //     .then((data) => setRowData(data.company));
-  // }, []);
+  const onGridReady = useCallback((params) => {
+    fetch("/json/company.json")
+      .then((resp) => resp.json())
+      .then((data) => setRowData(data.company));
+  }, []);
 
   const onFirstDataRendered = useCallback((params) => {
     params.api.getToolPanelInstance("filters").expandFilters();
@@ -235,6 +235,9 @@ export const CompanyGrid = () => {
       document.getElementById("filter-text-box").value
     );
   }, []);
+  const rowSelection = useMemo(() => {
+    return { mode: "multiRow" };
+  }, []);
 
   return (
     <div style={gridStyle} className={"ag-theme-quartz"}>
@@ -244,6 +247,7 @@ export const CompanyGrid = () => {
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         onGridReady={onGridReady}
+        rowSelection={rowSelection}
         // enableAdvancedFilter={true}
       />
       {/* 분야별 계층 보기 */}
