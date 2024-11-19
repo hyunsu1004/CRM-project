@@ -24,14 +24,14 @@ const Menubar = () => {
     <nav>
       <h3 className={styles.menuTitle}>MAIN</h3>
       <ul>
-        <MenuItem to="/main" icon={StarIcon} label="Favorite" />
+        <MenuItem to="/favorite" icon={StarIcon} label="Favorite" />
       </ul>
       <h3 className={styles.menuTitle}>MENU</h3>
       <ul>
-        <MenuItem to="/menu1" icon={CompanyIcon} label="Company" />
-        <MenuItem to="/menu2" icon={DealIcon} label="Deals" />
-        <MenuItem to="/menu3" icon={NoteIcon} label="Notes" />
-        <MenuItem to="/menu4" icon={TaskIcon} label="Tasks" />
+        <MenuItem to="/company" icon={CompanyIcon} label="Company" />
+        <MenuItem to="/deals" icon={DealIcon} label="Deals" />
+        <MenuItem to="/notes" icon={NoteIcon} label="Notes" />
+        <MenuItem to="/tasks" icon={TaskIcon} label="Tasks" />
       </ul>
       <h3 className={styles.menuTitle}>MY</h3>
       <ul>

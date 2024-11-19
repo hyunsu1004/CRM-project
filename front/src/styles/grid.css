@@ -1,22 +1,24 @@
-.ag-root-wrapper{
+.ag-root-wrapper {
     border: none;
 }
 
-.ag-header{
-    background-color: transparent;
+.ag-header {
+    text-align: center;
+    /* background-color: transparent; */
 }
 
-.ag-cell.gray-background {
-    background-color: gray;
-    color: white;
+.ag-cell{
+    text-align: center;
 }
 
-.ag-cell.blue-background {
-    background-color: blue;
-    color: white;
+.ag-cell.gray {
+    color: gray;
 }
 
-.ag-cell.green-background {
-    background-color: green;
-    color: white;
+.ag-cell.blue {
+    color: blue;
+}
+
+.ag-cell.green {
+    color: green;
 }

@@ -296,7 +296,7 @@ h1, h2, h3, p, a {
 /* main */
 .rside .main {
     width: 100%;
-    height: fit-content;
+    height: 100vh;
     /* flex: 1; */
 
     padding-top: 20px;
