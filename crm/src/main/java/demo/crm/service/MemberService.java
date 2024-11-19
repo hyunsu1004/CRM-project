@@ -21,13 +21,13 @@ public class MemberService {
     public Long join(Member member) {
         validateDuplicateMember(member);
         memberRepository.save(member);
-        return member.getGen_id();
+        return member.getMember_id();
     }
 
     private void validateDuplicateMember(Member member) {
-        List<Member> findMembers = memberRepository.findByIdForValidation(member.getId());
+        List<Member> findMembers = memberRepository.findByEmailForValidation(member.getEmail());
         if (!findMembers.isEmpty()) { // 중복된 ID가 있는 경우
-            throw new IllegalStateException("중복된 ID 입니다.");
+            throw new IllegalStateException("중복된 EMAIL 입니다.");
         }
     }
 

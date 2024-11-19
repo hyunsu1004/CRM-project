@@ -16,14 +16,13 @@ import java.util.List;
 public class Member {
 
     @Id @GeneratedValue
-    @Column(name = "generated_id")
-    private Long gen_id;
+    @Column(name = "member_id")
+    private Long member_id;
 
-    private String id;
+    private String email;
     private String password;
     private String name;
     private String phone;
-    private String email;
     private Date birth;
     //private List<Deal> Deals = new ArrayList<>();
 }
