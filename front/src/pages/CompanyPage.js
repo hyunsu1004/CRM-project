@@ -71,15 +71,17 @@ export const CompanyGrid = () => {
       headerName: "총 자본금",
       field: "totalCapital",
       flex: 1,
-      filter: "agNumberColumnFilter",
-      valueFormatter: p => p.value + ' 억원'
+      filter: "agTextColumnFilter",
+      // filter: "agNumberColumnFilter",
+      // valueFormatter: p => p.value + ' 억원'
     },
     {
       headerName: "총 투자유치금",
       field: "totalInvestment",
       flex: 1,
-      filter: "agNumberColumnFilter",
-      valueFormatter: p => p.value + ' 억원'
+      filter: "agTextColumnFilter",
+      // filter: "agNumberColumnFilter",
+      // valueFormatter: p => p.value + ' 억원'
     },
     {
       headerName: "최근 투자 상태",
@@ -117,7 +119,7 @@ export const CompanyGrid = () => {
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
-      editable: true,
+      editable: false,
       minWidth: 100,
       floatingFilter: true,
       filter: "agTextColumnFilter",
@@ -135,6 +137,17 @@ export const CompanyGrid = () => {
       console.error("데이터 가져오기 실패:", error);
     }
   }, []);
+
+  // Ver.MockServerTest (임시 API 이용 테스트)
+  // (https://5690fba9-a6e4-4e64-81c7-fae1c69ed8aa.mock.pstmn.io/api/company)
+  // const fetchGridData = useCallback(async () => {
+  //   try {
+  //     const response = await axios.get(`https://5690fba9-a6e4-4e64-81c7-fae1c69ed8aa.mock.pstmn.io/api/company`);
+  //     setRowData(response.data); // 백엔드에서 받아온 데이터 설정
+  //   } catch (error) {
+  //     console.error("데이터 가져오기 실패:", error);
+  //   }
+  // }, []);
 
   // 데이터를 저장하는 함수
   const saveGridData = useCallback(async () => {

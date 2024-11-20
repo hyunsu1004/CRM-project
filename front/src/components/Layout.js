@@ -124,7 +124,7 @@ const Layout = ({ children, user }) => {
         >
           <figure>
             <button onClick={toggleDarkMode}>
-              <ChgId className={styles.chgId} />
+              <ChgId className={styles.chgMode} />
             </button>
             <button onClick={toggleSidebar}>
               {isSidebarVisible ? (
