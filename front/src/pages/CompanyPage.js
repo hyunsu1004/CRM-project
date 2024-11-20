@@ -248,6 +248,8 @@ export const CompanyGrid = () => {
         defaultColDef={defaultColDef}
         onGridReady={onGridReady}
         rowSelection={rowSelection}
+        pagination={true}
+        paginationPageSize={5}
         // enableAdvancedFilter={true}
       />
       {/* 분야별 계층 보기 */}

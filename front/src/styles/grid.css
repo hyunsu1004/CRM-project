@@ -3,8 +3,12 @@
 }
 
 .ag-header {
-    text-align: center;
     /* background-color: transparent; */
+}
+
+.ag-theme-quartz .ag-header-cell {
+    text-align: center;
+    font-weight: 900;
 }
 
 .ag-cell{
