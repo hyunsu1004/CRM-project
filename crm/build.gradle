@@ -42,7 +42,7 @@ dependencies {
 	// 이메일 인증
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-	// 예제에서 확인을 위한 타임리프 추가 (필요하지 않다면 넣지 않아도 됨)
+	// 테스트를 위한 타임리프 추가 (필요하지 않다면 넣지 않아도 됨)
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 	// validation
@@ -50,6 +50,14 @@ dependencies {
 
 	// redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// Spring Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// JWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 }
 
 tasks.named('test') {

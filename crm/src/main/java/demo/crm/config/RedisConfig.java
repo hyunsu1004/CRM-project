@@ -1,4 +1,4 @@
-package demo.crm;
+package demo.crm.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

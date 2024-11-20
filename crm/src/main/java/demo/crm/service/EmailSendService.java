@@ -1,6 +1,6 @@
 package demo.crm.service;
 
-import demo.crm.RedisConfig;
+import demo.crm.config.RedisConfig;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
