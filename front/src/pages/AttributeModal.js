@@ -74,18 +74,16 @@ const AttributeModal = ({ onClose, onSubmit, existingAttributes = [] }) => {
         dataType,
       };
 
-      // 여기서 실제 API 호출을 주석 처리하고, 대신 alert로 값을 확인
+      // alert로 값 확인 (확인용)
       alert("전송될 데이터:\n" + JSON.stringify(data, null, 2));
 
-      // 아래는 주석 처리된 기존의 백엔드 전송 코드
-      /*
+      // 백엔드 전송 코드
       const response = await axios.post("/api/attribute", data);
       if (response.status === 200) {
         alert("속성이 성공적으로 추가되었습니다.");
         onSubmit(data); // 성공적으로 추가된 데이터 처리
         onClose(); // 모달 닫기
       }
-      */
     } catch (error) {
       console.error("속성 추가 오류:", error);
       alert("속성 추가에 실패했습니다. 다시 시도해주세요.");
