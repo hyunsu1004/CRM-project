@@ -30,6 +30,22 @@ var filterParams = {
   inRangeFloatingFilterDateFormat: "YYYY. MM. DD.",
 };
 
+const treeListFormatter = (pathKey, level, _parentPathKeys) => {
+  if (level === 1) {
+    const date = new Date();
+    date.setMonth(Number(pathKey) - 1);
+    return date.toLocaleDateString(undefined, { month: "long" });
+  }
+  return pathKey || "(Blanks)";
+};
+
+const groupTreeListFormatter = (pathKey, level, _parentPathKeys) => {
+  if (level === 0 && pathKey) {
+    return pathKey + " (" + pathKey.substring(0, 2).toUpperCase() + ")";
+  }
+  return pathKey || "(Blanks)";
+};
+
 export const CompanyGrid = () => {
   const gridRef = useRef();
   const [isModalOpen, setModalOpen] = useState(false);
@@ -113,7 +129,6 @@ export const CompanyGrid = () => {
     }
   ]);
 
-  // 기본 Col 타입 지정
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
@@ -125,6 +140,33 @@ export const CompanyGrid = () => {
       suppressHeaderContextButton: true,
     };
   }, []);
+
+  const dataTypeDefinitions = useMemo(() => {
+    return {
+      object: {
+        baseDataType: "object",
+        extendsDataType: "object",
+        valueParser: (params) => ({ name: params.newValue }),
+        valueFormatter: (params) =>
+          params.value == null ? "" : params.value.name,
+      },
+    };
+  }, []);
+
+  const autoGroupColumnDef = useMemo(() => {
+    return {
+      headerName: "회사명",
+      field: "name",
+      filter: "agSetColumnFilter",
+      minWidth: 200,
+      filterParams: {
+        treeList: true,
+        keyCreator: (params) => (params.value ? params.value.join("#") : null),
+        treeListFormatter: groupTreeListFormatter,
+      },
+    };
+  }, []);
+
 
   // 데이터를 가져오는 함수
   const fetchGridData = useCallback(async () => {
@@ -159,7 +201,25 @@ export const CompanyGrid = () => {
   //     .then((data) => setRowData(data.company));
   // }, []);
 
-  // 왼쪽 row 선택 체크 박스 생성
+  const onFirstDataRendered = useCallback((params) => {
+    params.api.getToolPanelInstance("filters").expandFilters();
+    // params.api.getToolPanelInstance("filters");
+  }, []);
+
+  // const initialState = useMemo(() => {
+  //   return {
+  //     filter: {
+  //       advancedFilterModel: true,
+  //     },
+  //   };
+  // }, []);
+
+  const onFilterTextBoxChanged = useCallback(() => {
+    gridRef.current.api.setGridOption(
+      "quickFilterText",
+      document.getElementById("filter-text-box").value
+    );
+  }, []);
   const rowSelection = useMemo(() => {
     return { mode: "multiRow" };
   }, []);
@@ -200,7 +260,7 @@ export const CompanyGrid = () => {
   );
 };
 
-const CompanyPage = ({ user, isDarkMode }) => {
+const GridExample = ({ user, isDarkMode }) => {
   return (
     <Layout user={user}>
       <CompanyGrid user={user} isDarkMode={isDarkMode} />
@@ -208,4 +268,4 @@ const CompanyPage = ({ user, isDarkMode }) => {
   );
 };
 
-export default CompanyPage;
+export default GridExample;

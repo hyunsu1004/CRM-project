@@ -2,14 +2,24 @@ import { AgGridReact } from "ag-grid-react";
 import { useEffect, useMemo, useState } from "react";
 import AttributeModal from "./AttributeModal";
 import Layout from "../components/Layout";
+import "../styles/btn.css";
 
 const CustomButtonComponent = ({ onClick }) => {
-  return <button onClick={onClick}></button>;
+  return (
+    <button className="btn" onClick={onClick}>
+      속성 추가
+    </button>
+  );
 };
 
 export const FavoriteGrid = () => {
   const [rowData, setRowData] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
+
+  // 모달에서 추가된 속성 데이터를 그리드에 반영할 수 있는 함수
+  const addNewAttribute = (newAttribute) => {
+    setRowData((prevData) => [...prevData, newAttribute]); // 새로운 속성을 그리드에 추가
+  };
 
   useEffect(() => {
     // 스프링 백엔드에서 데이터 가져오기
@@ -30,7 +40,7 @@ export const FavoriteGrid = () => {
 
   const [columnDefs] = useState([
     {
-      headerName: "이름(회사명)",
+      headerName: "회사명",
       valueGetter: (p) => p.data.name,
       flex: 1,
     },
@@ -63,13 +73,6 @@ export const FavoriteGrid = () => {
         showStepperButtons: true,
       },
     },
-    {
-      headerName: "속성 추가",
-      cellRenderer: (params) => (
-        <CustomButtonComponent onClick={() => setModalOpen(true)} />
-      ),
-      flex: 0.5,
-    },
   ]);
 
   return (
@@ -77,13 +80,13 @@ export const FavoriteGrid = () => {
       style={{ width: "100%", height: "350px" }}
       className={"ag-theme-quartz"}
     >
+      <CustomButtonComponent onClick={() => setModalOpen(true)} />
       <AgGridReact
         rowData={rowData}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
-        // theme={myTheme}
       />
-      {isModalOpen && <AttributeModal onClose={() => setModalOpen(true)} />}
+      {isModalOpen && <AttributeModal onClose={() => setModalOpen(false)} onSubmit={addNewAttribute} />}
     </div>
   );
 };
