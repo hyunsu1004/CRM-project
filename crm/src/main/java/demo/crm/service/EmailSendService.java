@@ -64,6 +64,7 @@ public class EmailSendService { // 랜덤 인증번호 생성 및 이메일 작�
     public String joinEmail(String email) {
         makeRandomNum();
         String customerMail = email;
+
         String title = "회원 가입을 위한 이메일입니다!";
         String content =
                 "이메일을 인증하기 위한 절차입니다." +
@@ -72,6 +73,7 @@ public class EmailSendService { // 랜덤 인증번호 생성 및 이메일 작�
                         "<br>" +
                         "회원 가입 폼에 해당 번호를 입력해주세요.";
         mailSend(serviceName, customerMail, title, content);
+        System.out.println("이메일 전송 완료");
         return Integer.toString(authNumber);
     }
 

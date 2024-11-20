@@ -1,12 +1,16 @@
 package demo.crm.controller;
 
 import demo.crm.domain.Member;
+//import demo.crm.service.JoinService;
+import demo.crm.dto.LoginDto;
 import demo.crm.service.MemberService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,20 +20,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberService memberService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
     @PostMapping("/api/signup")
-    public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
+    public String saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
         Member member = new Member();
         member.setEmail(request.getEmail());
-        member.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
-        member.setName(request.getName());
-        member.setPhone(request.getPhone());
-        member.setRole("ROLE_ADMIN");
 
-        Long id = memberService.join(member);
-        return new CreateMemberResponse(id);
+        String enPw = passwordEncoder.encode(request.getPassword());
+        member.setPassword(enPw);
+        member.setName(request.getUsername());
+        member.setPhone(request.getPhone());
+
+        memberService.join(member);
+        return "회원가입 완료";
     }
 
+    @PostMapping("/login")
+    public String loginMember(@RequestBody @Valid LoginDto loginDto) {
+
+        boolean validated = memberService.validLoginMember(loginDto);
+        return validated ? "success" : "fail";
+    }
 
     @Data
     static class CreateMemberRequest {
@@ -38,17 +50,16 @@ public class MemberController {
         @NotEmpty
         private String password;
         @NotEmpty
-        private String name;
+        private String username;
         @NotEmpty
         private String phone;
     }
 
     @Data
-    static class CreateMemberResponse {
-        private Long id;
-
-        public CreateMemberResponse(Long id) {
-            this.id = id;
-        }
+    static class LoginMemberRequest {
+        @NotEmpty
+        private String email;
+        @NotEmpty
+        private String password;
     }
 }

@@ -13,8 +13,8 @@ import java.util.List;
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    private Long member_id;
+    @Column(name = "id")
+    private Long id;
 
     private String email;
     private String password;

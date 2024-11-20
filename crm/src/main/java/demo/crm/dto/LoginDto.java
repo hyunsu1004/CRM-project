@@ -1,12 +1,12 @@
 package demo.crm.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-public class EmailRequestDto {
+@Data
+public class LoginDto {
     @NotEmpty
     private String email;
+    @NotEmpty
+    private String pw;
 }
