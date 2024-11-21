@@ -3,7 +3,7 @@ spring:
   mail:
     host: smtp.gmail.com        # SMTP 서버 호스트
     username: 1479242           # SMTP 서버 로그인 아이디
-    password: fiolwlascnwfkpea  # SMTP 서버 로그인 비밀번호
+    password: sadkfnoadnfkdanf  # SMTP 서버 로그인 비밀번호
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
