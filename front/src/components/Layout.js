@@ -7,6 +7,7 @@ import { ReactComponent as RightArrow } from "../img/double_arrow_right.svg";
 import { ReactComponent as UserImg } from "../img/person.svg";
 import { ReactComponent as LoginImg } from "../img/login.svg";
 import { ReactComponent as LogoutImg } from "../img/logout.svg";
+import { ReactComponent as LogoMainImg } from "../img/CLODGE_main_logo.svg";
 import Menubar from "./Menubar";
 import styles from "../styles/layout.module.css"; // 여기에 CSS 스타일 추가
 
@@ -43,50 +44,8 @@ const Layout = ({ children, user }) => {
           a.style.width = isSidebarVisible ? "218px" : "100%";
         });
       }
-      // 사이드바 안의 h2, h3 요소 가시성 제어
-      const headings = sidebarRef.current.querySelectorAll("h2, h3");
-      headings.forEach((heading) => {
-        heading.style.display = isSidebarVisible ? "block" : "none";
-      });
-      const figure = sidebarRef.current.querySelector("figure");
-      if (figure) {
-        figure.style.flexDirection = isSidebarVisible ? "row" : "column";
-        figure.querySelectorAll("button").forEach((button, idx) => {
-          button.style.order = isSidebarVisible ? `${idx + 1}` : `${2 - idx}`;
-        });
-      }
-    }
-  }, [isSidebarVisible]);
-
-  // 리사이즈 이벤트 리스너를 추가하여 창 크기 변경에 대응
-  useEffect(() => {
-    const handleResize = () => {
-      if (mainRef.current) {
-        mainRef.current.style.width = isSidebarVisible
-          ? "calc(100% - 260px)"
-          : "calc(100% - 80px)";
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [isSidebarVisible]);
-
-  // 사이드바 가시성에 따라 메인 콘텐츠의 여백을 조정
-  useEffect(() => {
-    if (mainRef.current && sidebarRef.current) {
-      mainRef.current.style.width = isSidebarVisible
-        ? "calc(100% - 260px)"
-        : "calc(100% - 80px)";
-      sidebarRef.current.style.width = isSidebarVisible ? "260px" : "80px";
-
-      const anchors = sidebarRef.current.querySelectorAll("a");
-      if (anchors) {
-        anchors.forEach((a) => {
-          a.style.width = isSidebarVisible ? "218px" : "100%";
-        });
-      }
-      // 사이드바 안의 h2, h3 요소 가시성 제어
-      const headings = sidebarRef.current.querySelectorAll("h2, h3");
+      // 사이드바 안의 h2, h4 요소 가시성 제어
+      const headings = sidebarRef.current.querySelectorAll("h2, h3, h4");
       headings.forEach((heading) => {
         heading.style.display = isSidebarVisible ? "block" : "none";
       });
@@ -154,7 +113,10 @@ const Layout = ({ children, user }) => {
         <div ref={mainRef} className={styles.rside}>
           <header className={styles.header}>
             <Link to="/">
-              <h1>CRM SYSTEM</h1>
+              <div className={styles.title}>
+                <LogoMainImg />
+                {/* <h1>CLODGE</h1> */}
+              </div>
             </Link>
           </header>
 

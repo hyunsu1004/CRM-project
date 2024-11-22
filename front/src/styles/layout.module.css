@@ -36,9 +36,18 @@ h1, h2, h3, p, a {
 
     padding: 10px;
     background-color: #fff;
-    border: 1px solid #ACB9CC;
-    border-radius: 0 20px 20px 0;
-    box-shadow: 2px 0 2px #aaa;
+
+    /* 기존 */
+    /* border: 1px solid #ACB9CC; */
+    /* 신규 */
+    border: 2px solid #ACB9CC;
+
+    /* 기존 */
+    /* border-radius: 0 20px 20px 0; */
+
+    /* 기존 */
+    /* box-shadow: 2px 0 2px #aaa; */
+
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -47,6 +56,8 @@ h1, h2, h3, p, a {
     overflow-y: auto;
 
     transition: width 0.4s ease-in-out;
+
+    overflow-x: hidden;
 }
 
 .darkMode .aside{
@@ -227,7 +238,7 @@ h1, h2, h3, p, a {
     cursor: pointer;
 }
 
-.aside nav ul li h3 {
+.aside nav ul li h4 {
     font-size: 20px;
 }
 
@@ -281,6 +292,24 @@ h1, h2, h3, p, a {
     background-color: #305673;
     /* border-top: 2px solid #ACB9CC; */
     border-bottom: 2px solid #ACB9CC;
+}
+
+.rside .header a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rside .header a .title {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 }
 
 .rside .header h1 {

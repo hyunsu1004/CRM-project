@@ -161,16 +161,16 @@ export const CompanyGrid = () => {
   }, []);
 
   // Ver.Collabo 그리드 준비 시 데이터 가져오기 (백엔드 협업)
-  const onGridReady = useCallback(() => {
-    fetchGridData(); // 그리드가 준비되면 데이터 로드
-  }, [fetchGridData]);
+  // const onGridReady = useCallback(() => {
+  //   fetchGridData(); // 그리드가 준비되면 데이터 로드
+  // }, [fetchGridData]);
 
-  // Ver.LocalTest 그리드에 데이터 받아와서 매핑 (public/json/company.json 파일)
-  // const onGridReady = useCallback((params) => {
-  //   fetch("/json/company.json")
-  //     .then((resp) => resp.json())
-  //     .then((data) => setRowData(data.company));
-  // }, []);
+  //Ver.LocalTest 그리드에 데이터 받아와서 매핑 (public/json/company.json 파일)
+  const onGridReady = useCallback((params) => {
+    fetch("/json/company.json")
+      .then((resp) => resp.json())
+      .then((data) => setRowData(data.company));
+  }, []);
 
   // 왼쪽 row 선택 체크 박스 생성
   const rowSelection = useMemo(() => {

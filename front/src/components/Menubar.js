@@ -12,7 +12,7 @@ const MenuItem = ({ to, icon: Icon, label }) => {
     <Link to={to}>
       <li>
         <Icon />
-        <h3>{label}</h3>
+        <h4>{label}</h4>
       </li>
     </Link>
   );
