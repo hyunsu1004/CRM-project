@@ -1,0 +1,30 @@
+.ag-root-wrapper {
+  border: none;
+}
+
+.ag-header {
+  background-color: transparent;
+}
+
+.ag-cell.gray-background {
+  background-color: gray;
+  color: white;
+}
+
+.ag-cell.blue-background {
+  background-color: blue;
+  color: white;
+}
+
+.ag-cell.green-background {
+  background-color: green;
+  color: white;
+}
+.ag-theme-quartz .ag-cell {
+  overflow: visible !important; /* 드롭다운 표시 */
+}
+
+.ag-cell select {
+  font-size: 14px;
+  padding: 4px;
+}

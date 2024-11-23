@@ -1,0 +1,330 @@
+/* 기본 텍스트 색상 */
+
+.body {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+}
+
+h1,
+h2,
+h3,
+p,
+a {
+  color: #000; /* 기본 상태 텍스트 색상을 검정으로 지정 */
+}
+
+.darkMode .body {
+  background-color: #305673;
+}
+
+.darkMode h1,
+h2,
+h3,
+p,
+a {
+  color: #fff;
+}
+
+.darkMode svg {
+  fill: #fff;
+}
+
+/* 왼쪽 메뉴 바 (고정) */
+.aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 260px;
+  height: 100vh;
+  z-index: 300;
+
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #acb9cc;
+  border-radius: 0 20px 20px 0;
+  box-shadow: 2px 0 2px #aaa;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 20px;
+
+  overflow-y: auto;
+
+  transition: width 0.4s ease-in-out;
+}
+
+.darkMode .aside {
+  background-color: #305673;
+  border: 1px solid #acb9cc;
+}
+
+.aside a {
+  width: fit-content;
+}
+
+/* 메뉴바 : 프로필 */
+.aside .profile_cont {
+  width: fit-content;
+  height: 60px;
+  padding: 0 10px;
+  font-size: 24px;
+  line-height: 40px;
+  font-weight: 600;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+
+  cursor: pointer;
+}
+
+/* 메뉴바 : 프로필 - 유저 사진 */
+.aside .userImg {
+  width: 36px;
+  height: 36px;
+  background-color: #305673;
+  border-radius: 50%;
+}
+
+/* 메뉴바 : 프로필 - 유저 사진 (다크 모드) */
+.darkMode .userImg {
+  background-color: #acb9cc;
+}
+
+/* 메뉴바 : 프로필 - 로그인 아이콘 */
+.aside .loginImg {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+/* 메뉴바 : 프로필 - svg 설정 */
+.aside .profile_cont svg {
+  transition: 0.2s ease-in-out;
+}
+.aside .profile_cont:hover svg {
+  transform: scale(1.1);
+}
+
+/* 메뉴바 : 프로필 - 이름 및 LOGIN text 설정 */
+.aside .profile_cont h2 {
+  transition: 0.2s ease-in-out;
+  font-size: 26px;
+  font-weight: 600;
+  text-align: center;
+}
+.aside .profile_cont:hover h2 {
+  opacity: 0.6;
+}
+
+/* 메뉴바 : 버튼 모음 (모드변환, 사이드바 접기) 컨테이너 */
+.aside figure {
+  width: 100%;
+  height: 80px;
+  padding: 0 10px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: end;
+
+  gap: 10px;
+
+  cursor: pointer;
+}
+
+/* 메뉴바 : 버튼 (모드변환, 사이드바 접기) */
+.aside figure button {
+  height: 40px;
+  width: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.aside figure button:nth-child(0) {
+  order: 1;
+}
+.aside figure button:nth-child(1) {
+  order: 2;
+}
+
+/* 메뉴바 : 버튼 (모드변환) */
+.aside figure .chgMode {
+  width: 30px;
+  height: 30px;
+  transition: 0.2s ease-in-out;
+}
+.aside figure .chgMode:hover {
+  transform: scale(1.2);
+  fill-opacity: 0.7;
+}
+
+/* 메뉴바 : 버튼 (사이드바 접기) */
+.aside figure .leftArr {
+  transition: 0.2s ease-in-out;
+}
+.aside figure .leftArr:hover {
+  transform: scale(1.2);
+  fill-opacity: 0.7;
+}
+
+/* 메뉴바 : 버튼 (사이드바 펼치기) */
+.aside figure .rightArr {
+  transition: 0.2s ease-in-out;
+}
+.aside figure .rightArr:hover {
+  transform: scale(1.2);
+  fill-opacity: 0.7;
+}
+
+.aside nav {
+  width: 100%;
+  padding: 10px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.aside nav .menuTitle {
+  font-size: 16px;
+  color: #bbb;
+}
+
+.aside nav ul {
+  width: 100%;
+  padding: 20px 0;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 20px;
+}
+
+.aside nav ul:not(:first-child) {
+  border-top: 2px solid #acb9cc;
+}
+
+.aside nav ul a {
+  width: 100%;
+}
+
+.aside nav ul li {
+  padding-left: 4px;
+  width: 100%;
+  height: 50px;
+  /* background-color: #fff; */
+  border-radius: 10px;
+  /* border: 2px solid #eee; */
+  font-size: 24px;
+  line-height: 40px;
+  font-weight: 600;
+  /* box-shadow: 0 0 10px #eee; */
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.aside nav ul li h3 {
+  font-size: 20px;
+}
+
+.aside nav ul li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.aside nav ul li svg {
+  width: 30px;
+  height: 30px;
+  transition: all 0.2s ease-in-out;
+}
+
+.aside nav ul li:hover svg {
+  transform: scale(1.1);
+}
+
+/* rside : 오른쪽 header, main, footer 를 감싼 container */
+
+.rside {
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* aside 제외 */
+  width: calc(100% - 260px);
+  height: fit-content;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transition: width 0.4s ease-in-out;
+}
+
+.header,
+.main,
+.footer {
+  padding: 20px;
+}
+
+/* header */
+.rside .header {
+  padding: 10px 0;
+  width: 100%;
+  height: 100px;
+  /* border-top: 2px solid #305673; */
+  border-bottom: 2px solid #305673;
+}
+
+.darkMode .rside .header {
+  background-color: #305673;
+  /* border-top: 2px solid #ACB9CC; */
+  border-bottom: 2px solid #acb9cc;
+}
+
+.rside .header h1 {
+  height: 100%;
+  line-height: 80px;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+  color: #305673;
+  /* border-top: 5px dotted #305673; */
+  /* border-bottom: 5px dotted #305673; */
+}
+
+.darkMode .rside .header h1 {
+  color: #fff;
+  /* border-top: 5px dotted #ACB9CC; */
+  /* border-bottom: 5px dotted #ACB9CC; */
+}
+
+/* main */
+.rside .main {
+  width: 100%;
+  height: 100vh;
+  /* flex: 1; */
+
+  padding-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 10px;
+}
+
+/* footer */
+.rside .footer {
+  width: 100%;
+  height: 100px;
+  background-color: #acb9cc;
+}
