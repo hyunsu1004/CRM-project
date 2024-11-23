@@ -4,7 +4,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import styles from "../styles/main.module.css";
+import styles from "../styles/layout.module.css";
 import "../styles/grid.css";
 import { ReactComponent as UserImg } from "../img/person.svg";
 import { ReactComponent as ChgId } from "../img/sync_alt.svg";

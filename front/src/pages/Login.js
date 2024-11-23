@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/login.module.css";
 import axios from "axios";
@@ -21,6 +21,23 @@ const Login = () => {
     if (passwordError) setPasswordError(null);
   };
 
+  // Ver. 로컬 사용자 검증
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    // JSON 파일에서 사용자 정보를 가져옴
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("/json/user.json");
+        const data = await response.json();
+        setUsers(data.user); // 사용자 정보를 상태에 저장
+      } catch (error) {
+        console.error("사용자 정보를 가져오는 데 실패했습니다.", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -37,26 +54,51 @@ const Login = () => {
 
     setLoading(true);
 
-    try {
-      const response = await axios.post(
-        "/api/auth/login",
-        { email, password },
-        {
-          withCredentials: true, // 세션 쿠키 사용 설정
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+    // Ver. Back-end 협업
+    // try {
+    //   const response = await axios.post(
+    //     "/api/auth/login",
+    //     { email, password },
+    //     {
+    //       withCredentials: true, // 세션 쿠키 사용 설정
+    //       headers: { "Content-Type": "application/json" },
+    //     }
+    //   );
 
-      if (response.status === 200) {
-        // 로그인 성공 시 메인 페이지로 이동
-        navigate("/main");
-      }
-    } catch (error) {
-      const errorMessage = error.response?.data || "로그인에 실패했습니다.";
-      setPasswordError(errorMessage);
-    } finally {
-      setLoading(false);
+    //   if (response.status === 200) {
+    //     // 로그인 성공 시 사용자 고유 ID를 받아옴
+    //     const userId = response.data.id; // 사용자 고유 ID를 받아옴
+    //     // 여기서 userId를 사용하여 다른 페이지로 이동하거나 상태를 업데이트할 수 있습니다.
+    //     // 예: navigate(`/user/${userId}`); // 사용자 페이지로 이동
+
+    //     // 로그인 성공 시 메인 페이지로 이동
+    //     navigate("/");
+    //   }
+    // } catch (error) {
+    //   const errorMessage = error.response?.data || "로그인에 실패했습니다.";
+    //   setPasswordError(errorMessage);
+    // } finally {
+    //   setLoading(false);
+    // }
+
+    // Ver. 로컬 사용자 검증
+    const user = users.find(
+      (user) => user.email === email && user.password === password
+    );
+
+    if (user) {
+      // 로그인 성공 시 사용자 정보를 localStorage에 저장
+      localStorage.setItem("user", JSON.stringify(user));
+      // 여기서 userId를 사용하여 다른 페이지로 이동하거나 상태를 업데이트할 수 있습니다.
+      // 예: navigate(`/user/${userId}`); // 사용자 페이지로 이동
+
+      // 로그인 성공 시 메인 페이지로 이동
+      navigate("/");
+    } else {
+      setPasswordError("이메일 또는 비밀번호가 잘못되었습니다.");
     }
+
+    setLoading(false);
   };
 
   return (

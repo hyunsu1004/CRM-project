@@ -13,6 +13,8 @@ function Router() {
             <Route path="/company" element={<CompanyPage />} />
             <Route path="/favorite" element={<FavoritePage />} />
             <Route path="/notes" element={<NotePage />} />
+            <Route path="/startups" element={<CompanyPage />} />
+            <Route path="/investors" element={<CompanyPage />} />
         </Routes>
     );
 }

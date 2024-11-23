@@ -7,9 +7,14 @@ import { ReactComponent as RightArrow } from "../img/double_arrow_right.svg";
 import { ReactComponent as UserImg } from "../img/person.svg";
 import { ReactComponent as LoginImg } from "../img/login.svg";
 import { ReactComponent as LogoutImg } from "../img/logout.svg";
-import { ReactComponent as LogoMainImg } from "../img/CLODGE_main_logo.svg";
+import { ReactComponent as LogoMainImg1 } from "../img/CLODGE_main_horizon_v1.svg";
+import { ReactComponent as LogoMainImg2 } from "../img/CLODGE_main_horizon_v2.svg";
+import { ReactComponent as LogoMiniImg } from "../img/CLODGE_mini.svg";
+import { ReactComponent as LightModeImg } from "../img/light_mode.svg";
+import { ReactComponent as DarkModeImg } from "../img/dark_mode.svg";
 import Menubar from "./Menubar";
 import styles from "../styles/layout.module.css"; // 여기에 CSS 스타일 추가
+import { width } from "@fortawesome/free-solid-svg-icons/faArrowDown";
 
 const Layout = ({ children, user }) => {
   // 사이드바가 열려 있는지 여부를 관리하는 상태
@@ -34,26 +39,26 @@ const Layout = ({ children, user }) => {
   useEffect(() => {
     if (mainRef.current && sidebarRef.current) {
       mainRef.current.style.width = isSidebarVisible
-        ? "calc(100% - 260px)"
+        ? "calc(100% - 240px)"
         : "calc(100% - 80px)";
-      sidebarRef.current.style.width = isSidebarVisible ? "260px" : "80px";
+      sidebarRef.current.style.width = isSidebarVisible ? "240px" : "80px";
 
       const anchors = sidebarRef.current.querySelectorAll("a");
       if (anchors) {
         anchors.forEach((a) => {
-          a.style.width = isSidebarVisible ? "218px" : "100%";
+          a.style.width = isSidebarVisible ? "178px" : "100%";
         });
       }
       // 사이드바 안의 h2, h4 요소 가시성 제어
-      const headings = sidebarRef.current.querySelectorAll("h2, h3, h4");
+      const headings = sidebarRef.current.querySelectorAll("h2, h3, h4, p");
       headings.forEach((heading) => {
         heading.style.display = isSidebarVisible ? "block" : "none";
       });
-      const figure = sidebarRef.current.querySelector("figure");
-      if (figure) {
-        figure.style.flexDirection = isSidebarVisible ? "row" : "column";
-        figure.querySelectorAll("button").forEach((button, idx) => {
-          button.style.order = isSidebarVisible ? `${idx + 1}` : `${2 - idx}`;
+      // profile_cont 변화
+      const profile_cont = sidebarRef.current.querySelectorAll("#profileCont");
+      if (profile_cont) {
+        profile_cont.forEach((pc) => {
+          pc.style.width = isSidebarVisible ? "100%" : "50px";
         });
       }
     }
@@ -64,7 +69,7 @@ const Layout = ({ children, user }) => {
     const handleResize = () => {
       if (mainRef.current) {
         mainRef.current.style.width = isSidebarVisible
-          ? "calc(100% - 260px)"
+          ? "calc(100% - 240px)"
           : "calc(100% - 80px)";
       }
     };
@@ -79,12 +84,20 @@ const Layout = ({ children, user }) => {
         <aside
           ref={sidebarRef}
           className={styles.aside}
-          style={{ width: isSidebarVisible ? "250px" : "1vh" }}
+          style={{ width: isSidebarVisible ? "240px" : "1vh" }}
         >
-          <figure>
-            <button onClick={toggleDarkMode}>
-              <ChgId className={styles.chgMode} />
-            </button>
+          <header className={styles.header}>
+            <Link to="/">
+              <div className={styles.title}>
+                {isSidebarVisible ? (
+                  <LogoMainImg2 className={styles.mainLogo} />
+                ) : (
+                  <LogoMiniImg className={styles.miniLogo} />
+                )}
+              </div>
+            </Link>
+          </header>
+          <div className={styles.btn_cont}>
             <button onClick={toggleSidebar}>
               {isSidebarVisible ? (
                 <LeftArrow className={styles.leftArr} />
@@ -92,34 +105,47 @@ const Layout = ({ children, user }) => {
                 <RightArrow className={styles.rightArr} />
               )}
             </button>
-          </figure>
-          <Link to="/Login">
-            {user ? (
-              <div className={styles.profile_cont}>
-                <UserImg className={styles.userImg} />
-                <h2>`${user.name}`</h2>
-              </div>
-            ) : (
-              <div className={styles.profile_cont}>
-                <LoginImg className={styles.loginImg} />
-                <h2>LOGIN</h2>
-              </div>
-            )}
-          </Link>
-          <Menubar />
+          </div>
+          {user ? (
+            <div
+              className={styles.profile_cont}
+              id="profileCont"
+              style={isSidebarVisible ? { paddingLeft: "13px" } : { paddingLeft: "13px" }}
+            >
+              <UserImg className={styles.userImg} />
+              <h2>{user.name}</h2> {/* 사용자 이름 표시 */}
+            </div>
+          ) : (
+            <div className={styles.login_cont}>
+              <Link to="/Login">
+                <div className={styles.profile_cont} id="profileCont">
+                  {/* <LogoMiniImg className={styles.loginImg} /> */}
+                  <LoginImg className={styles.loginImg} />
+                  <h2>로그인</h2>
+                </div>
+              </Link>
+              <Link to="/signup" className={styles.signup}>
+                <p>회원가입</p>
+              </Link>
+            </div>
+          )}
+          <Menubar
+            userId={user ? user.id : null}
+            isSidebarVisible={isSidebarVisible}
+          />
+          <div className={styles.btn_cont} style={{ justifyContent: "center" }}>
+            <button onClick={toggleDarkMode}>
+              {isDarkMode ? (
+                <LightModeImg className={styles.chgMode} />
+              ) : (
+                <DarkModeImg className={styles.chgMode} />
+              )}
+            </button>
+          </div>
         </aside>
 
         {/* 메인 콘텐츠 영역 */}
         <div ref={mainRef} className={styles.rside}>
-          <header className={styles.header}>
-            <Link to="/">
-              <div className={styles.title}>
-                <LogoMainImg />
-                {/* <h1>CLODGE</h1> */}
-              </div>
-            </Link>
-          </header>
-
           {/* children으로 전달된 페이지 내용 */}
           <main className={styles.main}>{children}</main>
 

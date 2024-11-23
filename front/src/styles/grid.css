@@ -1,5 +1,6 @@
 .ag-root-wrapper {
     border: none;
+    background-color: transparent;
 }
 
 .ag-theme-quartz {
@@ -74,6 +75,7 @@
 
 .ag-cell {
     text-align: center;
+    background-color: transparent;
 }
 
 .ag-cell:first-child {
@@ -97,4 +99,9 @@
     --ag-grid-size: 6px;
     --ag-list-item-height: 20px;
     --ag-font-size: 14px;
+}
+
+/* 테이블 박스 */
+.ag-center-cols-container{
+    background-color: transparent;
 }

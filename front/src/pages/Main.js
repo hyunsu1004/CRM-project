@@ -10,23 +10,23 @@ import AttributeModal from "./AttributeModal";
 import CompanyPage, { CompanyGrid } from "./CompanyPage";
 
 const Main = ({
-  user,
   isDarkMode,
   toggleDarkMode,
   isSidebarVisible,
   toggleSidebar,
 }) => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      setUser(JSON.parse(loggedInUser)); // localStorage에서 사용자 정보 읽기
+    }
+  }, []);
+  
   return (
     <Layout user={user}>
-      {/* 로그인 여부에 따라 다른 메인 컨텐츠 화면*/}
-      {/* 로그인 X : 주요 기업 목록, 로그인 O : 관심 기업 목록 */}
-      {/* {user ? <FavoriteGrid user={user} /> : <CompanyGrid />} */}
-
-      {/* 주요 기업 목록 (테스트 용) */}
       <CompanyGrid />
-
-      {/* 관심 기업 목록 (테스트 용) */}
-      {/* <FavoriteGrid user={user} /> */}
     </Layout>
   );
 };
