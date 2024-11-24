@@ -51,6 +51,7 @@ public class EmailSendService { // 랜덤 인증번호 생성 및 이메일 작�
             helper.setText(content,true); // content, html: true
             javaMailSender.send(message);
         } catch (MessagingException e) {
+            System.out.println("이상한거 발견");
             e.printStackTrace(); // 에러 출력
         }
         // redis에 3분 동안 이메일과 인증 코드 저장

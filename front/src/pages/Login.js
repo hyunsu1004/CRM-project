@@ -49,7 +49,7 @@ const Login = () => {
 
       if (response.status === 200) {
         // 로그인 성공 시 메인 페이지로 이동
-        navigate("/main");
+        navigate("/favorite");
       }
     } catch (error) {
       const errorMessage = error.response?.data || "로그인에 실패했습니다.";
