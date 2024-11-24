@@ -1,0 +1,465 @@
+/* 기본 텍스트 색상 */
+
+.body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+}
+
+h1, h2, h3, p, a {
+    color: #000; /* 기본 상태 텍스트 색상을 검정으로 지정 */
+}
+
+.darkMode .body {
+    background-color: #292d3e;
+}
+
+.darkMode {
+    color : #fff;
+}
+
+.darkMode h1, h2, h3, p, a{
+    color : #fff;
+}
+
+.darkMode svg {
+    fill : #ACB9CC;
+}
+
+/* 왼쪽 메뉴 바 (고정) */
+.aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 240px;
+    height: 100vh;
+    z-index: 300;
+
+    padding: 10px 10px;
+    /* background-color: #fff; */
+    background-color: #f7f7f7;
+
+    /* 기존 */
+    /* border: 1px solid #ACB9CC; */
+    /* 신규 */
+    border-right: 2px solid #acb9cc5e;
+
+    /* 기존 */
+    /* border-radius: 0 20px 20px 0; */
+
+    /* 기존 */
+    /* box-shadow: 2px 0 2px #aaa; */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 20px;
+
+    transition: width 0.4s ease-in-out;
+    
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* header - aside 안에 위치 */
+.header {
+    width: 100%;
+    height: 80px;
+    padding: 10px 0;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header a {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header a .mainLogo {
+    width: 60%;
+    width: 140px;
+    height: auto;
+}
+.header a .miniLogo {
+    width: 58px;
+    height: auto;
+}
+
+.header a .title {
+    width: fit-content;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.darkMode .aside{
+    background-color: #1b1e2b96;
+}
+
+.aside a{
+    width: fit-content;
+}
+
+/* 메뉴바 : 프로필 */
+.aside .profile_cont {
+    width: 100%;
+    height: 60px;
+    /* padding: 0 10px; */
+    font-size: 24px;
+    line-height: 40px;
+    font-weight: 600;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+
+    cursor: pointer;
+}
+
+/* 메뉴바 : 프로필 - 유저 사진 */
+.aside .userImg {
+    min-width: 32px;
+    width: 32px;
+    height: 32px;
+    background-color: #305673;
+    border-radius: 50%;
+}
+
+/* 메뉴바 : 프로필 - 유저 사진 (다크 모드) */
+.darkMode .userImg {
+    background-color: #ACB9CC;
+}
+
+/* 메뉴바 : 프로필 - svg 설정 */
+.aside .profile_cont svg{
+    transition: 0.2s ease-in-out;
+}
+.aside .profile_cont:hover svg{
+    transform: scale(1.1);
+}
+.darkMode .aside .profile_cont svg{
+    fill: #305673;
+}
+
+/* 메뉴바 : 프로필 - 이름 및 LOGIN text 설정 */
+.aside .profile_cont h2{
+    transition: 0.2s ease-in-out;
+    font-size: 20px;
+    line-height: 34px;
+    font-weight: 600;
+    /* text-align: center; */
+}
+.aside .profile_cont:hover h2{
+    opacity: 0.6;
+}
+.darkMode .aside .profile_cont h2{
+    color: #fff;
+}
+
+/* 메뉴바 : 로그인 - 로그인 & 회원가입 컨테이너 */
+.aside .login_cont {
+    width: 100%;
+    height: 90px;
+    /* border: 2px solid #ACB9CC; */
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 메뉴바 : 로그인 - 로그인 버튼 */
+.aside .login_cont a:first-child {
+    width: 100%;
+    height: 50px;
+    
+    display: flex;
+    justify-content: center;
+}
+
+/* 메뉴바 : 로그인 - 로그인 버튼 */
+.aside .login_cont .profile_cont {
+    width: 100%;
+    height: 50px;
+    /* padding: 10px 0; */
+    border-radius: 10px;
+    background-color: #305673;
+
+    justify-content: center;
+
+    transition: 0.4s ease-in-out;
+}
+.darkMode .aside .login_cont .profile_cont {
+    background-color: #ACB9CC;
+}
+
+/* 메뉴바 : 로그인 - 로그인 텍스트 */
+.aside .login_cont .profile_cont h2 {
+    font-size: 20px;
+    color: #fff;
+}
+.darkMode .aside .login_cont h2 {
+    color: #000;
+}
+
+/* 메뉴바 : 로그인 - 로그인 아이콘 */
+.aside .loginImg {
+    width: 30px;
+    height: 30px;
+    fill: #ACB9CC;
+    /* background-color: #fff; */
+    border-radius: 10px;
+}
+.darkMode .aside .loginImg {
+    fill: #305673;
+}
+
+/* 메뉴바 : 로그인 - 회원가입 */
+.aside .login_cont .signup p {
+    margin-right: 10px;
+    text-align: right;
+    color: #292d3e;
+    font-size: 14px;
+    font-weight: 600;
+}
+.darkMode .aside .login_cont .signup p {
+    color: #fff;
+}
+
+/* 메뉴바 : 사이드바 접기 컨테이너 */
+.aside .btn_cont{
+    width: 100%;
+    height: fit-content;
+    padding: 0 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: end;
+
+    gap: 10px;
+
+    cursor: pointer;
+}
+
+/* 메뉴바 : (사이드 바 접기) 버튼 */
+.aside button{
+    height: 40px;
+    width: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.aside .chgMode_cont{
+    width: 100%;
+    justify-content: center;
+}
+
+/* 메뉴바 : 버튼 (모드변환) */
+.aside .chgMode {
+    width: 30px;
+    height: 30px;
+    transition: 0.2s ease-in-out;
+}
+.aside .chgMode:hover{
+    transform: scale(1.2);
+}
+.darkMode .aside .chgMode{
+    fill: #FCCA6B;
+}
+
+/* 메뉴바 : 버튼 (사이드바 접기) */
+.aside figure .leftArr {
+    transition: 0.2s ease-in-out;
+}
+.aside figure .leftArr:hover{
+    transform: scale(1.2);
+    fill-opacity: 0.7;
+}
+
+/* 메뉴바 : 버튼 (사이드바 펼치기) */
+.aside figure .rightArr {
+    transition: 0.2s ease-in-out;
+}
+.aside figure .rightArr:hover{
+    transform: scale(1.2);
+    fill-opacity: 0.7;
+}
+
+/* 메뉴바 : 메뉴 모음 */
+.aside nav {
+    width: 100%;
+    padding: 10px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+/* 메뉴바 : 메뉴 큰 단위 */
+.aside nav ul {
+    width: 100%;
+    padding: 10px 0;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 6px;
+}
+
+.aside nav ul a{
+    width: 100%;
+}
+
+.aside nav ul .menuTitle {
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 24px;
+    line-height: 40px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.aside nav ul .menuTitle .menuItem {
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 24px;
+    line-height: 40px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.aside nav ul .menuItem {
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 24px;
+    line-height: 40px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.aside nav ul .menuTitle .icon_label_wrap {
+    width: fit-content;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.aside nav ul .menuTitle .icon_label_wrap svg {
+    fill: #305673;
+}
+
+.aside nav ul .menuTitle svg {
+    fill: #ACB9CC;
+}
+
+.menuTitle ul {
+    width: 100%;
+}
+.menuTitle ul a{
+    width: 100%;
+}
+.menuTitle ul a li{
+    width: 100%;
+}
+
+.aside nav ul li h4 {
+    font-size: 16px;
+    line-height: 50px;
+}
+
+.aside nav ul li:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.aside nav ul li svg {
+    width: 24px;
+    height: 24px;
+    margin-left: 7px;
+    transition: all 0.2s ease-in-out;
+}
+
+.aside nav ul li:hover svg {
+    transform: scale(1.1);
+}
+
+/* rside : 오른쪽 main, footer 를 감싼 container */
+
+.rside {
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* aside 제외 */
+    width: calc(100% - 260px);
+    height: fit-content;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    transition: width 0.4s ease-in-out;
+}
+
+.main,
+.footer {
+    padding: 20px;
+}
+
+/* main */
+.rside .main {
+    width: 100%;
+    height: 100vh;
+    /* flex: 1; */
+
+    padding-top: 20px;
+
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 10px;
+}
+
+/* footer */
+.rside .footer {
+    width: 100%;
+    height: 100px;
+    background-color: #ACB9CC;
+}

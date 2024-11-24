@@ -1,0 +1,198 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  width: 400px; /* Reduced width to match the layout */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.modal-content label {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.modal-content input[type="text"],
+.modal-content select {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.options-container {
+  width: 100%;
+  min-height: 46px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.option {
+  padding: 5px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  background-color: #80bfff; /* 기본 색상 */
+}
+
+.option:nth-child(1) {
+  background-color: #ff9999;
+} /* Series A */
+.option:nth-child(2) {
+  background-color: #80bfff;
+} /* Series B */
+.option:nth-child(3) {
+  background-color: #99e699;
+} /* Series C */
+
+.remove-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cancel-btn,
+.submit-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.submit-btn {
+  background-color: #305673;
+  color: #fff;
+}
+
+.submit-btn:hover {
+  background-color: rgba(48, 86, 115, 0.8);
+}
+
+.cancel-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.modal-content select[name="dataselect"] {
+  width: 360px; /* 전체 너비를 차지하게 설정 */
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: #333; /* 글자 색상 */
+  appearance: none; /* 기본 드롭다운 화살표 제거 (옵션) */
+}
+.modal-content select[name="basic"] {
+  width: 360px; /* 전체 너비를 차지하게 설정 */
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: #333; /* 글자 색상 */
+  appearance: none; /* 기본 드롭다운 화살표 제거 (옵션) */
+}
+.options-container {
+  width: 360px; /* 전체 너비를 차지하게 설정 */
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: #333; /* 글자 색상 */
+  appearance: none; /* 기본 드롭다운 화살표 제거 (옵션) */
+}
+.modal-content select[name="optionselect"] {
+  width: 360px; /* 전체 너비를 차지하게 설정 */
+  padding: 10px;
+  height: 40px;
+  font-size: 15px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: #333; /* 글자 색상 */
+  appearance: none; /* 기본 드롭다운 화살표 제거 (옵션) */
+}
+.dropdown {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  appearance: none; /* 기본 화살표를 제거 */
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEuNzA3MTcsNC4wNzA3Nkw4LDkuMzkxMzdMMTUuMjkyOSw0LjA3MDc2IiBzdHJva2U9IiM5OTk5OTkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utam9pbj0icm91bmQiLz4KPC9zdmc+"); /* 커스텀 화살표 */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+}
+
+.dropdown option {
+  color: #333;
+}
+.dropdown2 {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  appearance: none; /* 기본 화살표를 제거 */
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEuNzA3MTcsNC4wNzA3Nkw4LDkuMzkxMzdMMTUuMjkyOSw0LjA3MDc2IiBzdHJva2U9IiM5OTk5OTkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utam9pbj0icm91bmQiLz4KPC9zdmc+"); /* 커스텀 화살표 */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+}
