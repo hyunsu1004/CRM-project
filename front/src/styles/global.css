@@ -18,10 +18,14 @@ body {
 :root {
   --bg-color: #fff;
   --text-color: #000;
+  /* 메인 색상 */
+  --top-color: #305673;
+  --mid-color: #708A9E;
+  --bot-color: #ACB9CC;
 }
 
 .darkMode {
-  --bg-color: #305673;
+  --bg-color: #292d3e;
   --text-color: #fff;
   color: #fff;
 }

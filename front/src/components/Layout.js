@@ -1,22 +1,63 @@
-// src/components/Layout.js
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { ReactComponent as ChgId } from "../img/sync_alt.svg";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as LeftArrow } from "../img/double_arrow_left.svg";
 import { ReactComponent as RightArrow } from "../img/double_arrow_right.svg";
-import { ReactComponent as UserImg } from "../img/person.svg";
 import { ReactComponent as LoginImg } from "../img/login.svg";
-import { ReactComponent as LogoutImg } from "../img/logout.svg";
 import { ReactComponent as LogoMainImg1 } from "../img/CLODGE_main_horizon_v1.svg";
 import { ReactComponent as LogoMainImg2 } from "../img/CLODGE_main_horizon_v2.svg";
 import { ReactComponent as LogoMiniImg } from "../img/CLODGE_mini.svg";
 import { ReactComponent as LightModeImg } from "../img/light_mode.svg";
 import { ReactComponent as DarkModeImg } from "../img/dark_mode.svg";
+import { ReactComponent as CloseIcon } from "../img/close.svg";
+import { ReactComponent as SettingIcon } from "../img/setting.svg";
+import { ReactComponent as LogoutIcon } from "../img/logout.svg";
 import Menubar from "./Menubar";
 import styles from "../styles/layout.module.css"; // 여기에 CSS 스타일 추가
-import { width } from "@fortawesome/free-solid-svg-icons/faArrowDown";
+import profile from "../styles/profile.module.css"; // 여기에 CSS 스타일 추가
+import { Avatar, Button, IconButton, Typography } from "@mui/material";
+import "../styles/popper.css";
+import { height } from "@fortawesome/free-solid-svg-icons/faArrowDown";
+
+// 사용자 이름에 따른 프로필 사진 자동지정
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = "#";
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+export function stringAvatar(name) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+    },
+    // 이름이 1.두단어 형태 : 각단어의 맨앞 2.한단어 형태 : 맨앞
+    children: name.includes(" ")
+      ? `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`
+      : `${name[0]}`,
+  };
+}
 
 const Layout = ({ children, user }) => {
+  // 로그아웃
+  const navigate = useNavigate(); // useNavigate 초기화
+  const handleLogout = () => {
+    localStorage.removeItem("user"); // localStorage에서 user data  삭제
+    navigate("/login"); // Redirect to login page
+  };
+
   // 사이드바가 열려 있는지 여부를 관리하는 상태
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false); // 다크 모드 상태 관리
@@ -28,6 +69,7 @@ const Layout = ({ children, user }) => {
   // 사이드바 토글 함수
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
+    setOpen(false);
   };
 
   // 다크 모드 함수
@@ -77,6 +119,10 @@ const Layout = ({ children, user }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isSidebarVisible]);
 
+  const [open, setOpen] = useState(false);
+  // const profile = useRef();
+  const handleToggle = () => setOpen(!open);
+
   return (
     <div className={isDarkMode ? styles.darkMode : ""}>
       <div className={styles.body}>
@@ -107,15 +153,91 @@ const Layout = ({ children, user }) => {
             </button>
           </div>
           {user ? (
-            <div
-              className={styles.profile_cont}
-              id="profileCont"
-              style={isSidebarVisible ? { paddingLeft: "13px" } : { paddingLeft: "13px" }}
-            >
-              <UserImg className={styles.userImg} />
-              <h2>{user.name}</h2> {/* 사용자 이름 표시 */}
+            // 사용자 프로필
+            <div>
+              <button
+                // aria-describedby={id}
+                onClick={handleToggle}
+                style={{ width: "fit-content", height: "fit-content" }}
+              >
+                <div
+                  className={styles.profile_cont}
+                  id="profileCont"
+                  style={
+                    isSidebarVisible
+                      ? { paddingLeft: "13px" }
+                      : { paddingLeft: "13px" }
+                  }
+                >
+                  {/* 사용자 프로필 사진 : 이름 이니셜 */}
+                  <Avatar
+                    {...stringAvatar(`${user.name}`)}
+                    src="/broken-image.jpg"
+                    className={styles.userImg}
+                  />
+                  <h2>{user.name}</h2> {/* 사용자 이름 표시 */}
+                </div>
+              </button>
+              {/* 프로필 상세 박스 */}
+              {open && isSidebarVisible && (
+                <div className={profile.container}>
+                  <div className={profile.flexRow}>
+                    <div style={{ width: "40px" }}></div>
+                    <Typography
+                      style={{
+                        flex: 1,
+                        textAlign: "center",
+                        color: "var(--mid-color)",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {user.email}
+                    </Typography>
+                    <IconButton onClick={handleToggle}>
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                  <div className={profile.flexCol}>
+                    <Avatar
+                      {...stringAvatar(user.name)}
+                      src="/broken-image.jpg"
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        marginBottom: "1rem",
+                      }}
+                    />
+                    <Typography
+                      id="modal-modal-title"
+                      variant="h6"
+                      component="h2"
+                    >
+                      {user.name} 님
+                    </Typography>
+                  </div>
+                  <div className={profile.btnContainer}>
+                    <Button
+                      className={profile.profileBtn}
+                      startIcon={<SettingIcon />}
+                      onClick={() => navigate("/setting")}
+                      style={{ color: "var(--top-color)", fontSize: "12px" }}
+                    >
+                      설정
+                    </Button>
+                    <Button
+                      className={profile.profileBtn}
+                      startIcon={<LogoutIcon />}
+                      onClick={handleLogout}
+                      style={{ color: "var(--top-color)", fontSize: "12px" }}
+                    >
+                      로그아웃
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
+            // 로그인
             <div className={styles.login_cont}>
               <Link to="/Login">
                 <div className={styles.profile_cont} id="profileCont">
@@ -149,7 +271,33 @@ const Layout = ({ children, user }) => {
           {/* children으로 전달된 페이지 내용 */}
           <main className={styles.main}>{children}</main>
 
-          <footer className={styles.footer}></footer>
+          <footer className={styles.footer}>
+            <div className={styles.container}>
+              <div className={styles.info}>
+                <h4 style={{ fontSize: "20px" }}>
+                  <LogoMainImg1 style={{ width: "140px", height: "auto" }} />
+                </h4>
+                <p>
+                  대구광역시 북구 대학로 80 / IT대학 융복합관(건물번호: 415)
+                </p>
+                <p>고객센터: 1234-5678 | 이메일: sehi0119@naver.com</p>
+              </div>
+              <div className={styles.links}>
+                <a href="/terms" className={styles.link}>
+                  이용 약관
+                </a>
+                <a href="/privacy" className={styles.link}>
+                  개인정보처리방침
+                </a>
+                <a href="/help" className={styles.link}>
+                  고객지원
+                </a>
+              </div>
+              <div className={styles.copyright}>
+                <p>© {new Date().getFullYear()} CLODGE. All rights reserved.</p>
+              </div>
+            </div>
+          </footer>
         </div>
       </div>
     </div>

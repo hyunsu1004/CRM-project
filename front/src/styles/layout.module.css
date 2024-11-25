@@ -8,8 +8,13 @@
     background-color: #fff;
 }
 
-h1, h2, h3, p, a {
-    color: #000; /* 기본 상태 텍스트 색상을 검정으로 지정 */
+h1,
+h2,
+h3,
+p,
+a {
+    color: #000;
+    /* 기본 상태 텍스트 색상을 검정으로 지정 */
 }
 
 .darkMode .body {
@@ -17,15 +22,19 @@ h1, h2, h3, p, a {
 }
 
 .darkMode {
-    color : #fff;
+    color: #fff;
 }
 
-.darkMode h1, h2, h3, p, a{
-    color : #fff;
+.darkMode h1,
+h2,
+h3,
+p,
+a {
+    color: #fff;
 }
 
 .darkMode svg {
-    fill : #ACB9CC;
+    fill: #ACB9CC;
 }
 
 /* 왼쪽 메뉴 바 (고정) */
@@ -59,7 +68,7 @@ h1, h2, h3, p, a {
     gap: 20px;
 
     transition: width 0.4s ease-in-out;
-    
+
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -88,6 +97,7 @@ h1, h2, h3, p, a {
     width: 140px;
     height: auto;
 }
+
 .header a .miniLogo {
     width: 58px;
     height: auto;
@@ -103,11 +113,11 @@ h1, h2, h3, p, a {
     gap: 10px;
 }
 
-.darkMode .aside{
+.darkMode .aside {
     background-color: #1b1e2b96;
 }
 
-.aside a{
+.aside a {
     width: fit-content;
 }
 
@@ -134,7 +144,7 @@ h1, h2, h3, p, a {
     min-width: 32px;
     width: 32px;
     height: 32px;
-    background-color: #305673;
+    /* background-color: #305673; */
     border-radius: 50%;
 }
 
@@ -144,28 +154,32 @@ h1, h2, h3, p, a {
 }
 
 /* 메뉴바 : 프로필 - svg 설정 */
-.aside .profile_cont svg{
+.aside .profile_cont svg {
     transition: 0.2s ease-in-out;
 }
-.aside .profile_cont:hover svg{
+
+.aside .profile_cont:hover svg {
     transform: scale(1.1);
 }
-.darkMode .aside .profile_cont svg{
+
+.darkMode .aside .profile_cont svg {
     fill: #305673;
 }
 
 /* 메뉴바 : 프로필 - 이름 및 LOGIN text 설정 */
-.aside .profile_cont h2{
+.aside .profile_cont h2 {
     transition: 0.2s ease-in-out;
     font-size: 20px;
     line-height: 34px;
     font-weight: 600;
     /* text-align: center; */
 }
-.aside .profile_cont:hover h2{
+
+.aside .profile_cont:hover h2 {
     opacity: 0.6;
 }
-.darkMode .aside .profile_cont h2{
+
+.darkMode .aside .profile_cont h2 {
     color: #fff;
 }
 
@@ -187,7 +201,7 @@ h1, h2, h3, p, a {
 .aside .login_cont a:first-child {
     width: 100%;
     height: 50px;
-    
+
     display: flex;
     justify-content: center;
 }
@@ -204,6 +218,7 @@ h1, h2, h3, p, a {
 
     transition: 0.4s ease-in-out;
 }
+
 .darkMode .aside .login_cont .profile_cont {
     background-color: #ACB9CC;
 }
@@ -213,6 +228,7 @@ h1, h2, h3, p, a {
     font-size: 20px;
     color: #fff;
 }
+
 .darkMode .aside .login_cont h2 {
     color: #000;
 }
@@ -225,6 +241,7 @@ h1, h2, h3, p, a {
     /* background-color: #fff; */
     border-radius: 10px;
 }
+
 .darkMode .aside .loginImg {
     fill: #305673;
 }
@@ -237,12 +254,27 @@ h1, h2, h3, p, a {
     font-size: 14px;
     font-weight: 600;
 }
+
 .darkMode .aside .login_cont .signup p {
     color: #fff;
 }
 
+/* 로그아웃 버튼 */
+.logoutButton {
+    background-color: transparent;
+    color: #ff0000;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.logoutButton:hover {
+    text-decoration: underline;
+}
+
 /* 메뉴바 : 사이드바 접기 컨테이너 */
-.aside .btn_cont{
+.aside .btn_cont {
     width: 100%;
     height: fit-content;
     padding: 0 10px;
@@ -258,7 +290,7 @@ h1, h2, h3, p, a {
 }
 
 /* 메뉴바 : (사이드 바 접기) 버튼 */
-.aside button{
+.aside button {
     height: 40px;
     width: 40px;
 
@@ -266,7 +298,8 @@ h1, h2, h3, p, a {
     justify-content: center;
     align-items: center;
 }
-.aside .chgMode_cont{
+
+.aside .chgMode_cont {
     width: 100%;
     justify-content: center;
 }
@@ -277,10 +310,12 @@ h1, h2, h3, p, a {
     height: 30px;
     transition: 0.2s ease-in-out;
 }
-.aside .chgMode:hover{
+
+.aside .chgMode:hover {
     transform: scale(1.2);
 }
-.darkMode .aside .chgMode{
+
+.darkMode .aside .chgMode {
     fill: #FCCA6B;
 }
 
@@ -288,7 +323,8 @@ h1, h2, h3, p, a {
 .aside figure .leftArr {
     transition: 0.2s ease-in-out;
 }
-.aside figure .leftArr:hover{
+
+.aside figure .leftArr:hover {
     transform: scale(1.2);
     fill-opacity: 0.7;
 }
@@ -297,7 +333,8 @@ h1, h2, h3, p, a {
 .aside figure .rightArr {
     transition: 0.2s ease-in-out;
 }
-.aside figure .rightArr:hover{
+
+.aside figure .rightArr:hover {
     transform: scale(1.2);
     fill-opacity: 0.7;
 }
@@ -323,7 +360,7 @@ h1, h2, h3, p, a {
     gap: 6px;
 }
 
-.aside nav ul a{
+.aside nav ul a {
     width: 100%;
 }
 
@@ -393,10 +430,12 @@ h1, h2, h3, p, a {
 .menuTitle ul {
     width: 100%;
 }
-.menuTitle ul a{
+
+.menuTitle ul a {
     width: 100%;
 }
-.menuTitle ul a li{
+
+.menuTitle ul a li {
     width: 100%;
 }
 
@@ -445,7 +484,7 @@ h1, h2, h3, p, a {
 /* main */
 .rside .main {
     width: 100%;
-    height: 100vh;
+    height: fit-content;
     /* flex: 1; */
 
     padding-top: 20px;
@@ -460,6 +499,44 @@ h1, h2, h3, p, a {
 /* footer */
 .rside .footer {
     width: 100%;
-    height: 100px;
-    background-color: #ACB9CC;
+    height: fit-content;
+
+    border-top: 2px solid #acb9cc5e;
+}
+
+.footer {
+    padding: 20px 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.info {
+}
+
+.links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.link {
+    color: var(--mid-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.copyright {
+    font-size: 12px;
+    color: #aaa;
 }
