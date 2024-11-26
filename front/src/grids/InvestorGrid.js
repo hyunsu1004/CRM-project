@@ -14,7 +14,7 @@ export const InvestorGrid = ({ apiEndpoint, editable }) => {
         axios
             .get(apiEndpoint)
             .then((response) => {
-                const data = response.data;
+                const data = response.data.startups;
                 setRowData(data);
 
                 // 컬럼 정의

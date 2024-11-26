@@ -117,21 +117,21 @@ const Menubar = ({ userId, isSidebarVisible, userDeals = [] }) => {
       </ul>
       <ul style={{ borderTop: "2px solid #ACB9CC" }}>
         <MenuItem
-          to="/"
+          to="/notes"
+          icon={NoteIcon}
+          label="노트"
+          style={{ width: "100%" }}
+        />
+        <MenuItem
+          to="/setting"
           icon={SettingIcon}
           label="설정"
           style={{ width: "100%" }}
         />
         <MenuItem
-          to="/"
+          to="/info"
           icon={InfoIcon}
           label="도움말"
-          style={{ width: "100%" }}
-        />
-        <MenuItem
-          to="/notes"
-          icon={NoteIcon}
-          label="노트"
           style={{ width: "100%" }}
         />
       </ul>

@@ -14,7 +14,7 @@ export const StartupGrid = ({ apiEndpoint, editable }) => {
         axios
             .get(apiEndpoint)
             .then((response) => {
-                const data = response.data;
+                const data = response.data.investors;
                 setRowData(data);
 
                 // 컬럼 정의

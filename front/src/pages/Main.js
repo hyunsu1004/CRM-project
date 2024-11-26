@@ -90,7 +90,7 @@ const Main = () => {
                 TOP10 스타트업
               </span>
             </Typography>
-            <StartupGrid />
+            <StartupGrid apiEndpoint={"/json/company.json"} />
           </Box>
 
           <Box
@@ -112,7 +112,7 @@ const Main = () => {
                 TOP 10 투자자
               </span>
             </Typography>
-            <InvestorGrid />
+            <InvestorGrid apiEndpoint={"/json/company.json"}/>
           </Box>
         </Box>
       </Box>
