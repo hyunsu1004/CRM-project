@@ -26,7 +26,7 @@ const TabPanel = ({ children, value, index }) => {
     );
 };
 
-export const StartupGrid = ({ apiEndpoint, editable }) => {
+const StartupGrid = ({ apiEndpoint, editable }) => {
     const [rowData, setRowData] = useState([]);
     const [columnDefs, setColumnDefs] = useState([]);
     const [gridSettings, setGridSettings] = useState(null);
@@ -135,11 +135,8 @@ export const StartupGrid = ({ apiEndpoint, editable }) => {
 
     // 데이터 저장 API 요청 함수
     const saveToServer = (updatedRowData) => {
-        const dataTosend = Array.isArray(updatedRowData)
-            ? updatedRowData
-            : [updatedRowData]; //배열로 반환.
         axios
-            .post(`${apiEndpoint}/interest`, dataTosend) // 데이터 저장을 위한 API POST 요청
+            .post(`${apiEndpoint}/interest`, updatedRowData) // 데이터 저장을 위한 API POST 요청
             .then((response) => {
                 console.log("데이터가 성공적으로 저장되었습니다:", response.data);
             })
@@ -170,7 +167,6 @@ export const StartupGrid = ({ apiEndpoint, editable }) => {
 
             //선택된 회사의 데이터를 저장
             const updatedRowData = selectedNode.data; //선택된 데이터
-            //서버 요청
             saveToServer(updatedRowData); //서버로 업데이트된 데이터
 
             // 알림 표시
@@ -179,8 +175,6 @@ export const StartupGrid = ({ apiEndpoint, editable }) => {
             } else {
                 window.alert(event.node.data.name + " 이 관심기업에서 해제되었습니다.");
             }
-            //테이블 강제 리렌더링
-            //gridApi.refreshCells({ force : true });
 
             // {
             //     event.node.isSelected()

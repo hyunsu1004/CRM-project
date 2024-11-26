@@ -1,28 +1,32 @@
-import React, { useState } from "react";
-import "../styles/modal.css"; // 필요에 따라 CSS 파일 작성
+import React, { useState, useEffect } from "react";
+import "../styles/modal.css";
 import axios from "axios";
 
-const DealModal = ({ onClose, onSubmit, defaultAttributes, memberId }) => {
+const DealModal = ({ onClose, onSubmit, defaultAttributes, member }) => {
   const [companyName, setCompanyName] = useState("");
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false); // 중복 요청 방지 플래그
+  const [companyList, setCompanyList] = useState([]); // 전체 회사 리스트
 
-  // 예시 회사명 데이터 (이 데이터를 실제 API 호출로 대체 가능)
-  const companyList = [
-    "쿼타랩",
-    "카카오",
-    "네이버",
-    "삼성전자",
-    "LG전자",
-    "현대자동차",
-  ];
+  // API에서 회사 목록 가져오기
+  useEffect(() => {
+    const fetchCompanyList = async () => {
+      try {
+        const response = await axios.get("/api/member/startups");
+        setCompanyList(response.data.map((company) => company.name)); // 필요한 데이터만 추출
+      } catch (error) {
+        console.error("회사 목록을 불러오는 중 오류 발생:", error);
+      }
+    };
 
-  // 입력값 변경 시 호출
+    fetchCompanyList();
+  }, []);
+
+  // 입력값 변경 시 필터링
   const handleInputChange = (e) => {
     const value = e.target.value;
     setCompanyName(value);
 
-    // 회사명 필터링
     if (value) {
       const filtered = companyList.filter((company) =>
         company.toLowerCase().includes(value.toLowerCase())
@@ -36,7 +40,7 @@ const DealModal = ({ onClose, onSubmit, defaultAttributes, memberId }) => {
   // 회사명을 클릭하여 선택
   const handleCompanySelect = (company) => {
     setCompanyName(company);
-    setFilteredCompanies([]); // 목록 숨기기
+    setFilteredCompanies([]); // 선택 후 목록 숨기기
   };
 
   // 모달 제출 시 호출
@@ -47,32 +51,26 @@ const DealModal = ({ onClose, onSubmit, defaultAttributes, memberId }) => {
     }
 
     const currentDateTime = new Date().toISOString(); // 현재 날짜와 시간
-
     const newDeal = {
-      companyname: companyName,
-      username: "로그인 사용자", // 실제 사용자 정보로 교체 가능
-      make_day: currentDateTime, // 생성일시 추가
-      ...defaultAttributes, // 기본 속성값 추가
+      creator: member?.name, // Deal 엔티티의 creator에 해당
+      createTime: new Date().toISOString(), // 생성 시간
+      status: "PENDING", // DealStatus 열거형 값 (예: PENDING, APPROVED 등) - 기본값 설정
+      startup: {
+        name: companyName, // Startup 엔티티에서 사용할 회사명
+      },
     };
 
-    // 협업 ver
     try {
       setIsSubmitting(true); // 중복 요청 방지
-      // API 호출: 딜 추가
-      const response = await axios.post(
-        `/api/member/adddeals`, // API URL
-        newDeal, // 보낼 데이터
-        {
-          headers: {
-            "Content-Type": "application/json", // JSON 데이터로 전송
-          },
-        }
-      );
+      const response = await axios.post("/api/member/adddeals", newDeal, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      // 성공 처리
       if (response.status === 200 || response.status === 201) {
         alert("딜이 성공적으로 추가되었습니다.");
-        onSubmit(newDeal); // 부모 컴포넌트에서 처리할 수 있도록 콜백 호출
+        onSubmit(newDeal); // 부모 컴포넌트에서 처리하도록 콜백 호출
         onClose(); // 모달 닫기
       } else {
         throw new Error("딜 추가에 실패했습니다.");
@@ -83,10 +81,6 @@ const DealModal = ({ onClose, onSubmit, defaultAttributes, memberId }) => {
     } finally {
       setIsSubmitting(false); // 중복 요청 플래그 해제
     }
-
-    // 기존 로컬 ver
-    // onSubmit(newDeal);
-    // onClose();
   };
 
   return (

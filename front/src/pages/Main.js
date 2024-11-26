@@ -8,6 +8,7 @@ import Layout from "../components/Layout";
 import { CompanyGrid } from "./CompanyPage";
 import { AppBar, Box, Tab, Tabs, TextField, Typography } from "@mui/material";
 import axios from "axios";
+import { StartupGrid } from "./DatabasePage";
 
 const Main = () => {
   const [member, setMember] = useState(null);
@@ -87,7 +88,7 @@ const Main = () => {
                 TOP10 스타트업
               </span>
             </Typography>
-            <CompanyGrid />
+            <StartupGrid />
           </Box>
 
           <Box
@@ -108,31 +109,9 @@ const Main = () => {
                 TOP 10 투자자
               </span>
             </Typography>
-            <CompanyGrid />
+            {/* <InvestorGrid /> */}
           </Box>
         </Box>
-        {/* 탭 메뉴 */}
-        {/* <AppBar position="static" color="default">
-          <Tabs
-            value={tabIndex}
-            onChange={handleTabChange}
-            indicatorColor="primary"
-            textColor="primary"
-          >
-            <Tab label="All Companies" />
-            <Tab label="Preferred Companies" />
-          </Tabs>
-        </AppBar> */}
-
-        {/* 탭 컨텐츠 */}
-        {/* <TabPanel value={tabIndex} index={0}> */}
-        {/* 기업 전체 데이터 */}
-        {/* <StartupGrid apiEndpoint="/api/member/${memberId}/startup" /> */}
-        {/* </TabPanel> */}
-        {/* <TabPanel value={tabIndex} index={1}> */}
-        {/* 선호 기업 데이터 */}
-        {/* <StartupGrid apiEndpoint="/api/member/${memberId}/companies/preferred" /> */}
-        {/* </TabPanel> */}
       </Box>
     </Layout>
   );

@@ -490,7 +490,7 @@ const DatePickerEditor = (props) => {
   );
 };
 
-export const DealGrid = () => {
+export const DealGrid = ({member}) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const gridRef = useRef();
@@ -799,6 +799,7 @@ export const DealGrid = () => {
           onClose={() => setDealModalOpen(false)}
           onSubmit={addNewDeal} // 딜 추가 핸들러
           defaultAttributes={defaultAttributes}
+          member={member}
         />
       )}
     </div>
