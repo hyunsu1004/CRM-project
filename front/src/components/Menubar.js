@@ -116,7 +116,7 @@ const Menubar = ({ userId, isSidebarVisible, userDeals = [] }) => {
         ) : null}
       </ul>
       <ul style={{ borderTop: "2px solid #ACB9CC" }}>
-        <MenuItem
+        {/* <MenuItem
           to="/"
           icon={SettingIcon}
           label="설정"
@@ -126,6 +126,12 @@ const Menubar = ({ userId, isSidebarVisible, userDeals = [] }) => {
           to="/"
           icon={InfoIcon}
           label="도움말"
+          style={{ width: "100%" }}
+        /> */}
+        <MenuItem
+          to="/notes"
+          icon={NoteIcon}
+          label="노트"
           style={{ width: "100%" }}
         />
       </ul>
