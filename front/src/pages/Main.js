@@ -8,7 +8,8 @@ import Layout from "../components/Layout";
 import { CompanyGrid } from "./CompanyPage";
 import { AppBar, Box, Tab, Tabs, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import { StartupGrid } from "./DatabasePage";
+import { StartupGrid } from "../grids/StartupGrid";
+import { InvestorGrid } from "../grids/InvestorGrid";
 
 const Main = () => {
   const [member, setMember] = useState(null);
@@ -80,7 +81,8 @@ const Main = () => {
               alignItems: "center",
               gap: 2,
               border: "2px solid var(--top-color)",
-              borderRadius: "20px"
+              borderRadius: "20px",
+              flex: 1
             }}
           >
             <Typography variant="h6">
@@ -101,7 +103,8 @@ const Main = () => {
               alignItems: "center",
               gap: 2,
               border: "2px solid var(--top-color)",
-              borderRadius: "20px"
+              borderRadius: "20px",
+              flex: 1
             }}
           >
             <Typography variant="h6">
@@ -109,7 +112,7 @@ const Main = () => {
                 TOP 10 투자자
               </span>
             </Typography>
-            {/* <InvestorGrid /> */}
+            <InvestorGrid />
           </Box>
         </Box>
       </Box>
