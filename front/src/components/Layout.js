@@ -50,11 +50,11 @@ export function stringAvatar(name) {
   };
 }
 
-const Layout = ({ children, user }) => {
+const Layout = ({ children, member }) => {
   // 로그아웃
   const navigate = useNavigate(); // useNavigate 초기화
   const handleLogout = () => {
-    localStorage.removeItem("user"); // localStorage에서 user data  삭제
+    localStorage.removeItem("member"); // localStorage에서 member data  삭제
     navigate("/login"); // Redirect to login page
   };
 
@@ -121,7 +121,10 @@ const Layout = ({ children, user }) => {
 
   const [open, setOpen] = useState(false);
   // const profile = useRef();
-  const handleToggle = () => setOpen(!open);
+  const handleToggle = () => {
+    setIsSidebarVisible(true)
+    setOpen(!open)
+  };
 
   return (
     <div className={isDarkMode ? styles.darkMode : ""}>
@@ -152,7 +155,7 @@ const Layout = ({ children, user }) => {
               )}
             </button>
           </div>
-          {user ? (
+          {member ? (
             // 사용자 프로필
             <div>
               <button
@@ -171,11 +174,11 @@ const Layout = ({ children, user }) => {
                 >
                   {/* 사용자 프로필 사진 : 이름 이니셜 */}
                   <Avatar
-                    {...stringAvatar(`${user.name}`)}
+                    {...stringAvatar(`${member.name}`)}
                     src="/broken-image.jpg"
                     className={styles.userImg}
                   />
-                  <h2>{user.name}</h2> {/* 사용자 이름 표시 */}
+                  <h2>{member.name}</h2> {/* 사용자 이름 표시 */}
                 </div>
               </button>
               {/* 프로필 상세 박스 */}
@@ -191,7 +194,7 @@ const Layout = ({ children, user }) => {
                         fontWeight: "600",
                       }}
                     >
-                      {user.email}
+                      {member.email}
                     </Typography>
                     <IconButton onClick={handleToggle}>
                       <CloseIcon />
@@ -199,7 +202,7 @@ const Layout = ({ children, user }) => {
                   </div>
                   <div className={profile.flexCol}>
                     <Avatar
-                      {...stringAvatar(user.name)}
+                      {...stringAvatar(member.name)}
                       src="/broken-image.jpg"
                       style={{
                         width: "60px",
@@ -212,7 +215,7 @@ const Layout = ({ children, user }) => {
                       variant="h6"
                       component="h2"
                     >
-                      {user.name} 님
+                      {member.name} 님
                     </Typography>
                   </div>
                   <div className={profile.btnContainer}>
@@ -252,7 +255,7 @@ const Layout = ({ children, user }) => {
             </div>
           )}
           <Menubar
-            userId={user ? user.id : null}
+            userId={member ? member.id : null}
             isSidebarVisible={isSidebarVisible}
           />
           <div className={styles.btn_cont} style={{ justifyContent: "center" }}>

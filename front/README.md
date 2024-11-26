@@ -63,3 +63,19 @@ src/
 
 
 ### 메인 화면 구성
+
+## API / 테이블 구조
+1. 로그인 
+`api/login -> api/member/{memberId}`
+2. 딜 (딜추가, 속성추가 있는 화면 현재 deal 0개)
+`api/member/{memberId}/deals`
+3. 딜 추가모달
+`api/member/{memberId}/adddeals`
+4. 추가된 딜 누르면
+`api/member/{memberId}/deals/{dealId}`
+5. 속성추가모달
+`api/member/{memberId}/deals/addattributes`
+6. 노트
+`api/member/{memberId}/deals/{dealId}/note`
+7. 노트추가모달
+`api/member/{memberId}/deals/{dealId}/note/{noteId}`

@@ -5,6 +5,7 @@ import CompanyPage from "../pages/CompanyPage";
 import FavoritePage from "../pages/FavoritePage";
 import NotePage from "../pages/NotePage";
 import DatabasePage from "../pages/DatabasePage";
+import DealPage from "../pages/DealPage";
 
 function Router() {
     return (
@@ -16,6 +17,7 @@ function Router() {
             <Route path="/notes" element={<NotePage />} />
             <Route path="/startups" element={<DatabasePage />} />
             <Route path="/investors" element={<DatabasePage />} />
+            <Route path="/deals" element={<DealPage />} />
         </Routes>
     );
 }

@@ -62,7 +62,7 @@ const StartupGrid = ({ apiEndpoint }) => {
 };
 
 const DatabasePage = () => {
-  const [user, setUser] = useState(null);
+  const [member, setMember] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const location = useLocation(); // 현재 경로를 가져옴
@@ -73,9 +73,9 @@ const DatabasePage = () => {
     : "투자자";
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
+    const loggedInUser = localStorage.getItem("member");
     if (loggedInUser) {
-      setUser(JSON.parse(loggedInUser)); // localStorage에서 사용자 정보 읽기
+      setMember(JSON.parse(loggedInUser)); // localStorage에서 사용자 정보 읽기
     }
   }, []);
 
@@ -89,7 +89,7 @@ const DatabasePage = () => {
   };
 
   return (
-    <Layout user={user}>
+    <Layout member={member}>
       <Box sx={{ width: "100%", bgcolor: "transparent" }}>
         {/* 검색 바 */}
         <Box
@@ -117,7 +117,7 @@ const DatabasePage = () => {
         </Box>
 
         {/* 탭 메뉴 */}
-        <AppBar position="static" color="default">
+        <AppBar position="static" color="">
           <Tabs
             value={tabIndex}
             onChange={handleTabChange}
@@ -126,7 +126,7 @@ const DatabasePage = () => {
           >
             <Tab label="전체 기업" />
             {/* 로그인 시에만 보이는 탭 */}
-            {user?<Tab label="선호 기업" />:null}
+            {member?<Tab label="선호 기업" />:null}
           </Tabs>
         </AppBar>
 
@@ -134,15 +134,22 @@ const DatabasePage = () => {
         <TabPanel value={tabIndex} index={0}>
           {/* 기업 전체 데이터 */}
           {/* {pageType === "스타트업" ? (
-            <StartupGrid apiEndpoint="/api/user/${userId}/startups" />
+            <StartupGrid apiEndpoint="/api/member/${memberId}/startups" />
           ) : (
-            <StartupGrid apiEndpoint="/api/user/${userId}/investors" />
+            <StartupGrid apiEndpoint="/api/member/${memberId}/investors" />
           )} */}
           {/* 임시 */}
           <CompanyGrid />
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
-          {user ? <CompanyGrid /> : <div><h1>선호 기업을 관리하려면 로그인이 필요합니다.</h1></div>}
+          {member ? <CompanyGrid /> : <div><h1>선호 기업을 관리하려면 로그인이 필요합니다.</h1></div>}
+          {/* 선호 기업 데이터 */}
+          {/* {pageType === "스타트업" ? (
+            <StartupGrid apiEndpoint="/api/member/${memberId}/startups/interest" />
+          ) : (
+            <StartupGrid apiEndpoint="/api/member/${memberId}/investors/interest" />
+          )} */}
+          {/* 임시 */}
         </TabPanel>
       </Box>
     </Layout>

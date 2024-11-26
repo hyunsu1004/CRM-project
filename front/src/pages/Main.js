@@ -65,14 +65,14 @@ const StartupGrid = ({ apiEndpoint }) => {
 };
 
 const Main = () => {
-  const [user, setUser] = useState(null);
+  const [member, setMember] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
+    const loggedInUser = localStorage.getItem("member");
     if (loggedInUser) {
-      setUser(JSON.parse(loggedInUser)); // localStorage에서 사용자 정보 읽기
+      setMember(JSON.parse(loggedInUser)); // localStorage에서 사용자 정보 읽기
     }
   }, []);
 
@@ -86,7 +86,7 @@ const Main = () => {
   };
 
   return (
-    <Layout user={user}>
+    <Layout member={member}>
       <Box sx={{ width: "100%", bgcolor: "transparent" }}>
         {/* 검색 바 */}
         <Box
@@ -98,7 +98,11 @@ const Main = () => {
           }}
         >
           <Typography variant="h6">
-            환영합니다, <span style={{fontWeight: 900, color:"var(--mid-color)"}}>{user?.name || "Guest"}</span> 님
+            환영합니다,{" "}
+            <span style={{ fontWeight: 900, color: "var(--mid-color)" }}>
+              {member?.name || "Guest"}
+            </span>{" "}
+            님
           </Typography>
           <TextField
             label="검색"
@@ -110,8 +114,60 @@ const Main = () => {
           />
         </Box>
 
+        <Box
+          sx={{
+            height: "550px",
+            p: 2,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <Box
+            sx={{
+              height: "550px",
+              p: 2,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+              border: "2px solid var(--top-color)",
+              borderRadius: "20px"
+            }}
+          >
+            <Typography variant="h6">
+              <span style={{ fontWeight: 900, color: "var(--mid-color)" }}>
+                TOP10 스타트업
+              </span>
+            </Typography>
+            <CompanyGrid />
+          </Box>
+
+          <Box
+            sx={{
+              height: "550px",
+              p: 2,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+              border: "2px solid var(--top-color)",
+              borderRadius: "20px"
+            }}
+          >
+            <Typography variant="h6">
+              <span style={{ fontWeight: 900, color: "var(--mid-color)" }}>
+                TOP 10 투자자
+              </span>
+            </Typography>
+            <CompanyGrid />
+          </Box>
+        </Box>
         {/* 탭 메뉴 */}
-        <AppBar position="static" color="default">
+        {/* <AppBar position="static" color="default">
           <Tabs
             value={tabIndex}
             onChange={handleTabChange}
@@ -121,17 +177,17 @@ const Main = () => {
             <Tab label="All Companies" />
             <Tab label="Preferred Companies" />
           </Tabs>
-        </AppBar>
+        </AppBar> */}
 
         {/* 탭 컨텐츠 */}
-        <TabPanel value={tabIndex} index={0}>
-          {/* 기업 전체 데이터 */}
-          <StartupGrid apiEndpoint="/api/user/${userId}/startup" />
-        </TabPanel>
-        <TabPanel value={tabIndex} index={1}>
-          {/* 선호 기업 데이터 */}
-          <StartupGrid apiEndpoint="/api/user/${userId}/companies/preferred" />
-        </TabPanel>
+        {/* <TabPanel value={tabIndex} index={0}> */}
+        {/* 기업 전체 데이터 */}
+        {/* <StartupGrid apiEndpoint="/api/member/${memberId}/startup" /> */}
+        {/* </TabPanel> */}
+        {/* <TabPanel value={tabIndex} index={1}> */}
+        {/* 선호 기업 데이터 */}
+        {/* <StartupGrid apiEndpoint="/api/member/${memberId}/companies/preferred" /> */}
+        {/* </TabPanel> */}
       </Box>
     </Layout>
   );

@@ -1,5 +1,5 @@
 {
-  "user": [
+  "member": [
     { "id": 1, "email": "a@a.com", "password": "123", "name" : "김심컴" },
     { "id": 2, "email": "b@b.com", "password": "456", "name" : "이글솦" }
   ]

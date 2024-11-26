@@ -11,6 +11,19 @@ const AttributeModal = ({ onClose, onSubmit, existingAttributes = [] }) => {
   const [dataType, setDataType] = useState(""); // 자료형 선택 상태
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지 상태
   const [option1] = useState(["Series A", "Series B", "Series C", "Series D"]);
+  // 상태 목록
+  const statusOptions = [
+    { value: "미팅", color: "gray" },
+    { value: "검토", color: "gray" },
+    { value: "IR", color: "orange" },
+    { value: "예비투자심의", color: "orange" },
+    { value: "본투자심의", color: "orange" },
+    { value: "최종투자심의", color: "green" },
+    { value: "계약", color: "blue" },
+    { value: "납입", color: "blue" },
+    { value: "투자완료", color: "blue" },
+    { value: "검토중단", color: "red" },
+  ];
 
   // 자료형에 따른 추천 기본값 설정
   const defaultValues = {
@@ -69,16 +82,21 @@ const AttributeModal = ({ onClose, onSubmit, existingAttributes = [] }) => {
       const data = {
         name,
         description,
-        selectedOptions,
-        defaultValue,
+        defaultValue:
+          dataType === "status" ? statusOptions[0].value : defaultValue,
+        selectedOptions:
+          dataType === "select" ? ["Series A", "Series B", "Series C"] : [],
         dataType,
       };
 
       // alert로 값 확인 (확인용)
-      alert("전송될 데이터:\n" + JSON.stringify(data, null, 2));
+      // alert("전송될 데이터:\n" + JSON.stringify(data, null, 2));
 
       // 백엔드 전송 코드
-      const response = await axios.post("/api/attribute", data);
+      const response = await axios.post(
+        "/api/member/{memberId}/deals/addattributes",
+        data
+      );
       if (response.status === 200) {
         alert("속성이 성공적으로 추가되었습니다.");
         onSubmit(data); // 성공적으로 추가된 데이터 처리
@@ -139,42 +157,19 @@ const AttributeModal = ({ onClose, onSubmit, existingAttributes = [] }) => {
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        <label>옵션</label>
-        <div className="options-container">
-          {selectedOptions.map((option, index) => (
-            <span key={index} className="option">
-              {option}
-              <button
-                className="remove-btn"
-                onClick={() => removeOption(index)}
-              >
-                X
-              </button>
-            </span>
-          ))}
-        </div>
-        <select
-          className="dropdown2"
-          name="optionselect"
-          onChange={handleOptionSelect}
-          defaultValue=""
-        >
-          <option value="">옵션 선택</option>
-          {option1
-            .filter((option) => !selectedOptions.includes(option))
-            .map((option, index) => (
-              <option key={index} value={option}>
-                {option}
-              </option>
-            ))}
-        </select>
-
-        <label>기본값</label>
-        <input
-          type={dataType === "date" ? "date" : "text"} // 날짜일 경우 input type을 date로 설정
-          placeholder={defaultValue}
-          onChange={(e) => setDefaultValue(e.target.value)}
-        />
+        {dataType === "integer" || dataType === "string" ? (
+          <div>
+            <label>기본값</label>
+            <input
+              type="text"
+              placeholder={`기본값 입력 (${
+                dataType === "integer" ? "숫자" : "문자"
+              })`}
+              value={defaultValue}
+              onChange={(e) => setDefaultValue(e.target.value)}
+            />
+          </div>
+        ) : null}
 
         <div className="button-group">
           <button onClick={onClose} className="cancel-btn">
