@@ -60,7 +60,7 @@ const DealModal = ({ onClose, onSubmit, defaultAttributes, memberId }) => {
       setIsSubmitting(true); // 중복 요청 방지
       // API 호출: 딜 추가
       const response = await axios.post(
-        `/api/member/${memberId}/adddeals`, // API URL
+        `/api/member/adddeals`, // API URL
         newDeal, // 보낼 데이터
         {
           headers: {

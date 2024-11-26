@@ -27,7 +27,7 @@ const MultiSelectEditor = (props) => {
     { label: "Healthcare", color: "pink" },
   ];
 
-  const handleSelect = (option) => {
+  const handleSelect = async (option) => {
     const updatedSelection = selectedOptions.includes(option.label)
       ? selectedOptions.filter((item) => item !== option.label)
       : [...selectedOptions, option.label];
@@ -38,6 +38,17 @@ const MultiSelectEditor = (props) => {
     const newValue = updatedSelection.join(",");
     props.node.setDataValue(props.column.colId, newValue);
     props.api.refreshCells({ rowNodes: [props.node] });
+
+    // 백엔드에 데이터 업데이트
+    try {
+      await axios.put("/api/member/${memberId}/deals/${dealId}/updatedeals", {
+        id: props.node.data.id, // 예시로 row의 id를 사용
+        column: props.column.colId,
+        value: newValue,
+      });
+    } catch (error) {
+      console.error("데이터 업데이트 실패:", error);
+    }
   };
 
   const handleRemove = (option) => {
@@ -215,7 +226,7 @@ const PersonEditor = (props) => {
     { name: "제갈공명", email: "lyingdragon@purplelabs.io" },
   ];
 
-  const handleSelect = (person) => {
+  const handleSelect = async (person) => {
     const updatedSelection = selectedPeople.includes(person.name)
       ? selectedPeople.filter((name) => name !== person.name)
       : [...selectedPeople, person.name];
@@ -226,6 +237,17 @@ const PersonEditor = (props) => {
     const newValue = updatedSelection.join(",");
     props.node.setDataValue(props.column.colId, newValue);
     props.api.refreshCells({ rowNodes: [props.node] });
+
+    // 서버에 선택된 사람 목록 업데이트
+    try {
+      await axios.put("/api/update-person-selection", {
+        id: props.node.data.id, // 예시로 row의 id를 사용
+        column: props.column.colId,
+        selectedPeople: newValue,
+      });
+    } catch (error) {
+      console.error("사람 목록 업데이트 실패:", error);
+    }
   };
 
   return (
@@ -273,10 +295,21 @@ const SeriesDropdownEditor = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(props.value || ""); // 기본값을 props.value로 설정
 
-  const handleSelect = (selectedValue) => {
+  const handleSelect = async (selectedValue) => {
     setValue(selectedValue);
     props.node.setDataValue(props.column.colId, selectedValue); // 값 업데이트
     props.api.refreshCells({ rowNodes: [props.node] }); // 그리드 데이터 업데이트
+
+    // 서버에 시리즈 선택 정보 업데이트
+    try {
+      await axios.put("/api/member/${memberId}/deals/${dealId}/updateseries", {
+        id: props.node.data.id, // 예시로 row의 id를 사용
+        column: props.column.colId,
+        selectedSeries: selectedValue,
+      });
+    } catch (error) {
+      console.error("시리즈 선택 업데이트 실패:", error);
+    }
 
     setIsOpen(false);
     props.stopEditing(); // 편집 종료
@@ -781,7 +814,7 @@ const DealPage = () => {
     }
   }, []);
   return (
-    <Layout member={member} >
+    <Layout member={member}>
       <DealGrid member={member} />
     </Layout>
   );

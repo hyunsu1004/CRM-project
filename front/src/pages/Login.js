@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../styles/login.module.css";
 import axios from "axios";
 
@@ -67,7 +67,7 @@ const Login = () => {
 
     //   // 로그인 성공 시 사용자 고유 ID를 받아옴
     //   if (response.status === 200) {
-    //     const memberId = response.data; // 서버에서 받은 사용자 정보
+    //     const member = response.data; // 서버에서 받은 사용자 정보
     //     localStorage.setItem("member", JSON.stringify(member)); // 로컬 스토리지에 저장
 
     //     // 로그인 성공 시 메인 페이지로 이동
@@ -137,17 +137,17 @@ const Login = () => {
             {loading ? "로그인 중..." : "로그인"}
           </button>
           <div className={styles.links}>
-            <a href="/find-id" className={styles.link}>
+            <Link to="/find-id" className={styles.link}>
               아이디 찾기
-            </a>{" "}
+            </Link>{" "}
             |
-            <a href="/find-password" className={styles.link}>
+            <Link to="/find-password" className={styles.link}>
               비밀번호 찾기
-            </a>{" "}
+            </Link>{" "}
             |
-            <a href="/signup" className={styles.link}>
+            <Link to="/signup" className={styles.link}>
               회원가입
-            </a>
+            </Link>
           </div>
         </form>
       </div>

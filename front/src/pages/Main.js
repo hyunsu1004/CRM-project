@@ -9,61 +9,6 @@ import { CompanyGrid } from "./CompanyPage";
 import { AppBar, Box, Tab, Tabs, TextField, Typography } from "@mui/material";
 import axios from "axios";
 
-const TabPanel = ({ children, value, index }) => {
-  return (
-    <div role="tabpanel" hidden={value !== index}>
-      {value === index && (
-        <Box sx={{ p: 2 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-};
-
-const StartupGrid = ({ apiEndpoint }) => {
-  const [rowData, setRowData] = useState([]);
-  const [gridSettings, setGridSettings] = useState(null);
-
-  useEffect(() => {
-    // API에서 데이터 가져오기
-    axios
-      .get(apiEndpoint)
-      .then((response) => {
-        setRowData(response.data.initialData);
-        setGridSettings(response.data.gridSettings);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
-  }, [apiEndpoint]);
-
-  const onGridReady = (params) => {
-    const { columnApi, gridApi } = params;
-    if (gridSettings) {
-      columnApi.applyColumnState({
-        state: gridSettings.columns,
-        applyOrder: true,
-      });
-      gridApi.setSortModel(gridSettings.sortModel);
-      gridApi.setFilterModel(gridSettings.filterModel);
-    }
-  };
-
-  return (
-    <div className="ag-theme-alpine" style={{ height: 500, width: "100%" }}>
-      <AgGridReact
-        rowData={rowData}
-        columnDefs={gridSettings ? gridSettings.columns : []}
-        defaultColDef={{
-          resizable: true,
-          sortable: true,
-          filter: true,
-        }}
-        onGridReady={onGridReady}
-      />
-    </div>
-  );
-};
-
 const Main = () => {
   const [member, setMember] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
