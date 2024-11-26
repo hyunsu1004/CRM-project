@@ -133,21 +133,21 @@ const DatabasePage = () => {
         {/* 탭 컨텐츠 */}
         <TabPanel value={tabIndex} index={0}>
           {/* 기업 전체 데이터 */}
-          {/* {pageType === "스타트업" ? (
+          {pageType === "스타트업" ? (
             <StartupGrid apiEndpoint="/api/member/${memberId}/startups" />
           ) : (
             <StartupGrid apiEndpoint="/api/member/${memberId}/investors" />
-          )} */}
+          )}
           {/* 임시 */}
-          <CompanyGrid />
+          {/* <CompanyGrid /> */}
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
           {member ? <CompanyGrid /> : <div><h1>선호 기업을 관리하려면 로그인이 필요합니다.</h1></div>}
           {/* 선호 기업 데이터 */}
           {/* {pageType === "스타트업" ? (
-            <StartupGrid apiEndpoint="/api/member/${memberId}/startups/interest" />
+            <StartupGrid apiEndpoint="/api/member/${memberId}/startups/favorite" />
           ) : (
-            <StartupGrid apiEndpoint="/api/member/${memberId}/investors/interest" />
+            <StartupGrid apiEndpoint="/api/member/${memberId}/investors/favorite" />
           )} */}
           {/* 임시 */}
         </TabPanel>
