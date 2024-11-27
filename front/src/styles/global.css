@@ -1,6 +1,11 @@
 /* global.css */
 
 /* Reset CSS */
+
+body, * {
+  font-family: "IBM Plex Sans KR", sans-serif !important;
+}
+
 * {
   margin: 0;
   padding: 0;

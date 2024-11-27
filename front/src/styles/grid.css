@@ -60,7 +60,7 @@
 /* 헤더 색상 : 첫번째 */
 .ag-header-cell.ag-column-first {
     background-color: #305673;
-    color: white;
+    color: var(--bot-color);
 }
 
 /* 플로팅 필터 */
@@ -104,4 +104,10 @@
 /* 테이블 박스 */
 .ag-center-cols-container{
     background-color: transparent;
+}
+
+/* 폰트 지정 */
+.ag-root,
+.ag-theme-quartz {
+  font-family: "IBM Plex Sans KR", sans-serif;
 }

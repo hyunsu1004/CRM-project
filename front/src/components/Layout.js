@@ -223,7 +223,7 @@ const Layout = ({ children, member }) => {
                       className={profile.profileBtn}
                       startIcon={<SettingIcon />}
                       onClick={() => navigate("/setting")}
-                      style={{ color: "var(--top-color)", fontSize: "12px" }}
+                      style={{ color: "var(--top-color)", fontSize: "11px", fontWeight: 700 }}
                     >
                       설정
                     </Button>
@@ -231,7 +231,7 @@ const Layout = ({ children, member }) => {
                       className={profile.profileBtn}
                       startIcon={<LogoutIcon />}
                       onClick={handleLogout}
-                      style={{ color: "var(--top-color)", fontSize: "12px" }}
+                      style={{ color: "var(--top-color)", fontSize: "11px", fontWeight: 700 }}
                     >
                       로그아웃
                     </Button>
