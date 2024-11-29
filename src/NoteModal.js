@@ -20,6 +20,11 @@ const NoteModal = ({ note, onClose, onSave }) => {
   const [uploadedFiles, setUploadedFiles] = useState([]); // 파일 목록 상태 추가
   const navigate = useNavigate();
   const [previewFile, setPreviewFile] = useState(null);
+  const handleFileDelete = (fileToDelete) => {
+    setUploadedFiles((prevFiles) =>
+      prevFiles.filter((file) => file !== fileToDelete)
+    );
+  };
   useEffect(() => {
     if (note) {
       setTitle(note.title);
@@ -110,6 +115,18 @@ const NoteModal = ({ note, onClose, onSave }) => {
             ) : (
               <li style={{ fontSize: "14px", color: "gray" }}>
                 업로드된 파일이 없습니다.
+                <button
+                  onClick={() => handleFileDelete(file)} // 파일 삭제 버튼
+                  style={{
+                    color: "black",
+                    border: "none",
+                    padding: "5px 10px",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                >
+                  X
+                </button>
               </li>
             )}
           </ul>
