@@ -3,7 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 const NoteModal = ({ note, onClose, onSave }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState(note?.content || "");
@@ -20,6 +30,9 @@ const NoteModal = ({ note, onClose, onSave }) => {
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files); // 업로드된 파일 배열로 변환
     setUploadedFiles((prevFiles) => [...prevFiles, ...files]); // 기존 파일 목록에 추가
+  };
+  const closePreview = () => {
+    setPreviewFile(null); // 미리보기 닫기
   };
   const handleFileClick = (file) => {
     if (file.type.startsWith("image/")) {
@@ -100,6 +113,38 @@ const NoteModal = ({ note, onClose, onSave }) => {
               </li>
             )}
           </ul>
+          {previewFile && (
+            <div
+              style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 0, 0, 0.8)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 1000,
+              }}
+            >
+              <div
+                style={{
+                  position: "relative",
+                  backgroundColor: "#fff",
+                  padding: "20px",
+                  borderRadius: "8px",
+                }}
+              >
+                <button onClick={closePreview}>X</button>
+                <img
+                  src={previewFile}
+                  alt="Preview"
+                  style={{ maxWidth: "500px", maxHeight: "500px" }}
+                />
+              </div>
+            </div>
+          )}
           <button>취소</button>
           <button onClick={handleSave} className="save-button">
             저장
