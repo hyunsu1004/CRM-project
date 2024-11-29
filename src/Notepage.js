@@ -111,6 +111,8 @@ const NotePage = () => {
   const sidebarRef = useRef(null);
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
   const mainRef = useRef(null);
+  const [selectedNote, setSelectedNote] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 선택된 노트 데이터
   const columnDefs = useMemo(
     () => [
       { headerName: "제목", field: "title", flex: 1 },
@@ -120,6 +122,17 @@ const NotePage = () => {
     ],
     []
   );
+  const handleOpenModal = () => {
+    setSelectedNote(null); // 새 노트 추가를 위한 상태 초기화
+    setIsModalOpen(true);
+  };
+
+  // 모달 닫기
+  const handleRowDoubleClicked = (event) => {
+    setSelectedNote(event.data); // 선택된 행 데이터 저장
+    setIsModalOpen(true); // 모달 열기
+  };
+  const handleCloseModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     if (mainRef.current && sidebarRef.current) {
