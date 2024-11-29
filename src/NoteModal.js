@@ -4,14 +4,17 @@ import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-const NoteModal = (note) => {
+const NoteModal = ({ note, onClose, onSave }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState(note?.content || "");
+  const [uploadedFiles, setUploadedFiles] = useState([]); // 파일 목록 상태 추가
   const navigate = useNavigate();
+  const [previewFile, setPreviewFile] = useState(null);
   useEffect(() => {
     if (note) {
       setTitle(note.title);
       setContent(note.content);
+      setUploadedFiles(note.files || []);
     }
   }, [note]);
   const handleFileUpload = (event) => {
@@ -19,7 +22,15 @@ const NoteModal = (note) => {
     setUploadedFiles((prevFiles) => [...prevFiles, ...files]); // 기존 파일 목록에 추가
   };
   const handleSave = () => {
-    if (!title.trim() && !content.trim()) {
+    if (title.trim() && content.trim()) {
+      onSave({
+        title,
+        content,
+        date: new Date().toLocaleString(),
+        files: uploadedFiles,
+      });
+      onClose();
+    } else {
       alert("제목과 내용을 입력해주세요.");
     }
   };
