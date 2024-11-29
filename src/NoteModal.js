@@ -21,6 +21,19 @@ const NoteModal = ({ note, onClose, onSave }) => {
     const files = Array.from(event.target.files); // 업로드된 파일 배열로 변환
     setUploadedFiles((prevFiles) => [...prevFiles, ...files]); // 기존 파일 목록에 추가
   };
+  const handleFileClick = (file) => {
+    if (file.type.startsWith("image/")) {
+      // 이미지 파일 미리보기
+      const fileUrl = URL.createObjectURL(file); // 파일 Blob URL 생성
+      setPreviewFile(fileUrl); // 미리보기 파일 URL 설정
+    } else if (file.type === "application/pdf") {
+      // PDF 파일 새 탭에서 열기
+      const pdfUrl = URL.createObjectURL(file);
+      window.open(pdfUrl, "_blank"); // 새 탭에서 열기
+    } else {
+      alert("미리보기를 지원하지 않는 파일 형식입니다.");
+    }
+  };
   const handleSave = () => {
     if (title.trim() && content.trim()) {
       onSave({
@@ -52,6 +65,7 @@ const NoteModal = ({ note, onClose, onSave }) => {
                 // 아이콘 크기 조정
               }}
             />
+            <Button onChange={handleFileUpload}>미리보기</Button>
           </Button>
         </div>
         {/* 제목 입력 */}
@@ -69,6 +83,23 @@ const NoteModal = ({ note, onClose, onSave }) => {
         />
 
         <div>
+          <ul style={{ marginTop: "10px", paddingLeft: "20px" }}>
+            {uploadedFiles.length > 0 ? (
+              uploadedFiles.map((file, index) => (
+                <li key={index}>
+                  <span
+                    onClick={() => handleFileClick(file)} // 파일 클릭 시 처리
+                  >
+                    {file.name}
+                  </span>
+                </li>
+              ))
+            ) : (
+              <li style={{ fontSize: "14px", color: "gray" }}>
+                업로드된 파일이 없습니다.
+              </li>
+            )}
+          </ul>
           <button>취소</button>
           <button onClick={handleSave} className="save-button">
             저장
