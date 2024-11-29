@@ -20,8 +20,117 @@ import { faArrowDown } from "@fortawesome/free-solid-svg-icons/faArrowDown";
 import { useNavigate } from "react-router-dom";
 import NoteModal from "./NoteModal";
 import Layout from "../components/Layout";
+const PropertiesSidebar = ({ properties, isVisible, toggleVisibility }) => {
+  return (
+    <aside
+      className={`${styles.propertiesSidebar} ${
+        isVisible ? styles.visible : styles.hidden
+      }`}
+    >
+      <button
+        onClick={toggleVisibility}
+        className={`${styles.toggleButton} ${
+          isVisible ? styles.closeButton : styles.openButton
+        }`}
+      ></button>
+    </aside>
+  );
+};
+const Navigation = () => {
+  return (
+    <nav>
+      <ul>
+        <Link to="/main">
+          <li>
+            <HomeIcon />
+            <h3>관심기업</h3>
+          </li>
+        </Link>
+      </ul>
+      <ul>
+        <Link to="/menu1">
+          <li>
+            <LiIcon />
+            <h3>기업</h3>
+          </li>
+        </Link>
+        <Link to="/menu2">
+          <li>
+            <LiIcon />
+            <h3>딜</h3>
+          </li>
+        </Link>
+        <Link to="/menu3">
+          <li>
+            <LiIcon />
+            <h3>노트</h3>
+          </li>
+        </Link>
+        <Link to="/menu4">
+          <li>
+            <LiIcon />
+            <h3>일정</h3>
+          </li>
+        </Link>
+        <Link to="/menu5">
+          <li>
+            <LiIcon />
+            <h3>회의</h3>
+          </li>
+          <Link to="/menu5">
+            <li>
+              <LiIcon />
+              <h3>기업</h3>
+            </li>
+          </Link>
+        </Link>
+      </ul>
+    </nav>
+  );
+};
 
 const NotePage = () => {
+  const [isRightSidebarVisible, setIsRightSidebarVisible] = useState(true);
+  const [properties, setProperties] = useState(null);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const navigate = useNavigate();
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // 기본 열 속성
+  const defaultColDef = useMemo(() => ({ editable: false }), []);
+  const handleGridReady = (params) => {
+    setGridApi(params.api);
+  };
+  const toggleSidebar = () => setIsSidebarVisible(!isSidebarVisible);
+  const sidebarRef = useRef(null);
+  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+  const mainRef = useRef(null);
+
+  useEffect(() => {
+    if (mainRef.current && sidebarRef.current) {
+      mainRef.current.style.width = isSidebarVisible
+        ? "calc(100% - 260px)"
+        : "calc(100% - 80px)";
+      sidebarRef.current.style.width = isSidebarVisible ? "260px" : "80px";
+      const anchors = sidebarRef.current.querySelectorAll("a");
+      if (anchors) {
+        anchors.forEach((a) => {
+          a.style.width = isSidebarVisible ? "218px" : "100%";
+        });
+      }
+      const headings = sidebarRef.current.querySelectorAll("h2, h3");
+      headings.forEach((heading) => {
+        heading.style.display = isSidebarVisible ? "block" : "none";
+      });
+      const figure = sidebarRef.current.querySelector("figure");
+      if (figure) {
+        figure.style.flexDirection = isSidebarVisible ? "row" : "column";
+        figure.querySelectorAll("button").forEach((button, idx) => {
+          button.style.order = isSidebarVisible ? `${idx + 1}` : `${2 - idx}`;
+        });
+      }
+    }
+  }, [isSidebarVisible]);
   return (
     <Layout>
       <div className={styles.buttonContainer2}>
@@ -58,6 +167,13 @@ const NotePage = () => {
         <AgGridReact />
       </div>
       <PropertiesSidebar />
+      <PropertiesSidebar
+        properties={properties}
+        isVisible={isRightSidebarVisible}
+        toggleVisibility={() =>
+          setIsRightSidebarVisible(!isRightSidebarVisible)
+        }
+      />
     </Layout>
   );
 };
