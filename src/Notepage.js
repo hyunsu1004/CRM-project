@@ -282,13 +282,6 @@ const NotePage = () => {
           value={selectedCompany}
           onChange={(e) => setSelectedCompany(e.target.value)}
           className={styles.dropdownButton}
-          style={{
-            width: "200px", // 셀렉트 박스 너비 증가
-            height: "45px", // 셀렉트 박스 높이 증가
-            fontSize: "16px", // 텍스트 크기 증가
-            padding: "8px", // 내부 여백 추가
-            borderRadius: "8px", // 모서리 둥글게
-          }}
         >
           {[
             "엔파티클",
@@ -309,36 +302,13 @@ const NotePage = () => {
         </select>
       </div>
       <div className={styles.aaa}>
-        <div
-          className={styles.buttoncontainer}
-          style={{
-            display: "flex",
-            justifyContent: "right", // 버튼을 생성자 위 중앙에 위치
-            // 버튼 간격 설정
-            marginBottom: "10px", // 생성자 위로 공간 추가
-          }}
-        >
-          <button
-            onClick={handleOpenModal}
-            className={styles.addnotebtn}
-            style={{
-              width: "150px", // 버튼 가로 크기
-              height: "50px", // 버튼 세로 크기
-              fontSize: "16px", // 버튼 텍스트 크기
-              borderRadius: "8px", // 모서리 둥글게
-            }}
-          >
+        <div className={styles.buttoncontainer}>
+          <button onClick={handleOpenModal} className={styles.addnotebtn}>
             <FontAwesomeIcon icon={faPlus} /> 노트 추가
           </button>
           <button
             onClick={handleDeleteSelected} // 삭제 버튼 동작
             className={styles.deletebtn}
-            style={{
-              width: "150px", // 버튼 가로 크기
-              height: "50px", // 버튼 세로 크기
-              fontSize: "16px", // 버튼 텍스트 크기
-              borderRadius: "8px", // 모서리 둥글게
-            }}
           >
             <FontAwesomeIcon icon={faTrashAlt} /> 삭제
           </button>
