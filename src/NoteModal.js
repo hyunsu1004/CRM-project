@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
 const NoteModal = (note) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState(note?.content || "");
@@ -13,6 +14,10 @@ const NoteModal = (note) => {
       setContent(note.content);
     }
   }, [note]);
+  const handleFileUpload = (event) => {
+    const files = Array.from(event.target.files); // 업로드된 파일 배열로 변환
+    setUploadedFiles((prevFiles) => [...prevFiles, ...files]); // 기존 파일 목록에 추가
+  };
   const handleSave = () => {
     if (!title.trim() && !content.trim()) {
       alert("제목과 내용을 입력해주세요.");
@@ -23,14 +28,17 @@ const NoteModal = (note) => {
       <div className="modal-content">
         <div className="modal-header">
           <h2>노트</h2>
+
           <Button
             component="label"
             variant="contained"
             startIcon={null} // 기존 startIcon 제거
+            onChange={handleFileUpload}
           >
             <CloudUploadIcon
               style={{
-                fontSize: "20px", // 아이콘 크기 조정
+                fontSize: "20px",
+                // 아이콘 크기 조정
               }}
             />
           </Button>
@@ -40,7 +48,6 @@ const NoteModal = (note) => {
           type="text"
           placeholder="제목을 입력해주세요"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
           className="input-title"
         />
         <textarea
