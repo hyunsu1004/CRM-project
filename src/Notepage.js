@@ -133,6 +133,25 @@ const NotePage = () => {
     setIsModalOpen(true); // 모달 열기
   };
   const handleCloseModal = () => setIsModalOpen(false);
+  const handleSaveNote = (note) => {
+    if (selectedNote) {
+      // 기존 노트 수정
+      setRowData((prevRowData) => ({
+        ...prevRowData,
+        [selectedCompany]: prevRowData[selectedCompany].map((row) =>
+          row === selectedNote ? { ...row, ...note } : row
+        ),
+      }));
+    } else {
+      // 새 노트 추가
+      setRowData((prevRowData) => ({
+        ...prevRowData,
+        [selectedCompany]: [...(prevRowData[selectedCompany] || []), note],
+      }));
+    }
+    setSelectedNote(null);
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     if (mainRef.current && sidebarRef.current) {
@@ -225,6 +244,13 @@ const NotePage = () => {
           setIsRightSidebarVisible(!isRightSidebarVisible)
         }
       />
+      {isModalOpen && (
+        <NoteModal
+          note={selectedNote}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSaveNote}
+        />
+      )}
     </Layout>
   );
 };
