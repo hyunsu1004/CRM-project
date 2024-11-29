@@ -80,12 +80,32 @@ const NoteModal = ({ note, onClose, onSave }) => {
     <div className="modal-overlay">
       <div className="modal-content">
         {/* 노트 헤더와 파일 업로드 버튼 */}
-        <div className="modal-header">
+        <div
+          className="modal-header"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "20px",
+          }}
+        >
           <h2>노트</h2>
           <Button
             component="label"
             variant="contained"
             startIcon={null} // 기존 startIcon 제거
+            style={{
+              backgroundColor: "#1976d2",
+              color: "#fff",
+              fontSize: "12px",
+              padding: "6px 12px",
+              borderRadius: "8px",
+              width: "80px",
+              height: "40px", // 버튼 높이 지정
+              display: "flex",
+              justifyContent: "center", // 아이콘 수평 중앙 정렬
+              alignItems: "center", // 아이콘 수직 중앙 정렬
+            }}
           >
             <CloudUploadIcon
               style={{
@@ -118,7 +138,16 @@ const NoteModal = ({ note, onClose, onSave }) => {
         />
 
         {/* 업로드된 파일 목록 */}
-        <div>
+        <div
+          style={{
+            marginBottom: "20px",
+            maxHeight: "100px",
+            overflowY: "auto",
+            border: "1px solid #ccc",
+            padding: "10px",
+            borderRadius: "8px",
+          }}
+        >
           <ul style={{ marginTop: "10px", paddingLeft: "20px" }}>
             {uploadedFiles.length > 0 ? (
               uploadedFiles.map((file, index) => (
@@ -132,12 +161,25 @@ const NoteModal = ({ note, onClose, onSave }) => {
                   }}
                 >
                   <span
+                    style={{
+                      fontSize: "14px",
+                      color: "blue",
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                    }}
                     onClick={() => handleFileClick(file)} // 파일 클릭 시 처리
                   >
                     {file.name}
                   </span>
                   <button
                     onClick={() => handleFileDelete(file)} // 파일 삭제 버튼
+                    style={{
+                      color: "black",
+                      border: "none",
+                      padding: "5px 10px",
+                      borderRadius: "4px",
+                      cursor: "pointer",
+                    }}
                   >
                     X
                   </button>
@@ -153,9 +195,44 @@ const NoteModal = ({ note, onClose, onSave }) => {
 
         {/* 미리보기 */}
         {previewFile && (
-          <div>
-            <div>
-              <button onClick={closePreview}>X</button>
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 1000,
+            }}
+          >
+            <div
+              style={{
+                position: "relative",
+                backgroundColor: "#fff",
+                padding: "20px",
+                borderRadius: "8px",
+              }}
+            >
+              <button
+                onClick={closePreview}
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  backgroundColor: "red",
+                  color: "white",
+                  border: "none",
+                  padding: "5px 10px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+              >
+                X
+              </button>
               <img
                 src={previewFile}
                 alt="Preview"
