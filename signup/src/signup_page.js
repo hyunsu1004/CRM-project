@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import "/SignupForm.css";
 function SignupPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -16,21 +16,21 @@ function SignupPage() {
     birthDay: "",
   });
 
-  //   const [errors, setErrors] = useState({
-  //     name: "",
-  //     email: "",
-  //     password: "",
-  //     passcheck: false,
-  //     passwordcheck: "",
-  //     phonenum: "",
-  //     id: "",
-  //     birthdate: "",
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+    passcheck: false,
+    passwordcheck: "",
+    phonenum: "",
+    id: "",
+    birthdate: "",
 
-  //     domain: "",
-  //     birthYear: "",
-  //     birthMonth: "",
-  //     birthDay: "",
-  //   });
+    domain: "",
+    birthYear: "",
+    birthMonth: "",
+    birthDay: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,71 +40,71 @@ function SignupPage() {
     });
   };
 
-  //   const validateForm = () => {
-  //     let formIsValid = true;
-  //     const newErrors = { name: "", email: "", password: "" };
-  //     if (!formData.id) {
-  //       formIsValid = false;
-  //       newErrors.id = "아이디를 입력해주세요.";
-  //     }
+  const validateForm = () => {
+    let formIsValid = true;
+    const newErrors = { name: "", email: "", password: "" };
+    if (!formData.id) {
+      formIsValid = false;
+      newErrors.id = "아이디를 입력해주세요.";
+    }
 
-  //     if (!formData.name) {
-  //       formIsValid = false;
-  //       newErrors.name = "이름을 입력해 주세요.";
-  //     }
+    if (!formData.name) {
+      formIsValid = false;
+      newErrors.name = "이름을 입력해 주세요.";
+    }
 
-  //     if (!formData.email) {
-  //       formIsValid = false;
-  //       newErrors.email = "이메일을 입력해 주세요.";
-  //     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-  //       formIsValid = false;
-  //       newErrors.email = "유효한 이메일 주소를 입력해 주세요.";
-  //     }
+    if (!formData.email) {
+      formIsValid = false;
+      newErrors.email = "이메일을 입력해 주세요.";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      formIsValid = false;
+      newErrors.email = "유효한 이메일 주소를 입력해 주세요.";
+    }
 
-  //     if (!formData.password) {
-  //       formIsValid = false;
-  //       newErrors.password = "비밀번호를 입력해 주세요.";
-  //     } else if (formData.password.length < 8) {
-  //       formIsValid = false;
-  //       newErrors.password = "비밀번호는 최소 6자 이상이어야 합니다.";
-  //     }
-  //     if (formData.password !== formData.passwordcheck) {
-  //       formIsValid = false;
-  //       newErrors.passwordcheck = "비밀번호가 일치하지 않습니다.";
-  //     }
-  //     if (!formData.emailName) {
-  //       formIsValid = false;
-  //       newErrors.emailName = "이메일을 입력해 주세요.";
-  //     }
+    if (!formData.password) {
+      formIsValid = false;
+      newErrors.password = "비밀번호를 입력해 주세요.";
+    } else if (formData.password.length < 8) {
+      formIsValid = false;
+      newErrors.password = "비밀번호는 최소 6자 이상이어야 합니다.";
+    }
+    if (formData.password !== formData.passwordcheck) {
+      formIsValid = false;
+      newErrors.passwordcheck = "비밀번호가 일치하지 않습니다.";
+    }
+    if (!formData.emailName) {
+      formIsValid = false;
+      newErrors.emailName = "이메일을 입력해 주세요.";
+    }
 
-  //     if (!formData.emailDomain) {
-  //       formIsValid = false;
-  //       newErrors.emailDomain = "                도메인을 선택해 주세요.";
-  //     }
-  //     if (!formData.emailName && !formData.emailDomain) {
-  //       formIsValid = false;
-  //       newErrors.emailName = "";
-  //       newErrors.emailDomain = "이메일 입력 및 도메인을 선택해주세요.";
-  //     }
-  //     if (!formData.phonenum) {
-  //       formIsValid = false;
-  //       newErrors.phonenum = "전화번호를 입력해 주세요.";
-  //     }
-  //     if (!formData.birthYear || !formData.birthMonth || !formData.birthDay) {
-  //       formIsValid = false;
-  //       newErrors.birthYear = "생년월일을 완성해 주세요.";
-  //     }
+    if (!formData.emailDomain) {
+      formIsValid = false;
+      newErrors.emailDomain = "                도메인을 선택해 주세요.";
+    }
+    if (!formData.emailName && !formData.emailDomain) {
+      formIsValid = false;
+      newErrors.emailName = "";
+      newErrors.emailDomain = "이메일 입력 및 도메인을 선택해주세요.";
+    }
+    if (!formData.phonenum) {
+      formIsValid = false;
+      newErrors.phonenum = "전화번호를 입력해 주세요.";
+    }
+    if (!formData.birthYear || !formData.birthMonth || !formData.birthDay) {
+      formIsValid = false;
+      newErrors.birthYear = "생년월일을 완성해 주세요.";
+    }
 
-  //     setErrors(newErrors);
-  //     return formIsValid;
-  //   };
+    setErrors(newErrors);
+    return formIsValid;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //     if (validateForm()) {
-    //       alert("회원가입 성공!");
-    //       console.log("회원가입 정보:", formData);
-    //     }
+    if (validateForm()) {
+      alert("회원가입 성공!");
+      console.log("회원가입 정보:", formData);
+    }
   };
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: currentYear - 1899 }, (_, i) => 1900 + i);
@@ -126,7 +126,7 @@ function SignupPage() {
 
       <form onSubmit={handleSubmit}>
         <label>아이디</label>
-        {<span style={{ color: "red" }}></span>}
+        {errors.id && <span style={{ color: "red" }}>{errors.id}</span>}
 
         <div className="id-container">
           <input
@@ -143,7 +143,9 @@ function SignupPage() {
         </div>
         <label>비밀번호</label>
 
-        {<span style={{ color: "red" }}></span>}
+        {errors.password && (
+          <span style={{ color: "red" }}>{errors.password}</span>
+        )}
         <div>
           <input
             type="password"
@@ -154,7 +156,9 @@ function SignupPage() {
           />
         </div>
         <label>비밀번호확인</label>
-        {<span style={{ color: "red" }}></span>}
+        {errors.password && (
+          <span style={{ color: "red" }}>{errors.passwordcheck}</span>
+        )}
         <div>
           <input
             type="password"
@@ -165,7 +169,7 @@ function SignupPage() {
           />
         </div>
         <label>이름</label>
-        {<span style={{ color: "red" }}></span>}
+        {errors.name && <span style={{ color: "red" }}>{errors.name}</span>}
         <div>
           <input
             type="text"
@@ -176,7 +180,9 @@ function SignupPage() {
           />
         </div>
         <label>전화번호</label>
-        {<span style={{ color: "red" }}></span>}
+        {errors.phonenum && (
+          <span style={{ color: "red" }}>{errors.phonenum}</span>
+        )}
         <div>
           <input
             type="text"
@@ -188,8 +194,12 @@ function SignupPage() {
         </div>
 
         <label>이메일</label>
-        {<span style={{ color: "red" }}></span>}
-        {<span style={{ color: "red" }}></span>}
+        {errors.emailName && (
+          <span style={{ color: "red" }}>{errors.emailName}</span>
+        )}
+        {errors.emailDomain && (
+          <span style={{ color: "red" }}>{errors.emailDomain}</span>
+        )}
 
         <div style={{ display: "flex", flexDirection: "row" }}>
           <input
@@ -214,7 +224,9 @@ function SignupPage() {
           </select>
         </div>
         <label htmlFor="birthdate">생년월일</label>
-        {<span style={{ color: "red" }}></span>}
+        {(errors.birthYear || errors.birthMonth || errors.birthDay) && (
+          <span style={{ color: "red" }}>{errors.birthYear}</span>
+        )}
 
         <div className="form-group">
           <div className="birthdate-group">
