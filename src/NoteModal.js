@@ -43,13 +43,18 @@ const NoteModal = (note) => {
           onChange={(e) => setTitle(e.target.value)}
           className="input-title"
         />
-        {/* 내용 입력 */}
-        {/* 업로드된 파일 목록 */}
-        {/* 미리보기 */}
-        {/* 취소/저장 버튼 */}
+        <textarea
+          placeholder="내용을 입력해주세요"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          className="input-content"
+        />
+
         <div>
           <button>취소</button>
-          <button>저장</button>
+          <button onClick={handleSave} className="save-button">
+            저장
+          </button>
         </div>
       </div>
     </div>
