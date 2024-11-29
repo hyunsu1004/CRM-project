@@ -234,7 +234,15 @@ const NotePage = () => {
         style={{ width: "100%", height: "350px" }}
         className="ag-theme-quartz"
       >
-        <AgGridReact />
+        <AgGridReact
+          rowData={rowData[selectedCompany]}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          overlayNoRowsTemplate="<span></span>"
+          rowSelection="multiple"
+          onGridReady={handleGridReady}
+          onRowDoubleClicked={handleRowDoubleClicked}
+        />
       </div>
       <PropertiesSidebar />
       <PropertiesSidebar
