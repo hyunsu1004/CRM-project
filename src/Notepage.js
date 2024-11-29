@@ -16,7 +16,10 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons/faArrowDown";
+import {
+  faArrowDown,
+  faTrashAlt,
+} from "@fortawesome/free-solid-svg-icons/faArrowDown";
 import { useNavigate } from "react-router-dom";
 import NoteModal from "./NoteModal";
 import Layout from "../components/Layout";
@@ -95,6 +98,9 @@ const NotePage = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState("쿼타랩");
+  const [gridApi, setGridApi] = useState(null); // AgGrid API 저장
+  const [rowData, setRowData] = useState([]);
 
   // 기본 열 속성
   const defaultColDef = useMemo(() => ({ editable: false }), []);
@@ -105,6 +111,15 @@ const NotePage = () => {
   const sidebarRef = useRef(null);
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
   const mainRef = useRef(null);
+  const columnDefs = useMemo(
+    () => [
+      { headerName: "제목", field: "title", flex: 1 },
+      { headerName: "내용", field: "content", flex: 1.5 },
+
+      { headerName: "수정 일자", field: "date", flex: 1 },
+    ],
+    []
+  );
 
   useEffect(() => {
     if (mainRef.current && sidebarRef.current) {
@@ -131,6 +146,18 @@ const NotePage = () => {
       }
     }
   }, [isSidebarVisible]);
+  const handleDeleteSelected = () => {
+    const selectedNodes = gridApi.getSelectedNodes(); // 선택된 행 가져오기
+    const selectedData = selectedNodes.map((node) => node.data);
+
+    setRowData((prevRowData) => ({
+      ...prevRowData,
+      [selectedCompany]: prevRowData[selectedCompany].filter(
+        (row) => !selectedData.includes(row)
+      ),
+    }));
+  };
+
   return (
     <Layout>
       <div className={styles.buttonContainer2}>
@@ -156,7 +183,18 @@ const NotePage = () => {
       <div className={styles.aaa}>
         <div>
           <button>노트 추가</button>
-          <button></button>
+          <button
+            onClick={handleDeleteSelected} // 삭제 버튼 동작
+            className={styles.deletebtn}
+            style={{
+              width: "150px", // 버튼 가로 크기
+              height: "50px", // 버튼 세로 크기
+              fontSize: "16px", // 버튼 텍스트 크기
+              borderRadius: "8px", // 모서리 둥글게
+            }}
+          >
+            <FontAwesomeIcon icon={faTrashAlt} /> 삭제
+          </button>
         </div>
       </div>
 
