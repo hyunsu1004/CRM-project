@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import "./styles/index.css";
+// import "./styles/index.css";
 import "./styles/global.css"; // 전역 스타일 import
 import { createTheme } from "ag-grid-community";
 import { ThemeProvider } from "@emotion/react";

@@ -1,10 +1,10 @@
 import { BrowserRouter } from "react-router-dom";
 import Router from "./routes/Router";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, ThemeProvider, responsiveFontSizes } from "@mui/material";
 import "./styles/global.css";
 
-const theme = createTheme({
-  Typography: {
+let theme = createTheme({
+  typography: {
     fontFamily: '"IBM Plex Sans KR", sans-serif',
   },
   palette: {
@@ -14,8 +14,10 @@ const theme = createTheme({
     secondary: {
       main: "#708A9E",
     },
-  },
+  }
 });
+
+theme = responsiveFontSizes(theme);
 
 function App() {
   return (
