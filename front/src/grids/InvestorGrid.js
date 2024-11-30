@@ -6,7 +6,7 @@ import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { ReactComponent as LogoutIcon } from "../img/logout.svg";
 
-export const InvestorGrid = ({ apiEndpoint, editable }) => {
+export const InvestorGrid = ({ apiEndpoint, editable, rowSelection }) => {
     const [rowData, setRowData] = useState([]);
     const [columnDefs, setColumnDefs] = useState([]);
     const columnsToShow = ['name', 'category', 'totalInvestment', 'recentFunding'];
@@ -75,6 +75,10 @@ export const InvestorGrid = ({ apiEndpoint, editable }) => {
         };
     }, [editable]);
 
+    const gridOptions = {
+        rowSelection: rowSelection
+    }
+
     return (
         <div className="ag-theme-quartz" style={{ height: 600, width: "100%" }}>
             <AgGridReact
@@ -82,6 +86,7 @@ export const InvestorGrid = ({ apiEndpoint, editable }) => {
                 columnDefs={columnDefs}
                 defaultColDef={TopColDef}
                 rowHeight={42}
+                // rowSelection={gridOptions}
             />
         </div>
     );

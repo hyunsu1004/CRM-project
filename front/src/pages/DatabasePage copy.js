@@ -299,12 +299,12 @@ const DatabasePage = () => {
                     {/* 기업 전체 데이터 */}
                     {pageType === "스타트업" ? (
                         <StartupGrid
-                            apiEndpoint={`/api/member/startups`}
+                            apiEndpoint={`/json/company.json`}
                             editable={false}
                         />
                     ) : (
                         <StartupGrid
-                            apiEndpoint={`/api/member/investors`}
+                            apiEndpoint={`/json/company.json`}
                             editable={false}
                         />
                     )}
@@ -314,12 +314,12 @@ const DatabasePage = () => {
                 <TabPanel value={tabIndex} index={1}>
                     {pageType === "스타트업" ? (
                         <StartupGrid
-                            apiEndpoint={`/api/member/startups/interest`}
+                            apiEndpoint={`/json/company.json`}
                             editable={true}
                         />
                     ) : (
                         <StartupGrid
-                            apiEndpoint={`/api/member/investors/interest`}
+                            apiEndpoint={`/json/company.json`}
                             editable={true}
                         />
                     )}

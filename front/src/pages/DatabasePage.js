@@ -88,17 +88,18 @@ const DatabasePage = () => {
 
                 <TabPanel value={tabIndex} index={0}>
                     {pageType === "스타트업" ? (
-                        <StartupGrid apiEndpoint={`/api/member/startups`} editable={false} />
+                        <StartupGrid apiEndpoint={`/json/company.json`} editable={false} rowSelection={'multiRow'} />
                     ) : (
-                        <InvestorGrid apiEndpoint={`/api/member/investors`} editable={false} />
+                        <InvestorGrid apiEndpoint={`/json/company.json`} editable={false}
+                        rowSelection={'multiRow'} />
                     )}
                 </TabPanel>
 
                 <TabPanel value={tabIndex} index={1}>
                     {pageType === "스타트업" ? (
-                        <StartupGrid apiEndpoint={`/api/member/startups/interest`} editable={true} />
+                        <StartupGrid apiEndpoint={`/json/company.json`} editable={true} />
                     ) : (
-                        <InvestorGrid apiEndpoint={`/api/member/investors/interest`} editable={true} />
+                        <InvestorGrid apiEndpoint={`/json/company.json`} editable={true} />
                     )}
                 </TabPanel>
             </Box>
