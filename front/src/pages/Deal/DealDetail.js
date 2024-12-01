@@ -79,7 +79,7 @@ export const DealDashboard = () => {
   );
 };
 
-export const DealDetail = () => {
+const DealDetail = () => {
   // 멤버 정보 관리
   const [member, setMember] = useState(null);
   useEffect(() => {
@@ -132,3 +132,5 @@ export const DealDetail = () => {
     </Layout>
   );
 };
+
+export default DealDetail;
