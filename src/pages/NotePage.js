@@ -171,6 +171,7 @@ const NotePage = () => {
       { headerName: "내용", field: "content", flex: 1.5 },
 
       { headerName: "수정 일자", field: "date", flex: 1 },
+      //백엔드 연결할 field
     ],
     []
   );
@@ -210,6 +211,7 @@ const NotePage = () => {
 
   // 노트 저장
   const handleSaveNote = (note) => {
+    //백엔드로 노트 저장
     if (selectedNote) {
       // 기존 노트 수정
       setRowData((prevRowData) => ({
@@ -218,6 +220,24 @@ const NotePage = () => {
           row === selectedNote ? { ...row, ...note } : row
         ),
       }));
+      //노트 저장(백엔드)
+      // axios
+      // .put(`/api/notes/${selectedCompany}/${selectedNote.id}`, note, {
+      //   withCredentials: true,
+      // })
+      // .then(() => {
+      //   setRowData((prevRowData) => ({
+      //     ...prevRowData,
+      //     [selectedCompany]: prevRowData[selectedCompany].map((row) =>
+      //       row === selectedNote ? { ...row, ...note } : row
+      //     ),
+      //   }));
+      //   setSelectedNote(null);
+      //   setIsModalOpen(false);
+      // })
+      // .catch((error) => {
+      //   console.error("노트 수정 실패", error);
+      // });
     } else {
       // 새 노트 추가
       setRowData((prevRowData) => ({
@@ -266,6 +286,7 @@ const NotePage = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isSidebarVisible]);
   const handleDeleteSelected = () => {
+    //
     const selectedNodes = gridApi.getSelectedNodes(); // 선택된 행 가져오기
     const selectedData = selectedNodes.map((node) => node.data);
 

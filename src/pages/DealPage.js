@@ -592,6 +592,19 @@ export const DealGrid = ({ member }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isDealModalOpen, setDealModalOpen] = useState(false);
   const [existingAttributes, setExistingAttributes] = useState([]);
+  //딜 데이터 불러오기 백엔드 처리필요
+  // useEffect(() => {
+  //   const fetchDeals = async () => {
+  //     try {
+  //       const response = await axios.get("/api/deals", { withCredentials: true });
+  //       setRowData(response.data); // 백엔드로부터 데이터를 설정
+  //     } catch (error) {
+  //       console.error("딜 데이터를 가져오는 데 실패했습니다.", error);
+  //     }
+  //   };
+
+  //   fetchDeals();
+  // }, []);
   const [columnDefs, setColumnDefs] = useState([
     {
       headerName: "회사명",
@@ -665,7 +678,55 @@ export const DealGrid = ({ member }) => {
     const isInteger = newAttribute.dataType === "integer";
     const isString = newAttribute.dataType === "string";
     const uniqueFieldName = `${newAttribute.name}_${Date.now()}`;
+    //속성추가처리 백엔드 연결필요
+    // try {
+    //   const response = await axios.post("/api/deals/attributes", newAttribute, {
+    //     withCredentials: true,
+    //   });
 
+    //   const savedAttribute = response.data;
+
+    //   // 로컬 데이터 업데이트
+    //   const isSelect = savedAttribute.dataType === "select";
+    //   const isMultiSelect = savedAttribute.dataType === "multiSelect";
+    //   const isDate = savedAttribute.dataType === "date";
+
+    //   const uniqueFieldName = `${savedAttribute.name}_${Date.now()}`;
+
+    //   setRowData((prevData) =>
+    //     prevData.map((row) => ({
+    //       ...row,
+    //       [uniqueFieldName]: row[uniqueFieldName] || "",
+    //     }))
+    //   );
+
+    //   setColumnDefs((prevDefs) => [
+    //     ...prevDefs,
+    //     {
+    //       headerName: savedAttribute.name,
+    //       field: uniqueFieldName,
+    //       editable: true,
+    //       ...(isSelect && {
+    //         cellRenderer: SelectCellRenderer,
+    //         cellEditor: SeriesDropdownEditor,
+    //       }),
+    //       ...(isMultiSelect && {
+    //         cellRenderer: MultiSelectRenderer,
+    //         cellEditor: MultiSelectEditor,
+    //       }),
+    //       ...(isDate && {
+    //         cellEditor: DatePickerEditor,
+    //         valueFormatter: (params) =>
+    //           params.value
+    //             ? new Date(params.value).toLocaleDateString("ko-KR")
+    //             : "",
+    //       }),
+    //     },
+    //   ]);
+    // } catch (error) {
+    //   console.error("속성 추가 실패:", error);
+    //   alert("속성 추가 중 오류가 발생했습니다.");
+    // }
     // 새로운 속성에 대한 기본값 설정
     const getDefaultValue = () => {
       if (isSelect) return "";
@@ -789,6 +850,19 @@ export const DealGrid = ({ member }) => {
   };
 
   const addNewDeal = (newDeal) => {
+    //딜 추가 처리 백엔드 연결 필요
+    // try {
+    //   const response = await axios.post("/api/deals", newDeal, {
+    //     withCredentials: true,
+    //   });
+
+    //   // 서버에서 반환한 딜 데이터를 로컬에 추가
+    //   const savedDeal = response.data;
+    //   setRowData((prevData) => [...prevData, savedDeal]);
+    // } catch (error) {
+    //   console.error("딜 추가 실패:", error);
+    //   alert("딜 추가 중 오류가 발생했습니다.");
+    // }
     const newRow = {
       ...newDeal,
       ...defaultAttributes, // 기본 속성값 자동 추가
@@ -823,6 +897,25 @@ export const DealGrid = ({ member }) => {
 
   const handleDelete = () => {
     if (selectedRows.length === 0) return; // 선택된 행이 없으면 아무 작업도 하지 않음
+    //딕삭제 처리 백엔드 연결필요
+    // try {
+    //   const selectedIds = selectedRows.map((row) => row.id); // 삭제할 딜 ID 목록
+    //   await axios.delete("/api/deals", {
+    //     data: { ids: selectedIds },
+    //     withCredentials: true,
+    //   });
+
+    //   // 로컬 데이터에서 삭제
+    //   const updatedRowData = rowData.filter((row) => !selectedRows.includes(row));
+    //   setRowData(updatedRowData);
+
+    //   setSelectedRows([]);
+    //   setShowDeleteButton(false);
+    //   gridRef.current?.api?.deselectAll(); // 선택 해제
+    // } catch (error) {
+    //   console.error("딜 삭제 실패:", error);
+    //   alert("딜 삭제 중 오류가 발생했습니다.");
+    // }
 
     // 선택되지 않은 행만 남기기
     const updatedRowData = rowData.filter((row) => !selectedRows.includes(row));
@@ -894,6 +987,22 @@ export const DealGrid = ({ member }) => {
                 : row
             )
           );
+          //딜 수정 처리 백엔드 연결 필요
+          // const updatedDeal = {
+          //   id: params.data.id,
+          //   column: params.colDef.field,
+          //   value: params.newValue,
+          // };
+
+          // axios
+          //   .put(`/api/deals/${params.data.id}`, updatedDeal, { withCredentials: true })
+          //   .then(() => {
+          //     console.log("딜 업데이트 성공");
+          //   })
+          //   .catch((error) => {
+          //     console.error("딜 업데이트 실패:", error);
+          //     alert("딜 업데이트 중 오류가 발생했습니다.");
+          //   });
         }}
         enableAdvancedFilter={true}
       />
