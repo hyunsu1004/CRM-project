@@ -1,12 +1,14 @@
 import {Routes, Route} from "react-router-dom";
 import Main from "../pages/Main";
-import Login from "../pages/Login";
+import Login from "../pages/Auth/Login";
 import CompanyPage from "../pages/CompanyPage";
 import FavoritePage from "../pages/FavoritePage";
-import NotePage from "../pages/NotePage";
 import DatabasePage from "../pages/DatabasePage";
-import DealPage from "../pages/DealPage";
-import SignupPage from "../pages/SignupPage";
+import DealPage from "../pages/Deal/DealPage";
+import SignupPage from "../pages/Auth/SignupPage";
+import { DealDashboard, DealDetail } from "../pages/Deal/DealDetail";
+import NotePage from "../pages/Note/NotePage";
+
 
 function Router() {
     return (
@@ -19,7 +21,10 @@ function Router() {
             <Route path="/notes" element={<NotePage />} />
             <Route path="/startups" element={<DatabasePage />} />
             <Route path="/investors" element={<DatabasePage />} />
-            <Route path="/deals" element={<DealPage />} />
+            {/* <Route path="/deals" element={<DealPage />} />
+            <Route path="/deals/:dealId" element={<DealDetailPage />} /> */}
+            <Route path="/deals" element={<DealDashboard />} />
+            <Route path="/deals/:dealId" element={<DealDetail />} />
         </Routes>
     );
 }

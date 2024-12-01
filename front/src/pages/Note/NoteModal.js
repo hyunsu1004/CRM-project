@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/NoteModal.css";
+import "../../styles/NoteModal.css";
 import { useNavigate } from "react-router-dom";
 
 const NoteModal = ({ note, onClose, onSave }) => {
@@ -44,7 +44,6 @@ const NoteModal = ({ note, onClose, onSave }) => {
         <div className="modal-actions">
           <button
             onClick={() => {
-              navigate("/main");
               onClose();
             }}
             className="cancel-button"

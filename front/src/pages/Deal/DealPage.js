@@ -1,14 +1,14 @@
 import { AgGridReact } from "ag-grid-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import AttributeModal from "./AttributeModal";
-import "../styles/CustomDropdown.css";
+import AttributeModal from "../AttributeModal";
+import "../../styles/CustomDropdown.css";
 import "ag-grid-charts-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
-import "../styles/btn.css";
+import "../../styles/btn.css";
 import axios from "axios";
-import "../styles/grid.css";
-import Layout from "../components/Layout";
+import "../../styles/grid.css";
+import Layout from "../../components/Layout";
 import DealModal from "./DealModal";
 
 const MultiSelectEditor = (props) => {

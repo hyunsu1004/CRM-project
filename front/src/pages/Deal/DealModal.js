@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/modal.css";
+import "../../styles/modal.css";
 import axios from "axios";
 
 const DealModal = ({ onClose, onSubmit, defaultAttributes, member }) => {
