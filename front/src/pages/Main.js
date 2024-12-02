@@ -5,7 +5,6 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { useState, useEffect, useRef } from "react";
 import "../styles/grid.css";
 import Layout from "../components/Layout";
-import { CompanyGrid } from "./CompanyPage";
 import {
   AppBar,
   Box,
@@ -25,6 +24,7 @@ import {
 import axios from "axios";
 import { StartupGrid } from "../grids/StartupGrid";
 import { InvestorGrid } from "../grids/InvestorGrid";
+import { Link } from "react-router-dom";
 
 const Main = () => {
   const [member, setMember] = useState(null);
@@ -203,44 +203,46 @@ const Main = () => {
                       cursor: "pointer",
                     }}
                   >
-                    <CardContent>
-                      <Typography
-                        variant="subtitle1"
-                        sx={{
-                          fontSize: "20px",
-                          fontWeight: "600",
-                          color: "var(--top-color)",
-                          borderBottom: "2px solid var(--bot-color)",
-                        }}
-                      >
-                        {company.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          mt: 1,
-                          mb: 1,
-                          fontWeight: "600", // 글자 강조
-                          fontSize: "16px",
-                        }}
-                      >
-                        {company.productOrService}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          display: "inline-block", // 내용 크기에 맞게 줄임
-                          backgroundColor: "var(--top-color)", // 원하는 배경색
-                          color: "#fff", // 글자 색상 (배경과 대조)
-                          padding: "4px 8px", // 안쪽 여백
-                          borderRadius: "16px", // 둥근 모서리
-                          fontWeight: "600", // 글자 강조
-                          fontSize: "12px", // 텍스트 크기 조정
-                        }}
-                      >
-                        {company.technology}
-                      </Typography>
-                    </CardContent>
+                    <Link to={`/investors/${company.id}`}>
+                      <CardContent>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{
+                            fontSize: "20px",
+                            fontWeight: "600",
+                            color: "var(--top-color)",
+                            borderBottom: "2px solid var(--bot-color)",
+                          }}
+                        >
+                          {company.name}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            mt: 1,
+                            mb: 1,
+                            fontWeight: "600", // 글자 강조
+                            fontSize: "16px",
+                          }}
+                        >
+                          {company.productOrService}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            display: "inline-block", // 내용 크기에 맞게 줄임
+                            backgroundColor: "var(--top-color)", // 원하는 배경색
+                            color: "#fff", // 글자 색상 (배경과 대조)
+                            padding: "4px 8px", // 안쪽 여백
+                            borderRadius: "16px", // 둥근 모서리
+                            fontWeight: "600", // 글자 강조
+                            fontSize: "12px", // 텍스트 크기 조정
+                          }}
+                        >
+                          {company.technology}
+                        </Typography>
+                      </CardContent>
+                    </Link>
                   </Card>
                 ))}
               </Box>
@@ -279,7 +281,7 @@ const Main = () => {
                 TOP10 스타트업
               </span>
             </Typography>
-            <StartupGrid apiEndpoint={"/json/company.json"} />
+            <StartupGrid />
           </Box>
 
           <Box
@@ -302,7 +304,7 @@ const Main = () => {
                 TOP 10 투자자
               </span>
             </Typography>
-            <InvestorGrid apiEndpoint={"/json/company.json"} />
+            <InvestorGrid />
           </Box>
         </Box>
 
@@ -348,26 +350,32 @@ const Main = () => {
                 title: "포브스코리아 ‘2024 대한민국 AI 50",
                 description:
                   "포브스코리아가 선정한 2024년 ‘대한민국 AI 50’이 공개되었습니다. 대한민국 AI ...",
-                image: "https://user-upload.thevc.kr/reports/thumbnails/2024AI스타트업50.png",
+                image:
+                  "https://user-upload.thevc.kr/reports/thumbnails/2024AI스타트업50.png",
                 link: "https://thevc.kr/discussions/%ED%8F%AC%EB%B8%8C%EC%8A%A4%EC%BD%94%EB%A6%AC%EC%95%84-2024-%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD-AI-50",
               },
               {
                 title: "스타트업 재무 ‘성적표’ 업데이트, ‘수...",
                 description:
                   "올 초 가장 크게 화제가 됐던 소식 중 하나가 바로 쿠팡의 흑자전환 소식이었는데요. ...",
-                image: "https://user-upload.thevc.kr/reports/thumbnails/2023 스타트업 성적표 업데이트1.png",
+                image:
+                  "https://user-upload.thevc.kr/reports/thumbnails/2023 스타트업 성적표 업데이트1.png",
                 link: "https://thevc.kr/discussions/2023-%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85-%EC%9E%AC%EB%AC%B4-%EC%84%B1%EC%A0%81%ED%91%9C-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8_zzf06wuo",
               },
               {
                 title: "2024 - 20대 스타트업 대표들",
-                description: "2024년 포브스코리아 ‘30세 미만 30인이 공개 되었습니다. 누적 투자금 최대 레브 ...",
-                image: "https://user-upload.thevc.kr/reports/thumbnails/20대 스타트업 대표.png",
+                description:
+                  "2024년 포브스코리아 ‘30세 미만 30인이 공개 되었습니다. 누적 투자금 최대 레브 ...",
+                image:
+                  "https://user-upload.thevc.kr/reports/thumbnails/20대 스타트업 대표.png",
                 link: "https://thevc.kr/discussions/2024-20%EB%8C%80-%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85-%EB%8C%80%ED%91%9C%EB%93%A4_zzwuo",
               },
               {
                 title: "‘데드크로스 직면’, 2024 스타트업 고 ...",
-                description: "스타트업 투자 침체가 장기화되며 스타트업 고용시장에도 한파가 불고 있는 모습입니 ...",
-                image: "https://user-upload.thevc.kr/reports/thumbnails/2024 상반기 고용 현황 브리핑.png",
+                description:
+                  "스타트업 투자 침체가 장기화되며 스타트업 고용시장에도 한파가 불고 있는 모습입니 ...",
+                image:
+                  "https://user-upload.thevc.kr/reports/thumbnails/2024 상반기 고용 현황 브리핑.png",
                 link: "https://thevc.kr/discussions/korea_startup_employment_2024",
               },
             ].map((news, index) => (
@@ -378,7 +386,7 @@ const Main = () => {
                     height="140"
                     image={news.image}
                     alt={news.title}
-                    sx={{overflow: "hidden"}}
+                    sx={{ overflow: "hidden" }}
                   />
                   <CardContent>
                     <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
