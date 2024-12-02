@@ -6,7 +6,7 @@ import FavoritePage from "../pages/FavoritePage";
 import DatabasePage from "../pages/DatabasePage";
 import DealPage from "../pages/Deal/DealPage";
 import SignupPage from "../pages/Auth/SignupPage";
-import { DealDashboard, DealDetail } from "../pages/Deal/DealDetail";
+import DealDetail, { DealDashboard } from "../pages/Deal/DealDetail";
 import NotePage from "../pages/Note/NotePage";
 
 
