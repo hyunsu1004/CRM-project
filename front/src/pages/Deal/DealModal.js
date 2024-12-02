@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../styles/modal.css";
 import axios from "axios";
 
-const DealModal = ({ onClose, onSubmit, defaultAttributes, member }) => {
+const DealModal = ({ onClose, onSubmit, defaultAttributes }) => {
   const [companyName, setCompanyName] = useState("");
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false); // 중복 요청 방지 플래그
@@ -27,6 +27,7 @@ const DealModal = ({ onClose, onSubmit, defaultAttributes, member }) => {
     const value = e.target.value;
     setCompanyName(value);
 
+    // 회사명 필터링
     if (value) {
       const filtered = companyList.filter((company) =>
         company.toLowerCase().includes(value.toLowerCase())
@@ -40,47 +41,26 @@ const DealModal = ({ onClose, onSubmit, defaultAttributes, member }) => {
   // 회사명을 클릭하여 선택
   const handleCompanySelect = (company) => {
     setCompanyName(company);
-    setFilteredCompanies([]); // 선택 후 목록 숨기기
+    setFilteredCompanies([]); // 목록 숨기기
   };
 
-  // 모달 제출 시 호출
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!companyName) {
       alert("회사명을 선택해주세요.");
       return;
     }
 
     const currentDateTime = new Date().toISOString(); // 현재 날짜와 시간
+
     const newDeal = {
-      creator: member?.name, // Deal 엔티티의 creator에 해당
-      createTime: new Date().toISOString(), // 생성 시간
-      status: "PENDING", // DealStatus 열거형 값 (예: PENDING, APPROVED 등) - 기본값 설정
-      startup: {
-        name: companyName, // Startup 엔티티에서 사용할 회사명
-      },
+      companyname: companyName,
+      username: "로그인 사용자", // 실제 사용자 정보로 교체 가능
+      make_day: currentDateTime, // 생성일시 추가
+      ...defaultAttributes, // 기본 속성값 추가
     };
 
-    try {
-      setIsSubmitting(true); // 중복 요청 방지
-      const response = await axios.post("/api/member/adddeals", newDeal, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.status === 200 || response.status === 201) {
-        alert("딜이 성공적으로 추가되었습니다.");
-        onSubmit(newDeal); // 부모 컴포넌트에서 처리하도록 콜백 호출
+    onSubmit(newDeal);
         onClose(); // 모달 닫기
-      } else {
-        throw new Error("딜 추가에 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("딜 추가 중 오류 발생:", error);
-      alert("딜 추가 중 문제가 발생했습니다. 다시 시도해주세요.");
-    } finally {
-      setIsSubmitting(false); // 중복 요청 플래그 해제
-    }
   };
 
   return (
@@ -88,11 +68,7 @@ const DealModal = ({ onClose, onSubmit, defaultAttributes, member }) => {
       <div className="modal-container">
         <div className="modal-header">
           <h2>딜 추가</h2>
-          <button
-            className="close-btn"
-            onClick={onClose}
-            disabled={isSubmitting}
-          >
+          <button className="close-btn" onClick={onClose}>
             &times;
           </button>
         </div>
@@ -105,7 +81,6 @@ const DealModal = ({ onClose, onSubmit, defaultAttributes, member }) => {
             value={companyName}
             onChange={handleInputChange}
             placeholder="회사명을 입력하거나 선택하세요"
-            disabled={isSubmitting}
           />
           {/* 필터링된 회사명 목록 */}
           {filteredCompanies.length > 0 && (

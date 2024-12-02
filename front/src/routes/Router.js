@@ -4,7 +4,7 @@ import Login from "../pages/Auth/Login";
 import CompanyPage from "../pages/CompanyPage";
 import FavoritePage from "../pages/FavoritePage";
 import DatabasePage from "../pages/DatabasePage";
-import DealPage from "../pages/Deal/DealPage";
+import DealPage, { DealGrid } from "../pages/Deal/DealPage";
 import SignupPage from "../pages/Auth/SignupPage";
 import DealDetail, { DealDashboard } from "../pages/Deal/DealDetail";
 import NotePage from "../pages/Note/NotePage";
@@ -21,8 +21,8 @@ function Router() {
             <Route path="/notes" element={<NotePage />} />
             <Route path="/startups" element={<DatabasePage />} />
             <Route path="/investors" element={<DatabasePage />} />
-            {/* <Route path="/deals" element={<DealPage />} />
-            <Route path="/deals/:dealId" element={<DealDetailPage />} /> */}
+            {/* <Route path="/deals" element={<DealGrid />} /> */}
+            {/* <Route path="/deals/:dealId" element={<DealDetailPage />} /> */}
             <Route path="/deals" element={<DealDashboard />} />
             <Route path="/deals/:dealId" element={<DealDetail />} />
         </Routes>

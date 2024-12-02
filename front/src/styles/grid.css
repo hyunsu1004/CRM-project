@@ -75,6 +75,9 @@
 
 .ag-cell {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: transparent;
 }
 
@@ -110,4 +113,10 @@
 .ag-root,
 .ag-theme-quartz {
   font-family: "IBM Plex Sans KR", sans-serif;
+}
+
+/* 셀 선택 */
+.ag-cell-focus {
+    background-color: var(--bot-color);
+    border: 1px solid var(--top-color);
 }

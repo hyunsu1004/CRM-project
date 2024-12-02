@@ -14,8 +14,8 @@
 .modal-content {
   background-color: white;
   padding: 20px;
-  width: 530px;
-  height: 650px;
+  width: 630px;
+  height: 750px;
   border-radius: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -49,8 +49,8 @@ h2 {
 }
 
 .input-content {
-  min-height: 500px;
-  width: 505px;
+  min-height: 420px;
+  width: 590px;
   border: none;
   resize: vertical;
 }
