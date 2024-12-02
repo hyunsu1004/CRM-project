@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface DealRepository extends JpaRepository<Deal, Integer> {
-    List<Deal> findAllByMemberId(Integer memberId);
+    List<Deal> findAllByMember_Id(Integer memberId);
 }

@@ -47,11 +47,12 @@ public class DealService {
         deal.setCreateTime(new Date()); // 생성 시간 설정
         deal.setStatus(DealStatus.PENDING); // 기본 상태 설정
 
+
         return dealRepository.save(deal);
     }
 
 
-    public List<Deal> getAllDeals() {
-        return dealRepository.findAll();
+    public List<Deal> getAllDeals(Integer memberId) {
+        return dealRepository.findAllByMember_Id(memberId);
     }
 }

@@ -29,7 +29,7 @@ public class AttributeService {
     @Transactional
     public void addAttributeToAllDeals(Integer memberId, AttributeDTO attributeDTO) {
         // 모든 딜 조회 (특정 회원의 모든 딜)
-        List<Deal> allDeals = dealRepository.findAllByMemberId(memberId);
+        List<Deal> allDeals = dealRepository.findAllByMember_Id(memberId);
 
         // 새로운 Attribute 생성
         Attribute attribute = new Attribute();

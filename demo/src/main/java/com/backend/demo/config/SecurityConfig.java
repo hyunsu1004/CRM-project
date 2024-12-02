@@ -18,7 +18,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/login", "/", "/api/signup", "/signup/email", "/signup/email", "/signup/emailAuth","/crawl","/api/company","/api/attribute","/api/user/attribute","api/user/attributes","/api/{attributeId}",
                                 "/api/member/startups","/api/member/investors","/investors","/api/member/startups","/api/member/startups/interest/update","/api/member/startups/interest",
                                 "/api/member/adddeals","/api/deals","/api/member/notes","/api/member/notes/{id}","/api/member/deals/{id}/notes",
-                                "/api/member/deals/{id}","api/member/deals/notes/{dealId}","/notes/{dealId}").permitAll()
+                                "/api/member/deals/{id}","api/member/deals/notes/{dealId}","/notes/{dealId}", "/api/member/{memberId}/deals", "/api/member/{memberId}/deals/addattributes", "/api/member/{memberId}/deals/addattributes", "/api/member/{memberId}/deals/{dealId}/attributes/{attributeId}/addValue", "/api/member/adddeals").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login.disable());

@@ -959,7 +959,7 @@ export const DealGrid = ({ member }) => {
                             borderRadius: "4px",
                             cursor: "pointer",
                             fontSize: "14px",
-                            border: "none",
+                            // border: "none",
                         }}
                     >
                         딜삭제

@@ -22,7 +22,8 @@ public class Deal {
     private String creator; //생성자
     @JsonView()
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private Date createTime; //생성 시간
     @Enumerated(EnumType.STRING)
 
@@ -43,6 +44,14 @@ public class Deal {
     @JsonManagedReference
     private List<DealNote> notes; //DealNote와의 관계
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")  // memberId와 관계를 매핑
+    private Member member; // Member 엔티티와 연결
+
+    //  동적 속성 부분
+    @OneToMany(mappedBy = "deal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Attribute> attributes = new ArrayList<>();
+
     //startup의 name을 반환하는 getter추가
     public String getStartupName(){
         return startup != null ? startup.getName() : "";
@@ -57,8 +66,6 @@ public class Deal {
     }
 
 
-//  동적 속성 부분
-    @OneToMany(mappedBy = "deal", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Attribute> attributes = new ArrayList<>();
+
 }
 
