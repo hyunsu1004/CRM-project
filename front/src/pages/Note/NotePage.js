@@ -43,7 +43,7 @@ const PropertiesSidebar = ({ properties, isVisible, toggleVisibility }) => {
   );
 };
 
-const NotePage = () => {
+const NotePage = ({notes}) => {
   const { companyName } = useParams();
   const [isRightSidebarVisible, setIsRightSidebarVisible] = useState(true);
   const [properties, setProperties] = useState(null);
@@ -53,21 +53,24 @@ const NotePage = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [notes, setNotes] = useState([]); // 노트 목록 상태 추가
   const mainRef = useRef(null);
   const sidebarRef = useRef(null);
   const [selectedNote, setSelectedNote] = useState(null); // 선택된 노트 데이터
-  const [rowData, setRowData] = useState({
-    엔파티클: [],
-    리피드: [],
-    텔레픽스: [],
-    밸런스히어로: [],
-    메이사: [],
-    에이아이스페라: [],
-    너바나나: [],
-    아몬드컴퍼니: [],
-    제로원: [],
-  });
+  // 로컬
+  // const [notes, setNotes] = useState([]); // 노트 목록 상태 추가
+  // const [rowData, setRowData] = useState({
+  //   엔파티클: [],
+  //   리피드: [],
+  //   텔레픽스: [],
+  //   밸런스히어로: [],
+  //   메이사: [],
+  //   에이아이스페라: [],
+  //   너바나나: [],
+  //   아몬드컴퍼니: [],
+  //   제로원: [],
+  // });
+  // 백엔드
+  const [rowData, setRowData] = useState(notes||{});
   const [gridApi, setGridApi] = useState(null); // AgGrid API 저장
 
   // 열 정의
@@ -97,9 +100,6 @@ const NotePage = () => {
   const handleGridReady = (params) => {
     setGridApi(params.api);
   };
-  const toggleSidebar = () => setIsSidebarVisible(!isSidebarVisible);
-
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
   // 모달 열기
   const handleOpenModal = () => {

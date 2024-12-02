@@ -20,6 +20,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import Layout from "../../components/Layout";
 import NotePage from "../Note/NotePage";
+import axios from "axios";
 
 // 딜 데이터를 관리하기 위한 예시 데이터
 const dealRows = [
@@ -66,7 +67,7 @@ export const DealDashboard = () => {
 
   return (
     <Layout member={member}>
-      <Box sx={{ height: 600, width: "100%" }} className="ag-theme-alpine">
+      <Box sx={{ height: 600, width: "100%" }} className="ag-theme-quartz">
         {/* 딜 목록을 보여주는 그리드 */}
         <AgGridReact
           rowData={dealRows}
@@ -82,27 +83,48 @@ export const DealDashboard = () => {
 const DealDetail = () => {
   // 멤버 정보 관리
   const [member, setMember] = useState(null);
+  const [deal, setDeal] = useState(null);
+  const { dealId } = useParams();
+  const [note, setNote] = useState("");
+  
   useEffect(() => {
     const loggedInUser = localStorage.getItem("member");
     if (loggedInUser) {
       setMember(JSON.parse(loggedInUser)); // localStorage에서 사용자 정보 읽기
     }
-  }, []);
-  const { dealId } = useParams();
-  const [note, setNote] = useState("");
-  const [deal, setDeal] = useState(
-    dealRows.find((d) => d.id === parseInt(dealId))
-  );
+
+    // 백엔드 API 호출하여 딜 상세 데이터 불러오기
+    const fetchDeal = async () => {
+      try {
+        // 백엔드 API 호출
+        const response = await axios.get(`/api/deals/${dealId}`);
+        setDeal(response.data);
+      } catch (error) {
+        console.error("딜 상세 정보를 가져오는 데 실패했습니다:", error);
+      }
+    };
+
+    fetchDeal();
+  }, [dealId]);
 
   if (!deal) return <Typography>딜을 찾을 수 없습니다.</Typography>;
 
-  const handleAddNote = () => {
+
+  const handleAddNote = async () => {
     if (note.trim()) {
-      setDeal((prevDeal) => ({
-        ...prevDeal,
-        notes: [...prevDeal.notes, note],
-      }));
-      setNote("");
+      try {
+        // 백엔드에 새로운 노트 추가 요청
+        await axios.post(`/api/deals/${dealId}/notes`, { note });
+
+        // 노트 추가 성공 시 로컬 상태 업데이트
+        setDeal((prevDeal) => ({
+          ...prevDeal,
+          notes: [...prevDeal.notes, note],
+        }));
+        setNote("");
+      } catch (error) {
+        console.error("노트를 추가하는 데 실패했습니다:", error);
+      }
     }
   };
 
@@ -126,7 +148,7 @@ const DealDetail = () => {
           <Typography variant="h5" gutterBottom>
             노트 관리
           </Typography>
-          <NotePage />
+          <NotePage notes={deal.notes} />
         </Box>
       </Box>
     </Layout>

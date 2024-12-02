@@ -4,10 +4,10 @@ import Login from "../pages/Auth/Login";
 import CompanyPage from "../pages/CompanyPage";
 import FavoritePage from "../pages/FavoritePage";
 import DatabasePage from "../pages/DatabasePage";
-import DealPage, { DealGrid } from "../pages/Deal/DealPage";
 import SignupPage from "../pages/Auth/SignupPage";
 import DealDetail, { DealDashboard } from "../pages/Deal/DealDetail";
 import NotePage from "../pages/Note/NotePage";
+import DealGrid from "../pages/Deal/DealPage";
 
 
 function Router() {
@@ -21,9 +21,10 @@ function Router() {
             <Route path="/notes" element={<NotePage />} />
             <Route path="/startups" element={<DatabasePage />} />
             <Route path="/investors" element={<DatabasePage />} />
-            {/* <Route path="/deals" element={<DealGrid />} /> */}
-            {/* <Route path="/deals/:dealId" element={<DealDetailPage />} /> */}
-            <Route path="/deals" element={<DealDashboard />} />
+            {/* 원본 딜 페이지 */}
+            <Route path="/deals" element={<DealGrid />} />
+            {/* 임시 딜 페이지 */}
+            {/* <Route path="/deals" element={<DealDashboard />} /> */}
             <Route path="/deals/:dealId" element={<DealDetail />} />
         </Routes>
     );
