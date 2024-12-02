@@ -134,8 +134,11 @@ const StartupGrid = ({ apiEndpoint, editable }) => {
 
   // 데이터 저장 API 요청 함수
   const saveToServer = (updatedRowData) => {
+    const dataTosend = Array.isArray(updatedRowData)
+      ? updatedRowData
+      : [updatedRowData];
     axios
-      .post(`${apiEndpoint}/update`, updatedRowData) // 데이터 저장을 위한 API POST 요청
+      .post(`${apiEndpoint}/interest`, dataTosend) // 데이터 저장을 위한 API POST 요청
       .then((response) => {
         console.log("데이터가 성공적으로 저장되었습니다:", response.data);
       })
@@ -152,7 +155,7 @@ const StartupGrid = ({ apiEndpoint, editable }) => {
 
   // row 선택
   const rowSelection = useMemo(() => {
-    return { mode: "multiple" };
+    return { mode: "multiRow" };
   }, []);
 
   const onRowSelected = useCallback(
@@ -163,16 +166,28 @@ const StartupGrid = ({ apiEndpoint, editable }) => {
 
       // 'interest' 값을 반전시켜 팔로우/언팔로우 상태를 변경
       selectedNode.setDataValue("interest", !isFollowed);
-      
-      {
-        event.node.isSelected()
-          ? window.alert(
-              event.node.data.name + " 이 관심기업에 추가되었습니다."
-            )
-          : window.alert(
-              event.node.data.name + " 이 관심기업에서 해제되었습니다."
-            );
+
+      const updatedRowData = selectedNode.data
+
+      saveToServer(updatedRowData)
+
+
+
+      // 알림 표시
+      if (event.node.isSelected()) {
+        window.alert(event.node.data.name + " 이 관심기업에 추가되었습니다.");
+      } else {
+        window.alert(event.node.data.name + " 이 관심기업에서 해제되었습니다.");
       }
+      // {
+      //   event.node.isSelected()
+      //     ? window.alert(
+      //         event.node.data.name + " 이 관심기업에 추가되었습니다."
+      //       )
+      //     : window.alert(
+      //         event.node.data.name + " 이 관심기업에서 해제되었습니다."
+      //       );
+      // }
     },
     [window]
   );
@@ -186,7 +201,7 @@ const StartupGrid = ({ apiEndpoint, editable }) => {
 
   // GridOptions 설정
   const gridOptions = {
-    rowSelection: 'multiple',
+    rowSelection: 'multiRow',
     onSelectionChanged: onSelectionChanged,
     onRowSelected: onRowSelected
   }

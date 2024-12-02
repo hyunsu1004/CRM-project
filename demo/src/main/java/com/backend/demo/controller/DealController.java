@@ -1,11 +1,15 @@
 package com.backend.demo.controller;
 
 import com.backend.demo.entity.Deal;
+import com.backend.demo.entity.Note;
 import com.backend.demo.entity.Startup;
 import com.backend.demo.repository.CompanyRepository;
 import com.backend.demo.repository.DealRepository;
 import com.backend.demo.repository.StartupRepository;
 import com.backend.demo.service.DealService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +22,6 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-
 public class DealController {
     private final DealService dealService;
 
@@ -41,5 +44,17 @@ public class DealController {
     public ResponseEntity<List<Deal>> getAllDeals() {
         List<Deal> deals = dealService.getAllDeals();
         return ResponseEntity.ok(deals);
+    }
+
+    @PostMapping("/api/notes")
+    public ResponseEntity<Note> addNote(@RequestBody @Valid createNoteRequest request) {
+        return ResponseEntity.ok(dealService.addNoteToDeal(request.getDealId(), request.getContent()));
+    }
+
+    @Data
+    static class createNoteRequest {
+        private Long dealId;
+        @NotEmpty
+        private String content;
     }
 }

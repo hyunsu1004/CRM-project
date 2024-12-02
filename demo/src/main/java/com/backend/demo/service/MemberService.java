@@ -32,8 +32,11 @@ public class MemberService {
 
 
     public boolean validLoginMember(LoginDto loginDto) {
-        Member member = memberRepository.findByEmail(loginDto.getEmail())
-                .orElseThrow(()-> new IllegalStateException("User not found with id: " + loginDto.getEmail()));
+        Member member = memberRepository.findByEmail(loginDto.getEmail());
+//                .orElseThrow(()-> new IllegalStateException("User not found with id: " + loginDto.getEmail()));
+        if (member == null) {
+            throw new IllegalStateException("User not found with id: " + loginDto.getEmail());
+        }
         if (passwordEncoder.matches(loginDto.getPassword(), member.getPassword())) {
             return true;
         } else {
@@ -41,7 +44,7 @@ public class MemberService {
         }
     }
     public Member findByEmail(String email) {
-        return memberRepository.findByEmail(email).orElse(null);
+        return memberRepository.findByEmail(email);
     }
 
 

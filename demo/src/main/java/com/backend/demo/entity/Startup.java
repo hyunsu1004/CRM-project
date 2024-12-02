@@ -29,7 +29,6 @@ public class Startup {
     private boolean interest = false; //기본값 설정.
 
     @OneToMany(mappedBy = "startup", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<Deal> deals;
 
 }
