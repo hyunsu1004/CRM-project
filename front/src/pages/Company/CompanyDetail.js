@@ -46,49 +46,103 @@ const CompanyDetail = ({ type }) => {
 
   return (
     <Layout member={member}>
-      <Paper sx={{ padding: 4, marginBottom: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          {company.name}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Category: {company.category}
-        </Typography>
-        <List>
-          <ListItem>
-            <ListItemText
-              primary="Total Count"
-              secondary={company.totalCount}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary="Total Investment"
-              secondary={company.totalInvestment}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary="Average Investment"
-              secondary={company.averageInvestment}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary="Recent Funding"
-              secondary={company.recentFunding}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary="Key Category"
-              secondary={company.keyCategory}
-            />
-          </ListItem>
-        </List>
-        <Button variant="contained" component={Link} to={`/${type}`}>
-          Back to {type}
-        </Button>
-      </Paper>
+      {type === "startups" ? (
+        // 스타트업 세부 정보
+        <Paper sx={{ padding: 4, marginBottom: 4 }}>
+          <Typography variant="h4" gutterBottom>
+            {company.name}
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            카테고리: {company.category}
+          </Typography>
+          <List>
+            <ListItem>
+              <ListItemText
+                primary="주요 카테고리"
+                secondary={company.keyCategory}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="총 건수"
+                secondary={company.totalCount}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="총 투자금"
+                secondary={company.totalInvestment}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="평균 투자 금액"
+                secondary={company.averageInvestment}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="최근 펀딩 일자"
+                secondary={company.recentFunding}
+              />
+            </ListItem>
+          </List>
+          <Button variant="contained" component={Link} to={`/${type}`}>
+            스타트업 목록으로
+          </Button>
+        </Paper>
+      ) : (
+        // 투자시 세부 정보
+        <Paper sx={{ padding: 4, marginBottom: 4 }}>
+          <Typography variant="h4" gutterBottom>
+            {company.name}
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            카테고리: {company.category}
+          </Typography>
+          <List>
+            <ListItem>
+              <ListItemText
+                primary="기술 분야"
+                secondary={company.technology}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="총 자본금"
+                secondary={company.totalCapital}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="총 투자금"
+                secondary={company.totalInvestment}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="최근 투자 단계"
+                secondary={company.recentInvestment}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="최근 펀딩 일자"
+                secondary={company.recentFunding}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="주요 투자자"
+                secondary={company.keyInvestors}
+              />
+            </ListItem>
+          </List>
+          <Button variant="contained" component={Link} to={`/${type}`}>
+            Back to {type}
+          </Button>
+        </Paper>
+      )}
     </Layout>
   );
 };
