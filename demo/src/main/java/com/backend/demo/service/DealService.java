@@ -8,6 +8,7 @@ import com.backend.demo.repository.StartupRepository;
 import org.hibernate.sql.ast.tree.expression.Star;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -54,5 +55,15 @@ public class DealService {
 
     public List<Deal> getAllDeals() {
         return dealRepository.findAll();
+    }
+
+    public Deal findOne(Integer dealId) {
+        return dealRepository.findById(dealId).orElse(null);
+    }
+    @Transactional
+    public void update(Integer id, DealStatus status) {
+        Deal deal = dealRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("딜이 발견되지 않음."));
+        deal.setStatus(status);
+        dealRepository.save(deal);
     }
 }

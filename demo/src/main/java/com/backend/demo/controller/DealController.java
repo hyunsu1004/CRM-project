@@ -64,11 +64,14 @@ public class DealController {
     @PutMapping("/api/member/deals/{id}")
     public ResponseEntity<Deal> updateDealStatus(@PathVariable("id") Integer id, @RequestBody Deal updatedDeal) {
         //deal 엔티티에서 id로 찾고.
-        Deal deal = dealRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("딜이 발견되지 않음."));
-        deal.setStatus(updatedDeal.getStatus()); //상태 업데이트
-        dealRepository.save(deal); // 다시 DB 저장.
+        //System.out.println("id = " + id);
+        //System.out.println("updatedDeal.getStatus() = " + updatedDeal.getStatus());
+        dealService.update(id, updatedDeal.getStatus());
+        Deal deal = dealService.findOne(id);
+
         return ResponseEntity.ok(deal);
     }
+
 
 
 
