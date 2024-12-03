@@ -985,6 +985,8 @@ export const DealGrid = ({ member }) => {
 
                     const {id} = updateStatus; //id와 status를 추출.
 
+                    updateStatus.status = params.newValue;
+
                     // setRowData((prevData) =>
                     //     prevData.map((row) =>
                     //         row === params.data
