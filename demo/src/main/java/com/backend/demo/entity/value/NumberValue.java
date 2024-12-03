@@ -18,5 +18,6 @@ public class NumberValue {
     @JoinColumn(name = "attribute_id")
     private Attribute attribute;
 
+    @Column(name = "number_value")
     private Double value;
 }

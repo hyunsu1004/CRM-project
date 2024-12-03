@@ -20,5 +20,6 @@ public class DateValue {
     @JoinColumn(name = "attribute_id")
     private Attribute attribute;
 
+    @Column(name = "value_value")
     private LocalDate value;
 }

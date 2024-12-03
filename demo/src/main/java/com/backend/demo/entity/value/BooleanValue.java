@@ -18,5 +18,6 @@ public class BooleanValue {
     @JoinColumn(name = "attribute_id")
     private Attribute attribute;
 
+    @Column(name = "boolean_value")
     private Boolean value;
 }

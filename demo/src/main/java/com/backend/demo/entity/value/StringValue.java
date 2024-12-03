@@ -18,5 +18,6 @@ public class StringValue {
     @JoinColumn(name = "attribute_id")
     private Attribute attribute;
 
+    @Column(name = "string_value")
     private String value;
 }

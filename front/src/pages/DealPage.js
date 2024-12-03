@@ -594,6 +594,7 @@ export const DealGrid = ({ member }) => {
         const fetchDeals = async () => {
             try {
                 const response = await axios.get("/api/deals", { withCredentials: true });
+
                 setRowData(response.data); // 백엔드로부터 데이터를 설정
             } catch (error) {
                 console.error("딜 데이터를 가져오는 데 실패했습니다.", error);

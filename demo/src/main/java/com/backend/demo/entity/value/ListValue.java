@@ -21,5 +21,6 @@ public class ListValue {
     private Attribute attribute;
 
     @ElementCollection
+    @Column(name = "list_value")
     private List<String> values;
 }
