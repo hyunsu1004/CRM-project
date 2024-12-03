@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "company": "Company A",
+    "createdAt": "2023-12-01",
+    "status": "검토 중",
+    "notes": ["첫번째 딜 노트"]
+  },
+  {
+    "id": 2,
+    "company": "Company B",
+    "createdAt": "2023-12-02",
+    "status": "완료",
+    "notes": ["두번째 딜 노트"]
+  }
+]
