@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getStartups } from "../api/api";
+import { CompanyDetailModal } from "../pages/Company/CompanyDetail";
 
 export const StartupGrid = ({ apiEndpoint, editable }) => {
   const [rowData, setRowData] = useState([]);
@@ -17,6 +18,15 @@ export const StartupGrid = ({ apiEndpoint, editable }) => {
     "totalCount",
   ];
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+
+  const handleOpen = (company) => {
+    setSelectedCompany(company);
+    setOpenModal(true); // 모달 열기
+  };
+
+  const handleClose = () => setOpenModal(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -46,7 +56,10 @@ export const StartupGrid = ({ apiEndpoint, editable }) => {
             headerName: "기업명",
             field: "name",
             onCellClicked: (params) => {
-              navigate(`/startups/${params.data.id}`);
+              // 상세 페이지 이동
+              // navigate(`/startups/${params.data.id}`);
+              // 상세 모달 열기
+              handleOpen(params.data);
             },
           },
           { headerName: "주요 카테고리", field: "keyCategory" },
@@ -91,13 +104,23 @@ export const StartupGrid = ({ apiEndpoint, editable }) => {
   }, [editable]);
 
   return (
-    <div className="ag-theme-quartz" style={{ height: 600, width: "100%" }}>
-      <AgGridReact
-        rowData={rowData}
-        columnDefs={columnDefs}
-        defaultColDef={TopColDef}
-        rowHeight={42}
-      />
+    <div style={{ height: 600, width: "100%" }}>
+      <div className="ag-theme-quartz" style={{ height: "100%", width: "100%" }}>
+        <AgGridReact
+          rowData={rowData}
+          columnDefs={columnDefs}
+          defaultColDef={TopColDef}
+          rowHeight={42}
+        />
+      </div>
+      {selectedCompany && (
+        <CompanyDetailModal
+          type="startups"
+          openModal={openModal}
+          handleClose={handleClose}
+          company={selectedCompany}
+        />
+      )}
     </div>
   );
 };

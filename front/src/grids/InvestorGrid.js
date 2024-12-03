@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getInvestors } from "../api/api";
+import { CompanyDetailModal } from "../pages/Company/CompanyDetail";
 
 export const InvestorGrid = ({ apiEndpoint, editable, rowSelection }) => {
   const [rowData, setRowData] = useState([]);
@@ -17,6 +18,15 @@ export const InvestorGrid = ({ apiEndpoint, editable, rowSelection }) => {
     "recentFunding",
   ];
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+
+  const handleOpen = (company) => {
+    setSelectedCompany(company);
+    setOpenModal(true); // 모달 열기
+  };
+
+  const handleClose = () => setOpenModal(false);
 
   useEffect(() => {
     // API에서 데이터 가져오기
@@ -47,7 +57,10 @@ export const InvestorGrid = ({ apiEndpoint, editable, rowSelection }) => {
             headerName: "기업명",
             field: "name",
             onCellClicked: (params) => {
-              navigate(`/investors/${params.data.id}`);
+              // 상세 페이지 이동
+              // navigate(`/investors/${params.data.id}`);
+              // 상세 모달 열기
+              handleOpen(params.data);
             },
           },
           { headerName: "제품/서비스", field: "productOrService" },
@@ -99,14 +112,27 @@ export const InvestorGrid = ({ apiEndpoint, editable, rowSelection }) => {
   };
 
   return (
-    <div className="ag-theme-quartz" style={{ height: 600, width: "100%" }}>
-      <AgGridReact
-        rowData={rowData}
-        columnDefs={columnDefs}
-        defaultColDef={TopColDef}
-        rowHeight={42}
-        // rowSelection={gridOptions}
-      />
+    <div style={{ height: 600, width: "100%" }}>
+      <div
+        className="ag-theme-quartz"
+        style={{ height: "100%", width: "100%" }}
+      >
+        <AgGridReact
+          rowData={rowData}
+          columnDefs={columnDefs}
+          defaultColDef={TopColDef}
+          rowHeight={42}
+          // rowSelection={gridOptions}
+        />
+      </div>
+      {selectedCompany && (
+        <CompanyDetailModal
+          type="investors"
+          openModal={openModal}
+          handleClose={handleClose}
+          company={selectedCompany}
+        />
+      )}
     </div>
   );
 };

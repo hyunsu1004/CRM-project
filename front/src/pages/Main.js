@@ -25,6 +25,7 @@ import axios from "axios";
 import { StartupGrid } from "../grids/StartupGrid";
 import { InvestorGrid } from "../grids/InvestorGrid";
 import { Link } from "react-router-dom";
+import { CompanyDetail, CompanyDetailModal } from "./Company/CompanyDetail";
 
 const Main = () => {
   const [member, setMember] = useState(null);
@@ -33,6 +34,15 @@ const Main = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [companies, setCompanies] = useState([]);
   const [shuffledCompanies, setShuffledCompanies] = useState([]); // 셔플된 기업 리스트 저장
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+
+  const handleOpen = (company) => {
+    setSelectedCompany(company);
+    setOpenModal(true); // 모달 열기
+  };
+
+  const handleClose = () => setOpenModal(false);
 
   const slideRef = useRef();
 
@@ -126,7 +136,7 @@ const Main = () => {
             alignItems: "center",
             position: "sticky",
             top: 0,
-            backgroundColor: "#fff",
+            // backgroundColor: "#fff",
             zIndex: 1000,
             borderBottom: "2px solid var(--bot-color)",
           }}
@@ -203,7 +213,15 @@ const Main = () => {
                       cursor: "pointer",
                     }}
                   >
-                    <Link to={`/investors/${company.id}`}>
+                    <div
+                      onClick={() => {
+                        handleOpen(company);
+                      }}
+                      style={{
+                        cursor: "pointer",
+                        transition: "0.4ms ease-in-out",
+                      }}
+                    >
                       <CardContent>
                         <Typography
                           variant="subtitle1"
@@ -242,9 +260,17 @@ const Main = () => {
                           {company.technology}
                         </Typography>
                       </CardContent>
-                    </Link>
+                    </div>
                   </Card>
                 ))}
+                {selectedCompany && (
+                  <CompanyDetailModal
+                    type="startups"
+                    openModal={openModal}
+                    handleClose={handleClose}
+                    company={selectedCompany}
+                  />
+                )}
               </Box>
             </Box>
           </Box>
