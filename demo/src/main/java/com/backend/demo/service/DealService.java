@@ -52,7 +52,7 @@ public class DealService {
     }
 
 
-    public List<Deal> getAllDeals(Integer memberId) {
-        return dealRepository.findAllByMember_Id(memberId);
+    public List<Deal> getAllDeals() {
+        return dealRepository.findAll();
     }
 }

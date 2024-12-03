@@ -24,8 +24,8 @@ public class Member {
 
     private String role; // 이  멤버의 권한
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Deal> deals = new ArrayList<>();
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Deal> deals = new ArrayList<>();
 
 //    private List<Attribute> attributes = new ArrayList<>();
 }

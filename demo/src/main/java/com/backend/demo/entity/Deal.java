@@ -44,12 +44,10 @@ public class Deal {
     @JsonManagedReference
     private List<DealNote> notes; //DealNote와의 관계
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")  // memberId와 관계를 매핑
-    private Member member; // Member 엔티티와 연결
 
     //  동적 속성 부분
     @OneToMany(mappedBy = "deal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Attribute> attributes = new ArrayList<>();
 
     //startup의 name을 반환하는 getter추가

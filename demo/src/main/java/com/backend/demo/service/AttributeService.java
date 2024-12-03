@@ -19,17 +19,22 @@ import java.util.List;
 @Service
 public class AttributeService {
     @Autowired
-    private AttributeRepository attributeRepository;
+    private final AttributeRepository attributeRepository;
     @Autowired
-    private DealRepository dealRepository;
+    private final DealRepository dealRepository;
+
+    public AttributeService(AttributeRepository attributeRepository, DealRepository dealRepository) {
+        this.attributeRepository = attributeRepository;
+        this.dealRepository = dealRepository;
+    }
 
     /**
      * 속성 추가 로직
      */
     @Transactional
-    public void addAttributeToAllDeals(Integer memberId, AttributeDTO attributeDTO) {
+    public void addAttributeToAllDeals(AttributeDTO attributeDTO) {
         // 모든 딜 조회 (특정 회원의 모든 딜)
-        List<Deal> allDeals = dealRepository.findAllByMember_Id(memberId);
+        List<Deal> allDeals = dealRepository.findAll();
 
         // 새로운 Attribute 생성
         Attribute attribute = new Attribute();

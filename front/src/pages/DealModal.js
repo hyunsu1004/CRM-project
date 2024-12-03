@@ -62,7 +62,6 @@ const DealModal = ({ onClose, onSubmit, defaultAttributes, member }) => {
       startup: {
         name: companyName, // Startup 엔티티에서 사용할 회사명
       },
-      memberId: member?.id, // memberId를 딜 객체에 추가
     };
 
     try {

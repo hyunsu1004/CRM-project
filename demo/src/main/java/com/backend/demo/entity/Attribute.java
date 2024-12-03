@@ -1,6 +1,7 @@
 package com.backend.demo.entity;
 
 import com.backend.demo.entity.value.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Attribute {
 
     @ManyToOne
     @JoinColumn(name = "deal_id")
+    @JsonBackReference
     private Deal deal;
 
     @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -3,22 +3,30 @@ package com.backend.demo.controller;
 import com.backend.demo.dto.AttributeDTO;
 import com.backend.demo.service.AttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/member/{memberId}/deals")
+@RequestMapping("/api/member/{memberId}/")
 public class AttributeController {
 
     @Autowired
     private AttributeService attributeService;
 
+    public AttributeController(AttributeService attributeService) {
+        this.attributeService = attributeService;
+    }
+
     // 속성 추가 API (모든 딜에 속성 추가)
-    @PostMapping("/addattributes")
-    public ResponseEntity<?> addAttribute(@PathVariable("memberId") Integer memberId, @RequestBody AttributeDTO attributeDTO) {
-        // 모든 딜에 속성 추가 서비스 호출
-        attributeService.addAttributeToAllDeals(memberId, attributeDTO);
-        return ResponseEntity.ok("Attribute added to all deals successfully");
+    @PostMapping("deals/addattributes")
+    public ResponseEntity<?> addAttribute(@RequestBody AttributeDTO attributeDTO) {
+        try {
+            attributeService.addAttributeToAllDeals(attributeDTO);
+            return ResponseEntity.ok("Attribute added to all deals successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add attribute to all deals");
+        }
     }
 }
 

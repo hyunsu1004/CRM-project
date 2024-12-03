@@ -8,6 +8,6 @@ import java.util.List;
 
 @RestController
 public interface AttributeRepository extends JpaRepository<Attribute, Integer> {
-    boolean existsByName(String name); //속성 이름 중복 체크
-    List<Attribute> findByDealId(Integer dealId);
+//    boolean existsByName(String name); //속성 이름 중복 체크
+//    List<Attribute> findByDealId(Integer dealId);
 }
