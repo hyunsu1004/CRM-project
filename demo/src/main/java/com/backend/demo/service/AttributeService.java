@@ -89,7 +89,6 @@ public class AttributeService {
         }
     }
 
-    // 자료형에 맞게 값 저장
     // 자료형에 맞게 값 저장 (정수형)
     private void saveIntegerValue(Attribute attribute, String value) {
         NumberValue numberValue = new NumberValue();
