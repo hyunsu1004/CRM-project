@@ -25,7 +25,6 @@
     "styled-components": "^6.1.13",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://hyunsu1004.github.io/CRM-project",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

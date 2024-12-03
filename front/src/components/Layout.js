@@ -242,7 +242,7 @@ const Layout = ({ children, member }) => {
           ) : (
             // 로그인
             <div className={styles.login_cont}>
-              <Link to="/Login">
+              <Link to="/login">
                 <div className={styles.profile_cont} id="profileCont">
                   {/* <LogoMiniImg className={styles.loginImg} /> */}
                   <LoginImg className={styles.loginImg} />
