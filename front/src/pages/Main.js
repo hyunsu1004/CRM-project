@@ -136,7 +136,7 @@ const Main = () => {
             alignItems: "center",
             position: "sticky",
             top: 0,
-            // backgroundColor: "#fff",
+            backgroundColor: "#fff",
             zIndex: 1000,
             borderBottom: "2px solid var(--bot-color)",
           }}
@@ -265,7 +265,7 @@ const Main = () => {
                 ))}
                 {selectedCompany && (
                   <CompanyDetailModal
-                    type="startups"
+                    type="investors"
                     openModal={openModal}
                     handleClose={handleClose}
                     company={selectedCompany}

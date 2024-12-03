@@ -23,9 +23,17 @@ import {
   AccessTime,
   AccountBalance,
   ArrowBack,
+  Assessment,
+  AssessmentOutlined,
   AttachMoney,
   Business,
   Category,
+  Equalizer,
+  Group,
+  ListAlt,
+  People,
+  TrendingUp,
+  Work,
 } from "@mui/icons-material";
 
 // 회사 세부 정보 모달
@@ -49,10 +57,11 @@ export const CompanyDetailModal = ({
           borderRadius: 2,
           width: "80%",
           maxWidth: "600px",
+          textAlign: "center",
         }}
       >
         <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 2 }}>
-          {company.name} - 상세 정보
+          {company.name}
         </Typography>
         <List>
           {type === "startups" ? (
@@ -64,13 +73,27 @@ export const CompanyDetailModal = ({
                 <ListItemText
                   primary="주요 카테고리"
                   secondary={
-                    <span style={{ fontWeight: "bold" }}>
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                        display: "inline-block", // 내용 크기에 맞게 줄임
+                        backgroundColor: "var(--top-color)", // 원하는 배경색
+                        color: "#fff", // 글자 색상 (배경과 대조)
+                        padding: "4px 8px", // 안쪽 여백
+                        borderRadius: "16px", // 둥근 모서리
+                        fontWeight: "600", // 글자 강조
+                        fontSize: "12px", // 글자 크기
+                      }}
+                    >
                       {company.keyCategory}
                     </span>
                   }
                 />
               </ListItem>
               <ListItem>
+                <ListItemIcon>
+                  <Assessment />
+                </ListItemIcon>
                 <ListItemText
                   primary="총 건수"
                   secondary={
@@ -80,28 +103,40 @@ export const CompanyDetailModal = ({
                   }
                 />
               </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <AttachMoney />
-                </ListItemIcon>
-                <ListItemText
-                  primary="총 투자금"
-                  secondary={
-                    <span style={{ color: "#004d40" }}>
-                      {company.totalInvestment}
-                    </span>
-                  }
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemText
-                  primary="평균 투자 금액"
-                  secondary={
-                    <span style={{ color: "#ff5722" }}>
-                      {company.averageInvestment}
-                    </span>
-                  }
-                />
+              <ListItem sx={{ p: 0, m: 0 }}>
+                <List
+                  sx={{
+                    p: 0,
+                    m: 0,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <ListItem sx={{ width: "400px" }}>
+                    <ListItemIcon>
+                      <AttachMoney />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="총 투자금"
+                      secondary={
+                        <span style={{ color: "var(--mid-color)" }}>
+                          {company.totalInvestment}
+                        </span>
+                      }
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="평균 투자 금액"
+                      secondary={
+                        <span style={{ color: "#ff5722" }}>
+                          {company.averageInvestment}
+                        </span>
+                      }
+                    />
+                  </ListItem>
+                </List>
               </ListItem>
               <ListItem>
                 <ListItemIcon>
@@ -121,6 +156,30 @@ export const CompanyDetailModal = ({
             <>
               <ListItem>
                 <ListItemIcon>
+                  <Category />
+                </ListItemIcon>
+                <ListItemText
+                  primary="주요 카테고리"
+                  secondary={
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                        display: "inline-block", // 내용 크기에 맞게 줄임
+                        backgroundColor: "var(--top-color)", // 원하는 배경색
+                        color: "#fff", // 글자 색상 (배경과 대조)
+                        padding: "4px 8px", // 안쪽 여백
+                        borderRadius: "16px", // 둥근 모서리
+                        fontWeight: "600", // 글자 강조
+                        fontSize: "12px", // 글자 크기
+                      }}
+                    >
+                      {company.category}
+                    </span>
+                  }
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
                   <Business />
                 </ListItemIcon>
                 <ListItemText
@@ -128,25 +187,69 @@ export const CompanyDetailModal = ({
                   secondary={company.technology}
                 />
               </ListItem>
+              <ListItem sx={{ p: 0, m: 0 }}>
+                <List
+                  sx={{
+                    p: 0,
+                    m: 0,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <ListItem sx={{ width: "400px" }}>
+                    <ListItemIcon>
+                      <AttachMoney />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="총 투자금"
+                      secondary={
+                        <span style={{ color: "var(--mid-color)" }}>
+                          {company.totalInvestment}
+                        </span>
+                      }
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="총 자본금"
+                      secondary={
+                        <span style={{ color: "#1976d2" }}>
+                          {" "}
+                          {/* 파란색 계열 */}
+                          {company.totalCapital}
+                        </span>
+                      }
+                    />
+                  </ListItem>
+                </List>
+              </ListItem>
               <ListItem>
+                <ListItemIcon>
+                  <TrendingUp />
+                </ListItemIcon>
                 <ListItemText
-                  primary="총 자본금"
-                  secondary={company.totalCapital}
+                  primary="최근 투자 단계"
+                  secondary={
+                    <span style={{ color: "#f57c00" }}>
+                      {" "}
+                      {/* 회색 계열 */}
+                      {company.recentInvestment}
+                    </span>
+                  }
                 />
               </ListItem>
               <ListItem>
                 <ListItemIcon>
-                  <AccountBalance />
+                  <People />
                 </ListItemIcon>
                 <ListItemText
-                  primary="총 투자금"
-                  secondary={company.totalInvestment}
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemText
-                  primary="최근 투자 단계"
-                  secondary={company.recentInvestment}
+                  primary="주요 투자자"
+                  secondary={
+                    company.keyInvestors
+                      .split(" ") // 공백을 기준으로 분할
+                      .join(", ") // 각 투자자 이름 사이에 쉼표와 공백을 넣기
+                  }
                 />
               </ListItem>
               <ListItem>
@@ -155,13 +258,13 @@ export const CompanyDetailModal = ({
                 </ListItemIcon>
                 <ListItemText
                   primary="최근 펀딩 일자"
-                  secondary={company.recentFunding}
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemText
-                  primary="주요 투자자"
-                  secondary={company.keyInvestors}
+                  secondary={
+                    <span style={{ fontStyle: "italic" }}>
+                      {" "}
+                      {/* 보라색 계열 */}
+                      {company.recentFunding}
+                    </span>
+                  }
                 />
               </ListItem>
             </>
