@@ -55,30 +55,30 @@ const Login = () => {
     setLoading(true);
 
     // Ver. Back-end 협업
-    // try {
-    //   const response = await axios.post(
-    //     "/api/login",
-    //     { email, password },
-    //     {
-    //       // withCredentials: true, // 세션 쿠키 사용 설정
-    //       headers: { "Content-Type": "application/json" },
-    //     }
-    //   );
+    try {
+      const response = await axios.post(
+        "/api/login",
+        { email, password },
+        {
+          // withCredentials: true, // 세션 쿠키 사용 설정
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
-    //   // 로그인 성공 시 사용자 고유 ID를 받아옴
-    //   if (response.status === 200) {
-    //     const member = response.data; // 서버에서 받은 사용자 정보
-    //     localStorage.setItem("member", JSON.stringify(member)); // 로컬 스토리지에 저장
+      // 로그인 성공 시 사용자 고유 ID를 받아옴
+      if (response.status === 200) {
+        const member = response.data; // 서버에서 받은 사용자 정보
+        localStorage.setItem("member", JSON.stringify(member)); // 로컬 스토리지에 저장
 
-    //     // 로그인 성공 시 메인 페이지로 이동
-    //     navigate(`/`);
-    //   }
-    // } catch (error) {
-    //   const errorMessage = error.response?.data || "로그인에 실패했습니다.";
-    //   setPasswordError(errorMessage);
-    // } finally {
-    //   setLoading(false);
-    // }
+        // 로그인 성공 시 메인 페이지로 이동
+        navigate(`/`);
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data || "로그인에 실패했습니다.";
+      setPasswordError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
 
     // Ver. 로컬 사용자 검증
     const member = users.find(
