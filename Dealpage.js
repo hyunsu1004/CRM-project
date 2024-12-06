@@ -731,9 +731,27 @@ export const DealGrid = ({ member }) => {
           }}
           enableAdvancedFilter={true}
       />
-      (<AttributeModal onClose={() => setModalOpen(false)}></AttributeModal>)
-      {<DealModal />}
-      {<NoteModal />}
+            {isModalOpen && (
+        <AttributeModal
+          onClose={() => setModalOpen(false)}
+          onSubmit={addNewAttribute}
+          existingAttributes={existingAttributes} // 중복 확인을 위한 속성 전달
+        />
+      )}
+      {isDealModalOpen && (
+        <DealModal
+          onClose={() => setDealModalOpen(false)}
+          onSubmit={addNewDeal} // 딜 추가 핸들러
+          defaultAttributes={defaultAttributes}
+          member={member}
+        />
+      )}
+       {isNoteModalOpen && (
+        <NoteModal
+          onClose={() => setNoteModalOpen(false)}
+          selectedRow={selectedNoteRow}
+        />
+      )}
     </div>
   );
 };
