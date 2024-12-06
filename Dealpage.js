@@ -13,6 +13,7 @@ import ReactDOM from "react-dom";
 import DealModal from "../pages/DealModal";
 import { useNavigate } from "react-router-dom";
 import NoteModal from "./NoteModal";
+const MultiSelectEditor = (props) => {};
 export const DealGrid = ({ member }) => {
   return (
     <div
@@ -36,7 +37,6 @@ export const DealGrid = ({ member }) => {
         >
           {
             <button
-              onClick={handleDelete}
               style={{
                 padding: "8px 16px",
                 backgroundColor: "white",
