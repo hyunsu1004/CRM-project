@@ -43,6 +43,72 @@ const MultiSelectEditor = (props) => {
     </div>
   );
 };
+const seriesOptions = [
+  { value: "Series A", color: "red" },
+  { value: "Series B", color: "blue" },
+  { value: "Series C", color: "green" },
+  { value: "Seed", color: "white" },
+];
+
+const PersonEditor = (props) => {
+  const [selectedPeople, setSelectedPeople] = useState(
+    props.value ? props.value.split(",") : []
+  );
+
+  const peopleOptions = [
+    { name: "Jason Lee", email: "jason@purplelabs.io" },
+    { name: "김태훈", email: "taehoon@purplelabs.io" },
+    { name: "박철용", email: "double@purplelabs.io" },
+    { name: "Kristoffer Andersson", email: "kristoffer@purplelabs.io" },
+    { name: "장강명", email: "bright_river@purplelabs.io" },
+    { name: "배두나", email: "double@purplelabs.io" },
+    { name: "제갈공명", email: "lyingdragon@purplelabs.io" },
+  ];
+
+  const handleSelect = async (person) => {
+    const updatedSelection = selectedPeople.includes(person.name)
+      ? selectedPeople.filter((name) => name !== person.name)
+      : [...selectedPeople, person.name];
+
+    setSelectedPeople(updatedSelection);
+
+    // 값 업데이트
+    const newValue = updatedSelection.join(",");
+    props.node.setDataValue(props.column.colId, newValue);
+    props.api.refreshCells({ rowNodes: [props.node] });
+
+    // 서버에 선택된 사람 목록 업데이트
+    try {
+      await axios.put("/api/update-person-selection", {
+        id: props.node.data.id, // 예시로 row의 id를 사용
+        column: props.column.colId,
+        selectedPeople: newValue,
+      });
+    } catch (error) {
+      console.error("사람 목록 업데이트 실패:", error);
+    }
+  };
+
+  return (
+    <div className="custom-person-editor">
+      {peopleOptions.map((person) => (
+        <div key={person.email} className="person-item">
+          <label>
+            <input
+              type="checkbox"
+              checked={selectedPeople.includes(person.name)}
+              onChange={() => handleSelect(person)}
+            />
+            <span>
+              {person.name} ({person.email})
+            </span>
+          </label>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export const DealGrid = ({ member }) => {
   return (
     <div
