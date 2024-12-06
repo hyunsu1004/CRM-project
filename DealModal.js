@@ -4,6 +4,43 @@ import "../styles/modal.css"; // 필요에 따라 CSS 파일 작성
 const DealModal = ({ onClose, onSubmit, defaultAttributes }) => {
   const [companyName, setCompanyName] = useState("");
   const [filteredCompanies, setFilteredCompanies] = useState([]);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setCompanyName(value);
+
+    // 회사명 필터링
+    if (value) {
+      const filtered = companyList.filter((company) =>
+        company.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredCompanies(filtered);
+    } else {
+      setFilteredCompanies([]);
+    }
+  };
+
+  const handleCompanySelect = (company) => {
+    setCompanyName(company);
+    setFilteredCompanies([]); // 목록 숨기기
+  };
+  const handleSubmit = () => {
+    if (!companyName) {
+      alert("회사명을 선택해주세요.");
+      return;
+    }
+
+    const currentDateTime = new Date().toISOString(); // 현재 날짜와 시간
+
+    const newDeal = {
+      companyname: companyName,
+      username: "로그인 사용자", // 실제 사용자 정보로 교체 가능
+      make_day: currentDateTime, // 생성일시 추가
+      ...defaultAttributes, // 기본 속성값 추가
+    };
+
+    onSubmit(newDeal);
+    onClose(); // 모달 닫기
+  };
 
   const companyList = [
     "쿼타랩",
