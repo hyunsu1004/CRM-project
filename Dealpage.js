@@ -403,6 +403,17 @@ export const DealGrid = ({ member }) => {
       },
     },
   ]);
+  const deleteColumn = (field) => {
+    setColumnDefs((prevDefs) =>
+      prevDefs.filter((colDef) => colDef.field !== field)
+    );
+    setRowData((prevData) =>
+      prevData.map((row) => {
+        const { [field]: _, ...rest } = row;
+        return rest;
+      })
+    );
+  };
 
   return (
     <div
