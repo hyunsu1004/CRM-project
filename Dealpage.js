@@ -650,6 +650,9 @@ export const DealGrid = ({ member }) => {
        setShowDeleteButton(false);
        gridRef.current?.api?.deselectAll(); // 선택 해제
      };
+     const rowSelection = useMemo(() => {
+       return { mode: "multiRow" };
+     }, []);
   return (
     <div
       style={{ width: "100%", height: "70vh" }}
