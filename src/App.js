@@ -1,24 +1,24 @@
-import logo from "./logo.svg";
-import "./App.css";
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import ReactDOM from "react-dom";
+import dealpage from "./Dealpage";
+import Dealpage from "./Dealpage";
+ReactDOM.render(<App />, document.getElementById("root"));
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        {/* 로그인 라우터  */}
+        {/* <Route path="/" element={<Login />} />
+        <Route path="/main" element={<Main />} /> */}
+        {/* 메인 테스트용 라우터 */}
+        <Route path="/Dealpage" element={<Dealpage />} />
+      </Routes>
+    </Router>
   );
 }
 
