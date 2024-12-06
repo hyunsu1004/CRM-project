@@ -633,6 +633,23 @@ export const DealGrid = ({ member }) => {
        setShowNoteㄴButton(selectedData.length === 1);
        setSelectedNoteRow(selectedData.length === 1 ? selectedData[0] : null);
      }, []);
+     const handleNoteAdd = () => {
+       if (selectedNoteRow) {
+         setNoteModalOpen(true); // 노트 모달 열기
+       }
+     };
+   
+     const handleDelete = () => {
+       if (selectedRows.length === 0) return; // 선택된 행이 없으면 아무 작업도 하지 않음
+   
+       const updatedRowData = rowData.filter((row) => !selectedRows.includes(row));
+       setRowData(updatedRowData);
+   
+       // 삭제 후 상태 초기화
+       setSelectedRows([]);
+       setShowDeleteButton(false);
+       gridRef.current?.api?.deselectAll(); // 선택 해제
+     };
   return (
     <div
       style={{ width: "100%", height: "70vh" }}
