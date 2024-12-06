@@ -298,6 +298,29 @@ const StatusCellRenderer = (props) => {
     </div>
   );
 };
+// AG Grid에서 사용될 리프레시 메서드 구현
+StatusCellRenderer.refresh = (params) => {
+  return params.value !== undefined; // 값이 변경되었음을 나타냄
+};
+const StatusDropdownEditor = (props) => {
+  const [value, setValue] = useState(props.value || statusOptions[0].value);
+
+  const handleSelect = (newValue) => {
+    setValue(newValue);
+    props.node.setDataValue(props.column.colId, newValue); // 값 업데이트
+    props.api.refreshCells({
+      rowNodes: [props.node],
+      columns: [props.column.colId],
+    });
+    props.stopEditing(); // 편집 종료
+  };
+
+  return (
+    <div style={{ padding: "5px", boxSizing: "border-box" }}>
+      <CustomDropdown value={value} onChange={handleSelect} />
+    </div>
+  );
+};
 
 export const DealGrid = ({ member }) => {
   return (
