@@ -692,8 +692,9 @@ export const DealGrid = ({ member }) => {
               딜삭제
             </button>
           }
-          {
+{showNoteButton && (
             <button
+              onClick={handleNoteAdd}
               style={{
                 padding: "8px 16px",
                 backgroundColor: "white",
@@ -706,29 +707,29 @@ export const DealGrid = ({ member }) => {
             >
               노트 추가
             </button>
-          }
+          )}
         </div>
       </div>
       <AgGridReact
-      //     ref={gridRef} // gridRef를 AgGridReact에 연결
-      //     rowData={rowData}
-      //     columnDefs={columnDefs}
-      //     defaultColDef={defaultColDef}
-      //     rowSelection={rowSelection}
-      //     onSelectionChanged={onSelectionChanged}
-      //     suppressHeaderClickSelection={true}
-      //     context={context}
-      //     onCellValueChanged={(params) => {
-      //       // rowData 강제 업데이트
-      //       setRowData((prevData) =>
-      //         prevData.map((row) =>
-      //           row === params.data
-      //             ? { ...row, [params.colDef.field]: params.newValue }
-      //             : row
-      //         )
-      //       );
-      //     }}
-      //     enableAdvancedFilter={true}
+          ref={gridRef} // gridRef를 AgGridReact에 연결
+          rowData={rowData}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          rowSelection={rowSelection}
+          onSelectionChanged={onSelectionChanged}
+          suppressHeaderClickSelection={true}
+          context={context}
+          onCellValueChanged={(params) => {
+            // rowData 강제 업데이트
+            setRowData((prevData) =>
+              prevData.map((row) =>
+                row === params.data
+                  ? { ...row, [params.colDef.field]: params.newValue }
+                  : row
+              )
+            );
+          }}
+          enableAdvancedFilter={true}
       />
       (<AttributeModal onClose={() => setModalOpen(false)}></AttributeModal>)
       {<DealModal />}
