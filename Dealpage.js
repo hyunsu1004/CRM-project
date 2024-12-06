@@ -321,6 +321,31 @@ const StatusDropdownEditor = (props) => {
     </div>
   );
 };
+const DatePickerEditor = (props) => {
+  const [value, setValue] = useState(props.value || "");
+
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    setValue(newValue);
+    props.node.setDataValue(props.column.colId, newValue); // 그리드 데이터 업데이트
+    props.stopEditing(); // 편집 종료
+  };
+
+  return (
+    <input
+      type="date"
+      value={value}
+      onChange={handleChange}
+      style={{
+        width: "100%",
+        height: "100%",
+        padding: "5px",
+        border: "none",
+        boxSizing: "border-box",
+      }}
+    />
+  );
+};
 
 export const DealGrid = ({ member }) => {
   return (
