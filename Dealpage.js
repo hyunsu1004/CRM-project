@@ -270,6 +270,35 @@ const CustomDropdown = ({ value, onChange }) => {
     </div>
   );
 };
+const StatusCellRenderer = (props) => {
+  const status = statusOptions.find((opt) => opt.value === props.value);
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "8px", // 아이콘과 텍스트 사이 간격
+        fontSize: "14px", // 텍스트 크기
+        padding: "4px", // 내부 여백
+      }}
+    >
+      <span
+        style={{
+          display: "inline-block",
+          width: "12px",
+          height: "12px",
+          borderRadius: "50%",
+          backgroundColor: status?.color || "gray",
+        }}
+      ></span>
+      <span style={{ color: "black", fontWeight: "bold" }}>
+        {status?.value || "선택 없음"}
+      </span>
+    </div>
+  );
+};
+
 export const DealGrid = ({ member }) => {
   return (
     <div
