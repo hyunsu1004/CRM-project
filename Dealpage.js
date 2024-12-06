@@ -214,6 +214,18 @@ const CustomButtonComponent = ({ onClick, onDealClick }) => {
     </div>
   );
 };
+const statusOptions = [
+  { value: "미팅", color: "gray" },
+  { value: "검토", color: "gray" },
+  { value: "IR", color: "orange" },
+  { value: "예비투자심의", color: "orange" },
+  { value: "본투자심의", color: "orange" },
+  { value: "최종투자심의", color: "green" },
+  { value: "계약", color: "blue" },
+  { value: "납입", color: "blue" },
+  { value: "투자완료", color: "blue" },
+  { value: "검토중단", color: "red" },
+];
 
 export const DealGrid = ({ member }) => {
   return (
