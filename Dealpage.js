@@ -600,6 +600,14 @@ export const DealGrid = ({ member }) => {
       },
     ]);
   };
+  const addNewDeal = (newDeal) => {
+    const newRow = {
+      ...newDeal,
+      ...defaultAttributes, // 기본 속성값 자동 추가
+      status: defaultAttributes.status || statusOptions[0].value, // 기본값 설정
+    };
+    setRowData((prevData) => [...prevData, newRow]);
+  };
   return (
     <div
       style={{ width: "100%", height: "70vh" }}
