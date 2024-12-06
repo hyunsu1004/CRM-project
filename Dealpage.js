@@ -202,6 +202,18 @@ const SeriesDropdownEditor = (props) => {
     </div>
   );
 };
+const CustomButtonComponent = ({ onClick, onDealClick }) => {
+  return (
+    <div style={{ display: "flex", gap: "10px" }}>
+      <button className="btn" onClick={onClick}>
+        속성 추가
+      </button>
+      <button className="btn" onClick={onDealClick}>
+        딜 추가
+      </button>
+    </div>
+  );
+};
 
 export const DealGrid = ({ member }) => {
   return (
