@@ -119,6 +119,15 @@ const PersonEditor = (props) => {
     </div>
   );
 };
+const SelectCellRenderer = (props) => {
+  const series = seriesOptions.find((opt) => opt.value === props.value); // 매핑 확인
+  return (
+    <span style={{ fontWeight: "bold" }}>
+      <span style={{ color: series?.color || "black" }}>●</span>{" "}
+      <span style={{ color: "black" }}>{series?.value || "선택 없음"}</span>
+    </span>
+  );
+};
 
 export const DealGrid = ({ member }) => {
   return (
