@@ -348,6 +348,43 @@ const DatePickerEditor = (props) => {
 };
 
 export const DealGrid = ({ member }) => {
+  const [isNoteModalOpen, setNoteModalOpen] = useState(false); // 노트 모달 상태
+  const [selectedNoteRow, setSelectedNoteRow] = useState(null);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
+  const gridRef = useRef();
+  const navigate = useNavigate();
+  const [showNoteButton, setShowNoteButton] = useState(false);
+
+  const [rowData, setRowData] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isDealModalOpen, setDealModalOpen] = useState(false);
+  const [existingAttributes, setExistingAttributes] = useState([]);
+  const [columnDefs, setColumnDefs] = useState([
+    {
+      headerName: "회사명",
+      field: "companyname",
+      filter: "agSetColumnFilter",
+      flex: 1,
+    },
+    {
+      headerName: "생성 일시",
+      field: "make_day",
+      flex: 1,
+      filter: "agSetColumnFilter",
+      valueFormatter: (params) =>
+        params.value ? new Date(params.value).toLocaleString() : "",
+    },
+    {
+      headerName: "검토 상태",
+      field: "status",
+      cellRenderer: StatusCellRenderer, // React Cell Renderer
+      cellEditor: StatusDropdownEditor, // React Cell Editor
+      editable: true, // 편집 가능
+      filter: "agSetColumnFilter",
+    },
+  ]);
+
   return (
     <div
       style={{ width: "100%", height: "70vh" }}
