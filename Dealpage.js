@@ -608,6 +608,31 @@ export const DealGrid = ({ member }) => {
     };
     setRowData((prevData) => [...prevData, newRow]);
   };
+  onst defaultColDef = useMemo(
+       () => ({
+         flex: 1,
+         editable: true,
+         minWidth: 100,
+         floatingFilter: true,
+         filter: "agTextColumnFilter",
+         headerComponent: CustomHeaderComponent,
+         cellStyle: { textAlign: "center" },
+       }),
+       []
+     );
+     const context = {
+       deleteColumn, // deleteColumn을 context로 전달
+     };
+     const onSelectionChanged = useCallback(() => {
+       const selectedNodes = gridRef.current?.api?.getSelectedNodes(); // 선택된 노드 가져오기
+       const selectedData = selectedNodes
+         ? selectedNodes.map((node) => node.data)
+         : [];
+       setSelectedRows(selectedData);
+       setShowDeleteButton(selectedData.length > 0); // 선택된 데이터가 있는 경우 삭제 버튼 표시
+       setShowNoteㄴButton(selectedData.length === 1);
+       setSelectedNoteRow(selectedData.length === 1 ? selectedData[0] : null);
+     }, []);
   return (
     <div
       style={{ width: "100%", height: "70vh" }}
