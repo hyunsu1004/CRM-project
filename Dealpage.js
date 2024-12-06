@@ -383,6 +383,25 @@ export const DealGrid = ({ member }) => {
       editable: true, // 편집 가능
       filter: "agSetColumnFilter",
     },
+    {
+      headerName: "노트",
+      field: "note",
+      cellRenderer: (params) => (
+        <span
+          style={{
+            color: "blue",
+            cursor: "pointer",
+            textDecoration: "underline",
+          }}
+        >
+          노트 보기
+        </span>
+      ),
+      onCellClicked: (params) => {
+        const companyName = params.data.companyname; // 회사 이름 추출
+        navigate(`/note/${companyName}`); // NotePage로 이동
+      },
+    },
   ]);
 
   return (
