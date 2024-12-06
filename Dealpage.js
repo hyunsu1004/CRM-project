@@ -64,7 +64,18 @@ const PersonEditor = (props) => {
     { name: "배두나", email: "double@purplelabs.io" },
     { name: "제갈공명", email: "lyingdragon@purplelabs.io" },
   ];
-
+  const PersonRenderer = (props) => {
+    const people = props.value ? props.value.split(",") : [];
+    return (
+      <div>
+        {people.map((person, index) => (
+          <span key={index} style={{ marginRight: "8px", fontWeight: "bold" }}>
+            {person}
+          </span>
+        ))}
+      </div>
+    );
+  };
   const handleSelect = async (person) => {
     const updatedSelection = selectedPeople.includes(person.name)
       ? selectedPeople.filter((name) => name !== person.name)
