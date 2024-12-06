@@ -13,7 +13,196 @@ import ReactDOM from "react-dom";
 import DealModal from "../pages/DealModal";
 import { useNavigate } from "react-router-dom";
 import NoteModal from "./NoteModal";
+const CustomHeaderComponent = (props) => {
+  const handleDoubleClick = () => {
+    if (window.confirm(` "${props.displayName}"을(를) 삭제하겠습니까?`)) {
+      props.context.deleteColumn(props.column.getColId());
+    }
+  };
+
+  return (
+    <div
+      onDoubleClick={handleDoubleClick}
+      style={{
+        display: "flex",
+        justifyContent: "center", // 헤더 텍스트를 가운데 정렬
+        alignItems: "center", // 수직 중앙 정렬
+        width: "100%",
+        height: "100%",
+        cursor: "pointer",
+        textAlign: "center", // 텍스트 가운데 정렬
+      }}
+    >
+      {props.displayName}
+    </div>
+  );
+};
+
 const MultiSelectEditor = (props) => {
+  const [selectedOptions, setSelectedOptions] = useState(
+    props.value ? props.value.split(",") : []
+  );
+  const [isOpen, setIsOpen] = useState(false);
+
+  const categoryOptions = [
+    { label: "B2B", color: "red" },
+    { label: "Enterprise", color: "blue" },
+    { label: "Payment", color: "green" },
+    { label: "Fintech", color: "gray" },
+    { label: "E-commerce", color: "purple" },
+    { label: "Startup", color: "orange" },
+    { label: "Healthcare", color: "pink" },
+  ];
+
+  const handleSelect = async (option) => {
+    const updatedSelection = selectedOptions.includes(option.label)
+      ? selectedOptions.filter((item) => item !== option.label)
+      : [...selectedOptions, option.label];
+
+    setSelectedOptions(updatedSelection);
+
+    // 그리드 데이터 업데이트
+    const newValue = updatedSelection.join(",");
+    props.node.setDataValue(props.column.colId, newValue);
+    props.api.refreshCells({ rowNodes: [props.node] });
+
+    // 백엔드에 데이터 업데이트
+    try {
+      await axios.put("/api/member/${memberId}/deals/${dealId}/updatedeals", {
+        id: props.node.data.id, // 예시로 row의 id를 사용
+        column: props.column.colId,
+        value: newValue,
+      });
+    } catch (error) {
+      console.error("데이터 업데이트 실패:", error);
+    }
+  };
+
+  const handleRemove = (option) => {
+    const updatedSelection = selectedOptions.filter((item) => item !== option);
+    setSelectedOptions(updatedSelection);
+
+    // 그리드 데이터 업데이트
+    const newValue = updatedSelection.join(",");
+    props.node.setDataValue(props.column.colId, newValue);
+    props.api.refreshCells({ rowNodes: [props.node] });
+  };
+
+  return (
+    <div className="multi-select-editor">
+      <div
+        className="selected-options-container"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexWrap: "nowrap",
+          overflowX: "auto",
+          gap: "8px",
+          padding: "4px 8px",
+          border: "1px solid lightgray",
+          borderRadius: "4px",
+          position: "relative",
+        }}
+      >
+        {selectedOptions.map((option, index) => (
+          <span
+            key={index}
+            className="selected-tag"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              backgroundColor:
+                categoryOptions.find((cat) => cat.label === option)?.color ||
+                "lightgray",
+            }}
+          >
+            {option}
+            <span
+              className="remove-tag"
+              onClick={() => handleRemove(option)}
+              style={{ marginLeft: "8px", cursor: "pointer" }}
+            >
+              ✕
+            </span>
+          </span>
+        ))}
+        {selectedOptions.length > 3 && (
+          <span
+            style={{
+              marginLeft: "8px",
+              fontSize: "14px",
+              fontWeight: "bold",
+              color: "gray",
+            }}
+          >
+            +{selectedOptions.length - 3}
+          </span>
+        )}
+        <span
+          className="dropdown-arrow"
+          onClick={() => setIsOpen((prev) => !prev)}
+          style={{
+            marginLeft: "auto",
+            cursor: "pointer",
+            fontSize: "18px",
+            fontWeight: "bold",
+          }}
+        >
+          {isOpen ? "▲" : "▼"}
+        </span>
+      </div>
+      {isOpen && (
+        <div
+          className="dropdown-list"
+          style={{
+            position: "absolute",
+            top: "60px",
+            left: 0,
+            zIndex: 10,
+            width: "100%",
+            maxHeight: "200px",
+            overflowY: "auto",
+            backgroundColor: "white",
+            border: "1px solid lightgray",
+            borderRadius: "4px",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          {categoryOptions.map((option) => (
+            <div
+              key={option.label}
+              className="dropdown-item"
+              onClick={() => handleSelect(option)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: "8px",
+                cursor: "pointer",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={selectedOptions.includes(option.label)}
+                onChange={() => {}}
+              />
+              <span
+                style={{
+                  marginLeft: "8px",
+                  color: option.color,
+                  fontWeight: "bold",
+                }}
+              >
+                {option.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const MultiSelectRenderer = (props) => {
   const options = props.value ? props.value.split(",") : [];
   const categoryOptions = [
     { label: "B2B", color: "#d32f2f" },
@@ -49,7 +238,6 @@ const seriesOptions = [
   { value: "Series C", color: "green" },
   { value: "Seed", color: "white" },
 ];
-
 const PersonEditor = (props) => {
   const [selectedPeople, setSelectedPeople] = useState(
     props.value ? props.value.split(",") : []
@@ -64,18 +252,7 @@ const PersonEditor = (props) => {
     { name: "배두나", email: "double@purplelabs.io" },
     { name: "제갈공명", email: "lyingdragon@purplelabs.io" },
   ];
-  const PersonRenderer = (props) => {
-    const people = props.value ? props.value.split(",") : [];
-    return (
-      <div>
-        {people.map((person, index) => (
-          <span key={index} style={{ marginRight: "8px", fontWeight: "bold" }}>
-            {person}
-          </span>
-        ))}
-      </div>
-    );
-  };
+
   const handleSelect = async (person) => {
     const updatedSelection = selectedPeople.includes(person.name)
       ? selectedPeople.filter((name) => name !== person.name)
@@ -119,6 +296,19 @@ const PersonEditor = (props) => {
     </div>
   );
 };
+const PersonRenderer = (props) => {
+  const people = props.value ? props.value.split(",") : [];
+  return (
+    <div>
+      {people.map((person, index) => (
+        <span key={index} style={{ marginRight: "8px", fontWeight: "bold" }}>
+          {person}
+        </span>
+      ))}
+    </div>
+  );
+};
+
 const SelectCellRenderer = (props) => {
   const series = seriesOptions.find((opt) => opt.value === props.value); // 매핑 확인
   return (
@@ -128,6 +318,7 @@ const SelectCellRenderer = (props) => {
     </span>
   );
 };
+
 const SeriesDropdownEditor = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(props.value || "");
@@ -202,6 +393,7 @@ const SeriesDropdownEditor = (props) => {
     </div>
   );
 };
+
 const CustomButtonComponent = ({ onClick, onDealClick }) => {
   return (
     <div style={{ display: "flex", gap: "10px" }}>
@@ -270,6 +462,7 @@ const CustomDropdown = ({ value, onChange }) => {
     </div>
   );
 };
+
 const StatusCellRenderer = (props) => {
   const status = statusOptions.find((opt) => opt.value === props.value);
 
@@ -298,10 +491,12 @@ const StatusCellRenderer = (props) => {
     </div>
   );
 };
+
 // AG Grid에서 사용될 리프레시 메서드 구현
 StatusCellRenderer.refresh = (params) => {
   return params.value !== undefined; // 값이 변경되었음을 나타냄
 };
+
 const StatusDropdownEditor = (props) => {
   const [value, setValue] = useState(props.value || statusOptions[0].value);
 
@@ -360,6 +555,7 @@ export const DealGrid = ({ member }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isDealModalOpen, setDealModalOpen] = useState(false);
   const [existingAttributes, setExistingAttributes] = useState([]);
+
   const [columnDefs, setColumnDefs] = useState([
     {
       headerName: "회사명",
@@ -414,7 +610,10 @@ export const DealGrid = ({ member }) => {
       })
     );
   };
+
   const [defaultAttributes, setDefaultAttributes] = useState({});
+  // 모달에서 추가된 속성 데이터를 그리드에 반영할 수 있는 함수
+
   const addNewAttribute = (newAttribute) => {
     const isSelect = newAttribute.dataType === "select";
     const isMultiSelect = newAttribute.dataType === "multiSelect";
@@ -600,6 +799,7 @@ export const DealGrid = ({ member }) => {
       },
     ]);
   };
+
   const addNewDeal = (newDeal) => {
     const newRow = {
       ...newDeal,
@@ -608,51 +808,58 @@ export const DealGrid = ({ member }) => {
     };
     setRowData((prevData) => [...prevData, newRow]);
   };
-  onst defaultColDef = useMemo(
-       () => ({
-         flex: 1,
-         editable: true,
-         minWidth: 100,
-         floatingFilter: true,
-         filter: "agTextColumnFilter",
-         headerComponent: CustomHeaderComponent,
-         cellStyle: { textAlign: "center" },
-       }),
-       []
-     );
-     const context = {
-       deleteColumn, // deleteColumn을 context로 전달
-     };
-     const onSelectionChanged = useCallback(() => {
-       const selectedNodes = gridRef.current?.api?.getSelectedNodes(); // 선택된 노드 가져오기
-       const selectedData = selectedNodes
-         ? selectedNodes.map((node) => node.data)
-         : [];
-       setSelectedRows(selectedData);
-       setShowDeleteButton(selectedData.length > 0); // 선택된 데이터가 있는 경우 삭제 버튼 표시
-       setShowNoteㄴButton(selectedData.length === 1);
-       setSelectedNoteRow(selectedData.length === 1 ? selectedData[0] : null);
-     }, []);
-     const handleNoteAdd = () => {
-       if (selectedNoteRow) {
-         setNoteModalOpen(true); // 노트 모달 열기
-       }
-     };
-   
-     const handleDelete = () => {
-       if (selectedRows.length === 0) return; // 선택된 행이 없으면 아무 작업도 하지 않음
-   
-       const updatedRowData = rowData.filter((row) => !selectedRows.includes(row));
-       setRowData(updatedRowData);
-   
-       // 삭제 후 상태 초기화
-       setSelectedRows([]);
-       setShowDeleteButton(false);
-       gridRef.current?.api?.deselectAll(); // 선택 해제
-     };
-     const rowSelection = useMemo(() => {
-       return { mode: "multiRow" };
-     }, []);
+
+  const defaultColDef = useMemo(
+    () => ({
+      flex: 1,
+      editable: true,
+      minWidth: 100,
+      floatingFilter: true,
+      filter: "agTextColumnFilter",
+      headerComponent: CustomHeaderComponent,
+      cellStyle: { textAlign: "center" },
+    }),
+    []
+  );
+  const context = {
+    deleteColumn, // deleteColumn을 context로 전달
+  };
+  const onSelectionChanged = useCallback(() => {
+    const selectedNodes = gridRef.current?.api?.getSelectedNodes(); // 선택된 노드 가져오기
+    const selectedData = selectedNodes
+      ? selectedNodes.map((node) => node.data)
+      : [];
+    setSelectedRows(selectedData);
+    setShowDeleteButton(selectedData.length > 0); // 선택된 데이터가 있는 경우 삭제 버튼 표시
+    setShowNoteButton(selectedData.length === 1);
+    setSelectedNoteRow(selectedData.length === 1 ? selectedData[0] : null);
+  }, []);
+  const handleNoteAdd = () => {
+    if (selectedNoteRow) {
+      setNoteModalOpen(true); // 노트 모달 열기
+    }
+  };
+
+  const handleDelete = () => {
+    if (selectedRows.length === 0) return; // 선택된 행이 없으면 아무 작업도 하지 않음
+
+    const updatedRowData = rowData.filter((row) => !selectedRows.includes(row));
+    setRowData(updatedRowData);
+
+    // 삭제 후 상태 초기화
+    setSelectedRows([]);
+    setShowDeleteButton(false);
+    gridRef.current?.api?.deselectAll(); // 선택 해제
+  };
+  // 데이터를 가져오는 함수
+
+  // 데이터를 저장하는 함수
+
+  // 왼쪽 row 선택 체크 박스 생성
+  const rowSelection = useMemo(() => {
+    return { mode: "multiRow" };
+  }, []);
+
   return (
     <div
       style={{ width: "100%", height: "70vh" }}
@@ -677,8 +884,9 @@ export const DealGrid = ({ member }) => {
             marginBottom: "10px", // 전체 margin 조정
           }}
         >
-          {showDeleteButton && 
+          {showDeleteButton && (
             <button
+              onClick={handleDelete}
               style={{
                 padding: "8px 16px",
                 backgroundColor: "white",
@@ -691,8 +899,8 @@ export const DealGrid = ({ member }) => {
             >
               딜삭제
             </button>
-          }
-{showNoteButton && (
+          )}
+          {showNoteButton && (
             <button
               onClick={handleNoteAdd}
               style={{
@@ -711,27 +919,27 @@ export const DealGrid = ({ member }) => {
         </div>
       </div>
       <AgGridReact
-          ref={gridRef} // gridRef를 AgGridReact에 연결
-          rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          rowSelection={rowSelection}
-          onSelectionChanged={onSelectionChanged}
-          suppressHeaderClickSelection={true}
-          context={context}
-          onCellValueChanged={(params) => {
-            // rowData 강제 업데이트
-            setRowData((prevData) =>
-              prevData.map((row) =>
-                row === params.data
-                  ? { ...row, [params.colDef.field]: params.newValue }
-                  : row
-              )
-            );
-          }}
-          enableAdvancedFilter={true}
+        ref={gridRef} // gridRef를 AgGridReact에 연결
+        rowData={rowData}
+        columnDefs={columnDefs}
+        defaultColDef={defaultColDef}
+        rowSelection={rowSelection}
+        onSelectionChanged={onSelectionChanged}
+        suppressHeaderClickSelection={true}
+        context={context}
+        onCellValueChanged={(params) => {
+          // rowData 강제 업데이트
+          setRowData((prevData) =>
+            prevData.map((row) =>
+              row === params.data
+                ? { ...row, [params.colDef.field]: params.newValue }
+                : row
+            )
+          );
+        }}
+        enableAdvancedFilter={true}
       />
-            {isModalOpen && (
+      {isModalOpen && (
         <AttributeModal
           onClose={() => setModalOpen(false)}
           onSubmit={addNewAttribute}
@@ -746,7 +954,7 @@ export const DealGrid = ({ member }) => {
           member={member}
         />
       )}
-       {isNoteModalOpen && (
+      {isNoteModalOpen && (
         <NoteModal
           onClose={() => setNoteModalOpen(false)}
           selectedRow={selectedNoteRow}
