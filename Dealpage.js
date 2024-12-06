@@ -414,7 +414,192 @@ export const DealGrid = ({ member }) => {
       })
     );
   };
+  const [defaultAttributes, setDefaultAttributes] = useState({});
+  const addNewAttribute = (newAttribute) => {
+    const isSelect = newAttribute.dataType === "select";
+    const isMultiSelect = newAttribute.dataType === "multiSelect";
+    const isDate = newAttribute.dataType === "date";
+    const isCurrency = newAttribute.dataType === "currency";
+    const isAmount = newAttribute.dataType === "amount";
+    const isCheckbox = newAttribute.dataType === "checkbox";
+    const isPerson = newAttribute.dataType === "person";
+    const isEmail = newAttribute.dataType === "email";
+    const isPhone = newAttribute.dataType === "phone";
+    const isURL = newAttribute.dataType === "url";
+    const isFile = newAttribute.dataType === "file";
+    const isInteger = newAttribute.dataType === "integer";
+    const isString = newAttribute.dataType === "string";
+    const uniqueFieldName = `${newAttribute.name}_${Date.now()}`;
 
+    // try {
+    //   const response = await axios.post("/api/deals/attributes", newAttribute, {
+    //     withCredentials: true,
+    //   });
+
+    //   const savedAttribute = response.data;
+
+    //   // 로컬 데이터 업데이트
+    //   const isSelect = savedAttribute.dataType === "select";
+    //   const isMultiSelect = savedAttribute.dataType === "multiSelect";
+    //   const isDate = savedAttribute.dataType === "date";
+
+    //   const uniqueFieldName = `${savedAttribute.name}_${Date.now()}`;
+
+    //   setRowData((prevData) =>
+    //     prevData.map((row) => ({
+    //       ...row,
+    //       [uniqueFieldName]: row[uniqueFieldName] || "",
+    //     }))
+    //   );
+
+    //   setColumnDefs((prevDefs) => [
+    //     ...prevDefs,
+    //     {
+    //       headerName: savedAttribute.name,
+    //       field: uniqueFieldName,
+    //       editable: true,
+    //       ...(isSelect && {
+    //         cellRenderer: SelectCellRenderer,
+    //         cellEditor: SeriesDropdownEditor,
+    //       }),
+    //       ...(isMultiSelect && {
+    //         cellRenderer: MultiSelectRenderer,
+    //         cellEditor: MultiSelectEditor,
+    //       }),
+    //       ...(isDate && {
+    //         cellEditor: DatePickerEditor,
+    //         valueFormatter: (params) =>
+    //           params.value
+    //             ? new Date(params.value).toLocaleDateString("ko-KR")
+    //             : "",
+    //       }),
+    //     },
+    //   ]);
+    // } catch (error) {
+    //   console.error("속성 추가 실패:", error);
+    //   alert("속성 추가 중 오류가 발생했습니다.");
+    // }
+    // 새로운 속성에 대한 기본값 설정
+    const getDefaultValue = () => {
+      if (isSelect) return "";
+      if (isMultiSelect) return "";
+      if (isDate) return null;
+      if (isCurrency || isAmount || isInteger) return 0;
+      if (isCheckbox) return false;
+      if (isPerson || isEmail || isPhone || isURL || isFile || isString)
+        return "";
+      return newAttribute.defaultValue || "";
+    };
+
+    // 1. 기존 데이터 유지 + 새로운 속성 추가
+    const updatedRowData = rowData.map((row) => ({
+      ...row, // 기존 데이터 유지
+      [uniqueFieldName]: row[uniqueFieldName] || getDefaultValue(), // 새 속성 기본값 설정
+      // 새 속성 기본값 설정
+    }));
+
+    // 2. rowData 업데이트
+    setRowData(updatedRowData);
+
+    // 3. 새로운 컬럼 정의 추가
+    setColumnDefs((prevDefs) => [
+      ...prevDefs,
+      {
+        headerName: newAttribute.name,
+        field: newAttribute.name,
+        flex: 1,
+        editable: true,
+        filter: "agTextColumnFilter",
+        ...(isSelect && {
+          cellRenderer: SelectCellRenderer,
+          cellEditor: SeriesDropdownEditor,
+        }),
+        ...(isMultiSelect && {
+          cellRenderer: MultiSelectRenderer,
+          cellEditor: MultiSelectEditor,
+        }),
+        ...(isDate && {
+          cellEditor: DatePickerEditor,
+          valueFormatter: (params) =>
+            params.value
+              ? new Date(params.value1).toLocaleDateString("ko-KR")
+              : "",
+        }),
+        ...(isCurrency && {
+          valueFormatter: (params) =>
+            params.value
+              ? new Intl.NumberFormat("ko-KR", {
+                  style: "currency",
+                  currency: "KRW",
+                }).format(params.value)
+              : "",
+          cellEditor: "agTextCellEditor",
+        }),
+        ...(isAmount && {
+          valueFormatter: (params) =>
+            params.value ? `${params.value} 원` : "",
+          cellEditor: "agTextCellEditor",
+        }),
+        ...(isCheckbox && {
+          cellRenderer: (params) => (params.value ? "✅" : "❌"),
+          cellEditor: "agCheckboxCellEditor",
+        }),
+        ...(isPerson && {
+          cellRenderer: PersonRenderer,
+          cellEditor: PersonEditor,
+        }),
+        ...(isEmail && {
+          cellRenderer: (params) =>
+            params.value ? (
+              <a href={`mailto:${params.value}`} style={{ color: "blue" }}>
+                {params.value}
+              </a>
+            ) : (
+              ""
+            ),
+          cellEditor: "agTextCellEditor",
+        }),
+        ...(isPhone && {
+          valueFormatter: (params) => (params.value ? `${params.value}` : ""),
+          cellEditor: "agTextCellEditor",
+        }),
+        ...(isString && {
+          valueFormatter: (params) => (params.value ? `${params.value}` : ""),
+          cellEditor: "agTextCellEditor",
+        }),
+        ...(isInteger && {
+          valueFormatter: (params) =>
+            params.value !== undefined && params.value !== null
+              ? `${params.value}`
+              : 0,
+          cellEditor: "agTextCellEditor",
+        }),
+
+        ...(isURL && {
+          cellRenderer: (params) =>
+            params.value9 ? (
+              <a href={params.value} target="_blank" style={{ color: "blue" }}>
+                {params.value9}
+              </a>
+            ) : (
+              ""
+            ),
+          cellEditor: "agTextCellEditor",
+        }),
+        ...(isFile && {
+          cellRenderer: (params) =>
+            params.value ? (
+              <a href={params.value} target="_blank" style={{ color: "blue" }}>
+                다운로드
+              </a>
+            ) : (
+              ""
+            ),
+          cellEditor: "agTextCellEditor",
+        }),
+      },
+    ]);
+  };
   return (
     <div
       style={{ width: "100%", height: "70vh" }}
