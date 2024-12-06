@@ -13,7 +13,36 @@ import ReactDOM from "react-dom";
 import DealModal from "../pages/DealModal";
 import { useNavigate } from "react-router-dom";
 import NoteModal from "./NoteModal";
-const MultiSelectEditor = (props) => {};
+const MultiSelectEditor = (props) => {
+  const options = props.value ? props.value.split(",") : [];
+  const categoryOptions = [
+    { label: "B2B", color: "#d32f2f" },
+    { label: "Enterprise", color: "blue" },
+    { label: "Payment", color: "green" },
+    { label: "Fintech", color: "gray" },
+  ];
+
+  return (
+    <div className="selected-options-container">
+      {options.map((option, index) => (
+        <span
+          key={index}
+          className={`selected-tag ${
+            categoryOptions.find((cat) => cat.label === option)?.label
+          }`}
+          style={{
+            backgroundColor:
+              categoryOptions.find((cat) => cat.label === option)?.color ||
+              "lightgray",
+            color: "white",
+          }}
+        >
+          {option}
+        </span>
+      ))}
+    </div>
+  );
+};
 export const DealGrid = ({ member }) => {
   return (
     <div
