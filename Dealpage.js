@@ -665,6 +665,10 @@ export const DealGrid = ({ member }) => {
           marginBottom: "10px",
         }}
       >
+        <CustomButtonComponent
+          onClick={() => setModalOpen(true)}
+          onDealClick={() => setDealModalOpen(true)}
+        />
         <div
           style={{
             display: "flex",
@@ -673,7 +677,7 @@ export const DealGrid = ({ member }) => {
             marginBottom: "10px", // 전체 margin 조정
           }}
         >
-          {
+          {showDeleteButton && 
             <button
               style={{
                 padding: "8px 16px",
