@@ -226,7 +226,50 @@ const statusOptions = [
   { value: "투자완료", color: "blue" },
   { value: "검토중단", color: "red" },
 ];
+const CustomDropdown = ({ value, onChange }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
+  const handleSelect = (selectedValue) => {
+    onChange(selectedValue); // 선택된 값을 부모 컴포넌트로 전달
+    setIsOpen(false); // 드롭다운 닫기
+  };
+
+  return (
+    <div className="custom-dropdown">
+      <div className="dropdown-header" onClick={() => setIsOpen(!isOpen)}>
+        <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span
+            className="dropdown-dot"
+            style={{
+              backgroundColor:
+                statusOptions.find((opt) => opt.value === value)?.color ||
+                "gray",
+            }}
+          ></span>
+          <span>{value || "해당 없음"}</span>
+        </span>
+        <span>{isOpen ? "▲" : "▼"}</span>
+      </div>
+      {isOpen && (
+        <ul className="dropdown-list">
+          {statusOptions.map((option) => (
+            <li
+              key={option.value}
+              className="dropdown-item"
+              onClick={() => handleSelect(option.value)}
+            >
+              <span
+                className="dropdown-dot"
+                style={{ backgroundColor: option.color }}
+              ></span>
+              <span>{option.value}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
 export const DealGrid = ({ member }) => {
   return (
     <div
