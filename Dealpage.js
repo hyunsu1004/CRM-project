@@ -128,6 +128,80 @@ const SelectCellRenderer = (props) => {
     </span>
   );
 };
+const SeriesDropdownEditor = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState(props.value || "");
+
+  const handleSelect = (selectedValue) => {
+    setValue(selectedValue);
+    props.node.setDataValue(props.column.colId, selectedValue); // AG Grid 데이터 업데이트
+    props.api.refreshCells({ rowNodes: [props.node] });
+    setIsOpen(false);
+    props.stopEditing(); // 편집 종료
+  };
+
+  const dropdownContent = (
+    <ul className="dropdown-list">
+      {seriesOptions.map((option) => (
+        <li
+          key={option.value}
+          className="dropdown-item"
+          onClick={() => handleSelect(option.value)}
+        >
+          <span
+            className="dropdown-dot"
+            style={{
+              display: "inline-block",
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              backgroundColor: option.color,
+              marginRight: "8px",
+            }}
+          ></span>
+          {option.value}
+        </li>
+      ))}
+    </ul>
+  );
+
+  return (
+    <div className="custom-dropdown" style={{ position: "relative" }}>
+      <div
+        className="dropdown-header"
+        onClick={() => setIsOpen((prev) => !prev)}
+        style={{
+          border: "1px solid lightgray",
+          borderRadius: "4px",
+          padding: "8px 12px",
+          backgroundColor: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          cursor: "pointer",
+        }}
+      >
+        <span>
+          <span
+            className="dropdown-dot"
+            style={{
+              display: "inline-block",
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              backgroundColor:
+                seriesOptions.find((opt) => opt.value === value)?.color ||
+                "gray",
+            }}
+          ></span>{" "}
+          {value || "선택 없음"}
+        </span>
+        <span className="dropdown-arrow">{isOpen ? "▲" : "▼"}</span>
+      </div>
+      {isOpen && ReactDOM.createPortal(dropdownContent, document.body)}
+    </div>
+  );
+};
 
 export const DealGrid = ({ member }) => {
   return (
