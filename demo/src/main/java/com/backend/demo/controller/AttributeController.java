@@ -1,6 +1,7 @@
 package com.backend.demo.controller;
 
 import com.backend.demo.dto.AttributeDTO;
+import com.backend.demo.entity.Attribute;
 import com.backend.demo.service.AttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,10 @@ public class AttributeController {
     @PostMapping("deals/addattributes")
     public ResponseEntity<?> addAttribute(@RequestBody AttributeDTO attributeDTO) {
         try {
-            attributeService.addAttributeToAllDeals(attributeDTO);
-            return ResponseEntity.ok("Attribute added to all deals successfully!");
+//            System.out.println("프론트 -> 백엔드: 속성 추가 데이터 전송 완료");
+//            System.out.println(attributeDTO.getName());
+            Attribute attribute = attributeService.createAttribute(attributeDTO);
+            return ResponseEntity.ok(attribute);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add attribute to all deals");
         }

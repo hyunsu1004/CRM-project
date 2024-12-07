@@ -3,8 +3,7 @@ package com.backend.demo.service;
 import com.backend.demo.entity.Deal;
 import com.backend.demo.entity.DealStatus;
 import com.backend.demo.entity.Startup;
-import com.backend.demo.repository.DealRepository;
-import com.backend.demo.repository.StartupRepository;
+import com.backend.demo.repository.*;
 import org.hibernate.sql.ast.tree.expression.Star;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +24,7 @@ public class DealService {
         this.dealRepository = dealRepository;
         this.startupRepository = startupRepository;
     }
+
     //딜 생성 기능.
     public Deal createDeal(Deal deal) {
         // Startup 존재 여부 확인

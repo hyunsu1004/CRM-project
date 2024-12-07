@@ -18,23 +18,21 @@ public class Attribute {
     private String name;
     private String description;
     private String defaultValue;
-    private String dataType;
-    private String options; //select, multi_select 옵션들을 저장할 수 있을(JSON 형식으로 저장)
 
-    @ManyToOne
-    @JoinColumn(name = "deal_id")
-    @JsonBackReference
-    private Deal deal;
+    @Enumerated(EnumType.STRING)
+    private AttributeType dataType; // STRING, NUMBER
+
+    private String options; //select, multi_select 옵션들을 저장할 수 있을(JSON 형식으로 저장)
 
     @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StringValue> stringValues; // 문자열 값 리스트
     @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NumberValue> numberValues; // 숫자 값 리스트
-    @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DateValue> dateValues; // 날짜 값 리스트
-    @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BooleanValue> booleanValues; // 체크박스 값 리스트
-    @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ListValue> listValues; // 다중 선택 값 리스트
+//    @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<DateValue> dateValues; // 날짜 값 리스트
+//    @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<BooleanValue> booleanValues; // 체크박스 값 리스트
+//    @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<ListValue> listValues; // 다중 선택 값 리스트
 
 }

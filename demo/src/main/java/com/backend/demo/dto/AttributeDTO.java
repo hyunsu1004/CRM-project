@@ -10,7 +10,7 @@ import java.util.List;
 public class AttributeDTO {
     private String name;
     private String description;
-    private String dataType;
     private String defaultValue;
     private List<String> selectedOptions;
+    private String dataType;
 }

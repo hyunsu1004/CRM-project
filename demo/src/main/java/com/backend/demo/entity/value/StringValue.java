@@ -1,6 +1,7 @@
 package com.backend.demo.entity.value;
 
 import com.backend.demo.entity.Attribute;
+import com.backend.demo.entity.Deal;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,4 +21,8 @@ public class StringValue {
 
     @Column(name = "string_value")
     private String value;
+
+    @ManyToOne
+    @JoinColumn(name = "deal_id")
+    private Deal deal;
 }

@@ -89,13 +89,20 @@ const AttributeModal = ({ onClose, onSubmit, existingAttributes = [] }) => {
         dataType,
       };
 
+      console.log("전송될 데이터:", data);
+
       // alert로 값 확인 (확인용)
-      // alert("전송될 데이터:\n" + JSON.stringify(data, null, 2));
+      alert("전송될 데이터:\n" + JSON.stringify(data, null, 2));
 
       // 백엔드 전송 코드
       const response = await axios.post(
         "/api/member/{memberId}/deals/addattributes",
-        data
+        data,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
       );
       if (response.status === 200) {
         alert("속성이 성공적으로 추가되었습니다.");

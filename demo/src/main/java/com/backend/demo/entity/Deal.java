@@ -1,5 +1,7 @@
 package com.backend.demo.entity;
 
+import com.backend.demo.entity.value.NumberValue;
+import com.backend.demo.entity.value.StringValue;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,8 +27,8 @@ public class Deal {
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private Date createTime; //생성 시간
-    @Enumerated(EnumType.STRING)
 
+    @Enumerated(EnumType.STRING)
     private DealStatus status; // 검토상태
 
     //하나의 스타트업은 여러 딜을 가질 수 있음.
@@ -47,8 +49,10 @@ public class Deal {
 
     //  동적 속성 부분
     @OneToMany(mappedBy = "deal", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Attribute> attributes = new ArrayList<>();
+    private List<StringValue> stringValues = new ArrayList<>(); // 문자열 값 리스트
+
+    @OneToMany(mappedBy = "deal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NumberValue> numberValues = new ArrayList<>(); // 숫자 값 리스트
 
     //startup의 name을 반환하는 getter추가
     public String getStartupName(){
