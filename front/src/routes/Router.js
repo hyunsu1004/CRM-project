@@ -12,7 +12,8 @@ import {
   CompanyDetail,
 } from "../pages/Company/CompanyDetail";
 import { StartupGrid } from "../grids/StartupGrid";
-
+import SettingPage from "../pages/SettingPage";
+import HelpPage from "../pages/HelpPage";
 function Router() {
   return (
     <Routes>
@@ -40,6 +41,8 @@ function Router() {
         path="/startups-grid"
         element={<StartupGrid apiEndpoint="/api/startups" editable={false} />}
       />
+        <Route path="/setting" element={<SettingPage />} />
+        <Route path="/help" element={<HelpPage />} />
     </Routes>
   );
 }

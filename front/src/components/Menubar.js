@@ -117,13 +117,13 @@ const Menubar = ({ userId, isSidebarVisible, userDeals = [] }) => {
       </ul>
       <ul style={{ borderTop: "2px solid #ACB9CC" }}>
         <MenuItem
-          to="/"
+          to="/setting"
           icon={SettingIcon}
           label="설정"
           style={{ width: "100%" }}
         />
         <MenuItem
-          to="/"
+          to="/help"
           icon={InfoIcon}
           label="도움말"
           style={{ width: "100%" }}

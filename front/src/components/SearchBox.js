@@ -162,7 +162,7 @@ export default function FreeSoloCreateOptionDialog() {
             )}
             <Dialog open={open} onClose={handleClose}>
                 <form onSubmit={handleSubmit}>
-                    <DialogTitle>Add a new film</DialogTitle>
+                    <DialogTitle>회사 추가</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             목록에 없는 회사를 추가해주세요!
