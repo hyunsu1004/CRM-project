@@ -16,13 +16,21 @@ const NoteModal = ({ note, onClose, onSave }) => {
 
     const handleSave = () => {
         if (title.trim() && content.trim()) {
+            // DOMPurify로 content를 정리 (HTML 유지)
+            const sanitizedContent = DOMPurify.sanitize(content);
+
+            // plain text 버전 생성
             const plainTextContent = DOMPurify.sanitize(content, {
                 USE_PROFILES: { html: false },
             });
+
+            // 저장 콜백 실행
             onSave({
                 title,
-                content,
+                content: sanitizedContent, // HTML 형식 저장
+                plainText: plainTextContent, // Plain text 저장 (필요 시)
             });
+
             onClose();
         } else {
             alert("제목과 내용을 입력해주세요.");

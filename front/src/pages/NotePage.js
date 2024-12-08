@@ -20,9 +20,7 @@ const NotePage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const gridApiRef = useRef(null);
     const [member, setMember] = useState(null);
-    const [noteId,setNoteId] = useState(null);
-
-
+    const [noteId, setNoteId] = useState(null);
 
     useEffect(() => {
         // 사용자 정보 로드
@@ -32,11 +30,22 @@ const NotePage = () => {
         }
     }, []);
 
-
     const columnDefs = useMemo(
         () => [
             { headerName: "제목", field: "title", flex: 1, checkboxSelection: true },
-            { headerName: "내용", field: "content", flex: 2 },
+            {
+                headerName: "내용",
+                field: "content",
+                flex: 2,
+                cellRenderer: (params) => {
+                    // HTML 태그 제거
+                    const doc = new DOMParser().parseFromString(
+                        params.value,
+                        "text/html"
+                    );
+                    return doc.body.textContent || "";
+                },
+            },
         ],
         []
     );
@@ -66,7 +75,6 @@ const NotePage = () => {
         setSelectedNote(null);
     };
 
-
     const stripHtmlTags = (html) => {
         const doc = new DOMParser().parseFromString(html, "text/html");
         return doc.body.textContent || "";
@@ -92,16 +100,14 @@ const NotePage = () => {
         }
     };
 
-
     const handleDeleteSelected = async () => {
         const selectedNodes = gridApiRef.current.getSelectedNodes();
         const noteId = selectedNodes.map((node) => node.data.id);
 
         //selectedIds 가 비어 있는지 확인
-        if(noteId.length === 0){
+        if (noteId.length === 0) {
             console.log("선택된 노트가 없습니다.");
             return; //선택 노트가없으면 작업중지
-
         }
         console.log(noteId);
         try {
@@ -111,7 +117,7 @@ const NotePage = () => {
             fetchNotes();
         } catch (error) {
             console.error("노트를 삭제하는 중 오류 발생:", error);
-            console.error("상세 메시지 : " ,error.message);
+            console.error("상세 메시지 : ", error.message);
         }
     };
 
@@ -120,7 +126,7 @@ const NotePage = () => {
     }, []);
 
     return (
-        <Layout member = {member}>
+        <Layout member={member}>
             <div className={styles.pageHeader}>
                 <button
                     onClick={() => navigate("/deals")}

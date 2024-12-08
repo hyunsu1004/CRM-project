@@ -80,7 +80,7 @@ const StartupGrid = ({ apiEndpoint, editable }) => {
                         field: "keyInvestors",
                     },
                     {
-                        headerName: "선호도",
+                        headerName: "선호 여부",
                         field: "interest",
                     },
                 ];
@@ -242,10 +242,7 @@ const InvestorGrid = ({ apiEndpoint, editable }) => {
                         headerName: "총 투자 건수",
                         field: "totalCount",
                     },
-                    {
-                        headerName: "총 투자 금액",
-                        field: "totalInvestment ",
-                    },
+
                     {
                         headerName: "평균 집행 금액",
                         field: "averageInvestment",
@@ -478,7 +475,7 @@ const DatabasePage = () => {
                             editable={false}
                         />
                     ) : (
-                        <StartupGrid
+                        <InvestorGrid
                             apiEndpoint={`/api/member/investors`}
                             editable={false}
                         />
@@ -493,7 +490,7 @@ const DatabasePage = () => {
                             editable={true}
                         />
                     ) : (
-                        <StartupGrid
+                        <InvestorGrid
                             apiEndpoint={`/api/member/investors/interest`}
                             editable={true}
                         />
