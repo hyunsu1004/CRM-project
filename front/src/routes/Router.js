@@ -12,6 +12,8 @@ import {
   CompanyDetail,
 } from "../pages/Company/CompanyDetail";
 import { StartupGrid } from "../grids/StartupGrid";
+import SettingPage from "../pages/SettingPage";
+import HelpPage from "../pages/HelpPage";
 
 function Router() {
   return (
@@ -23,22 +25,14 @@ function Router() {
       <Route path="/notes" element={<NotePage />} />
       <Route path="/startups" element={<DatabasePage />} />
       <Route path="/investors" element={<DatabasePage />} />
-      {/* 원본 딜 페이지 */}
       <Route path="/deals" element={<DealPage />} />
-      {/* 임시 딜 페이지 */}
-      {/* <Route path="/deals" element={<DealDashboard />} /> */}
-      {/* 딜 상세 페이지 */}
-      {/* <Route path="/deals/:dealId" element={<DealDetail />} /> */}
-      {/* <Route path="/" element={<CompanyDashboard />} /> */}
       <Route path="/startups/:id" element={<CompanyDetail type="startups" />} />
       <Route
         path="/investors/:id"
         element={<CompanyDetail type="investors" />}
       />
-      <Route
-        path="/startups-grid"
-        element={<StartupGrid apiEndpoint="/api/startups" editable={false} />}
-      />
+      <Route path="/setting" element={<SettingPage />} />
+      <Route path="/help" element={<HelpPage />} />
     </Routes>
   );
 }

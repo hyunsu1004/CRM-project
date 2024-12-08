@@ -20,6 +20,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Fab,
 } from "@mui/material";
 import axios from "axios";
 import { StartupGrid } from "../grids/StartupGrid";
@@ -27,6 +28,8 @@ import { InvestorGrid } from "../grids/InvestorGrid";
 import { Link } from "react-router-dom";
 import { CompanyDetail, CompanyDetailModal } from "./Company/CompanyDetail";
 import FreeSoloCreateOptionDialog from "../components/SearchBox";
+import { ReactComponent as ChatBotIcon } from "../img/robot.svg";
+import Chatbot from "../components/Chatbot";
 
 const Main = () => {
   const [member, setMember] = useState(null);
@@ -37,6 +40,12 @@ const Main = () => {
   const [shuffledCompanies, setShuffledCompanies] = useState([]); // 셔플된 기업 리스트 저장
   const [openModal, setOpenModal] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState(null);
+  const [chatOpen, setChatOpen] = useState(false);
+
+  // 챗봇 채팅창 열기
+  const toggleChat = () => {
+    setChatOpen(!chatOpen);
+  };
 
   const handleOpen = (company) => {
     setSelectedCompany(company);
@@ -462,6 +471,17 @@ const Main = () => {
           </Box>
         </Box>
       </Box>
+      {/* 챗봇 Floating Button */}
+      <Fab
+        color="secondary"
+        aria-label="chatBot"
+        sx={{ position: "fixed", bottom: "30px", right: "30px" }}
+        onClick={toggleChat}
+      >
+        <ChatBotIcon />
+      </Fab>
+      {/* 챗봇 UI */}
+      {chatOpen && <Chatbot />}
     </Layout>
   );
 };
