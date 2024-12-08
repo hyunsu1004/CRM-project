@@ -63,15 +63,12 @@ export const InvestorGrid = ({ apiEndpoint, editable, rowSelection }) => {
               handleOpen(params.data);
             },
           },
-          { headerName: "제품/서비스", field: "productOrService" },
-          { headerName: "기술 분야", field: "technology" },
           { headerName: "카테고리", field: "category" },
-          { headerName: "총 자본금", field: "totalCapital" },
-          { headerName: "총 투자금", field: "totalInvestment" },
-          { headerName: "최근 투자 단계", field: "recentInvestment" },
-          { headerName: "최근 펀딩 일자", field: "recentFunding" },
-          { headerName: "주요 투자자", field: "keyInvestors" },
-          { headerName: "선호도", field: "interest" },
+          { headerName: "총 투자건수", field: "totalCount" },
+          { headerName: "총 투자금액", field: "totalInvestment" },
+          { headerName: "평균 집행 금액", field: "averageInvestment" },
+          { headerName: "최근 펀딩 날짜", field: "recentFunding" },
+          { headerName: "주요 투자 분야", field: "keyCategory" },
         ];
 
         // 특정 컬럼만 보여주도록 설정

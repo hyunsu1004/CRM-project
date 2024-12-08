@@ -11,15 +11,6 @@
   /* z-index: 400; */
 }
 
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  width: 530px;
-  height: 650px;
-  border-radius: 5px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
 h2 {
   margin-top: 0;
   font-size: 18px;
@@ -49,15 +40,29 @@ h2 {
 }
 
 .input-content {
-  min-height: 500px;
+  min-height: 550px;
   width: 505px;
   border: none;
   resize: vertical;
 }
 
-.modal-actions {
+.modal-content {
+  position: relative; /* 자식 요소 위치 조정을 위한 기준 설정 */
+  background-color: white;
+  padding: 20px;
+  width: 530px;
+  height: 650px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column; /* 세로 정렬 */
+}
+
+.modal-actions {
+  position: absolute; /* 부모 기준 하단으로 고정 */
+  bottom: 20px; /* 하단에서 20px 간격 */
+  right: 20px; /* 오른쪽에서 20px 간격 */
+  display: flex;
   gap: 10px;
 }
 

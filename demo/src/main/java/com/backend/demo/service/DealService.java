@@ -16,19 +16,20 @@ import java.util.Optional;
 
 @Service
 public class DealService {
-    @Autowired
+
     private final DealRepository dealRepository;
-    @Autowired
+
     private final StartupRepository startupRepository;
 
     public DealService(DealRepository dealRepository, StartupRepository startupRepository) {
         this.dealRepository = dealRepository;
         this.startupRepository = startupRepository;
     }
+
     //딜 생성 기능.
     public Deal createDeal(Deal deal) {
         // Startup 존재 여부 확인
-        if(deal.getStartup() == null || deal.getStartup().getName() == null) {
+        if (deal.getStartup() == null || deal.getStartup().getName() == null) {
             //예외처리 : startup이 아니면 null이면 처리
             System.out.println("Startup: " + deal.getStartup());
             System.out.println("Startup Name: " + (deal.getStartup() != null ? deal.getStartup().getName() : "null"));
@@ -57,9 +58,11 @@ public class DealService {
         return dealRepository.findAll();
     }
 
+
     public Deal findOne(Integer dealId) {
         return dealRepository.findById(dealId).orElse(null);
     }
+
     @Transactional
     public void update(Integer id, DealStatus status) {
         Deal deal = dealRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("딜이 발견되지 않음."));

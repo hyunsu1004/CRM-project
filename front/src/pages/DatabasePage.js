@@ -179,18 +179,6 @@ const StartupGrid = ({ apiEndpoint, editable }) => {
             } else {
                 window.alert(event.node.data.name + " 이 관심기업에서 해제되었습니다.");
             }
-            //테이블 강제 리렌더링
-            //gridApi.refreshCells({ force : true });
-
-            // {
-            //     event.node.isSelected()
-            //         ? window.alert(
-            //             event.node.data.name + " 이 관심기업에 추가되었습니다."
-            //         )
-            //         : window.alert(
-            //             event.node.data.name + " 이 관심기업에서 해제되었습니다."
-            //         );
-            // }
         },
         [window]
     );
@@ -243,44 +231,32 @@ const InvestorGrid = ({ apiEndpoint, editable }) => {
                 // 기업 컬럼 정의
                 const columnDefs = [
                     {
-                        headerName: "기업명",
+                        headerName: "투자자명",
                         field: "name",
                     },
                     {
-                        headerName: "제품/서비스",
-                        field: "productOrService",
-                    },
-                    {
-                        headerName: "기술 분야",
-                        field: "technology",
-                    },
-                    {
-                        headerName: "카테고리",
+                        headerName: "분류",
                         field: "category",
                     },
                     {
-                        headerName: "총 자본금",
-                        field: "totalCapital",
+                        headerName: "총 투자 건수",
+                        field: "totalCount",
                     },
                     {
-                        headerName: "총 투자금",
-                        field: "totalInvestment",
+                        headerName: "총 투자 금액",
+                        field: "totalInvestment ",
                     },
                     {
-                        headerName: "최근 투자 단계",
-                        field: "recentInvestment",
+                        headerName: "평균 집행 금액",
+                        field: "averageInvestment",
                     },
                     {
-                        headerName: "최근 펀딩 일자",
+                        headerName: "최근 투자 날짜",
                         field: "recentFunding",
                     },
                     {
-                        headerName: "주요 투자자",
-                        field: "keyInvestors",
-                    },
-                    {
-                        headerName: "선호도",
-                        field: "interest",
+                        headerName: "주요 투자 분야",
+                        field: "keyCategory",
                     },
                 ];
 

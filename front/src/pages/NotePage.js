@@ -10,6 +10,7 @@ import Layout from "../components/Layout";
 import axios from "axios";
 import styles from "../styles/layout.module.css";
 import { width } from "@fortawesome/free-solid-svg-icons/faArrowDown";
+import DOMPurify from "dompurify";
 
 const NotePage = () => {
     const { dealId } = useParams();
@@ -65,8 +66,18 @@ const NotePage = () => {
         setSelectedNote(null);
     };
 
+
+    const stripHtmlTags = (html) => {
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        return doc.body.textContent || "";
+    };
+
     const handleSaveNote = async (note) => {
         try {
+            const sanitizedNote = {
+                ...note,
+                content: stripHtmlTags(note.content), // HTML 태그 제거
+            };
             if (selectedNote) {
                 // 업데이트
                 await axios.put(`/api/deals/${dealId}/notes/${selectedNote.id}`, note);
@@ -80,9 +91,6 @@ const NotePage = () => {
             console.error("노트를 저장하는 중 오류 발생:", error);
         }
     };
-
-
-    //const handleOpenModal = (note)
 
 
     const handleDeleteSelected = async () => {

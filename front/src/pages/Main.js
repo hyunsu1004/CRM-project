@@ -26,7 +26,7 @@ import { StartupGrid } from "../grids/StartupGrid";
 import { InvestorGrid } from "../grids/InvestorGrid";
 import { Link } from "react-router-dom";
 import { CompanyDetail, CompanyDetailModal } from "./Company/CompanyDetail";
-
+import FreeSoloCreateOptionDialog from "../components/SearchBox";
 const Main = () => {
     const [member, setMember] = useState(null);
     const [tabIndex, setTabIndex] = useState(0);
@@ -149,13 +149,15 @@ const Main = () => {
                         님
                     </Typography>
                     <TextField
-                        label="검색"
-                        variant="outlined"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                        size="small"
-                        sx={{ width: 300 }}
+                    //     label="검색"
+                    //     variant="outlined"
+                    //     value={searchTerm}
+                    //     onChange={handleSearch}
+                    //     size="small"
+                    //     sx={{ width: 300 }}
+                    // />
                     />
+                    <FreeSoloCreateOptionDialog />
                 </Box>
 
                 {/* 추천 섹션 (슬라이드 형식, 라이브러리 없이 구현) */}

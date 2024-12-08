@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../styles/NoteModal.css";
-
+import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill"; // React-Quill 컴포넌트 임포트
+import DOMPurify from "dompurify";
 const NoteModal = ({ note, onClose, onSave }) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -14,10 +16,12 @@ const NoteModal = ({ note, onClose, onSave }) => {
 
     const handleSave = () => {
         if (title.trim() && content.trim()) {
+            const plainTextContent = DOMPurify.sanitize(content, {
+                USE_PROFILES: { html: false },
+            });
             onSave({
                 title,
                 content,
-                date: new Date().toLocaleString(),
             });
             onClose();
         } else {
@@ -43,11 +47,13 @@ const NoteModal = ({ note, onClose, onSave }) => {
                 />
 
                 {/* 내용 입력 */}
-                <textarea
-                    placeholder="내용을 입력해주세요"
+                <ReactQuill
+                    theme="snow" // Quill의 테마 (snow 또는 bubble 선택 가능)
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    className="input-content"
+                    onChange={(value) => setContent(value)}
+                    className="inpust-content"
+                    placeholder="내용을 입력해주세요"
+                    style={{ height: "380px", marginBottom: "20px" }} // 에디터 스타일
                 />
 
                 {/* 취소/저장 버튼 */}
