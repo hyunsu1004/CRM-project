@@ -1,31 +1,5 @@
 import React, { useState } from "react";
 import "../styles/modal.css"; // 필요에 따라 CSS 파일 작성
-const MultiSelectEditor = (props) => {
-       const [selectedOptions, setSelectedOptions] = useState(
-         props.value ? props.value.split(",") : []
-       );
-       const [isOpen, setIsOpen] = useState(false);
-     
-       const categoryOptions = [
-         { label: "B2B", color: "red" },
-         { label: "Enterprise", color: "blue" },
-         { label: "Payment", color: "green" },
-         { label: "Fintech", color: "gray" },
-         { label: "E-commerce", color: "purple" },
-         { label: "Startup", color: "orange" },
-         { label: "Healthcare", color: "pink" },
-       ];
-        const handleSelect = async (option) => {
-    const updatedSelection = selectedOptions.includes(option.label)
-      ? selectedOptions.filter((item) => item !== option.label)
-      : [...selectedOptions, option.label];
-
-    setSelectedOptions(updatedSelection);
-
-    // 그리드 데이터 업데이트
-    const newValue = updatedSelection.join(",");
-    props.node.setDataValue(props.column.colId, newValue);
-    props.api.refreshCells({ rowNodes: [props.node] });
 
 const DealModal = ({ onClose, onSubmit, defaultAttributes }) => {
   const [companyName, setCompanyName] = useState("");
