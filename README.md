@@ -91,13 +91,8 @@ External Data Source: The VC (K-Startup Data) → Selenium Crawler (Background J
 **AI**
 `Google Gemini` `OpenAI`
 
-**Blockchain**
-`Ethereum` `Solidity`
-
 **Tooling / Infra**
 `Notion` `GitHub` `Amazon S3`
-
-> ※ 아키텍처 다이어그램 내 일부 기술(AI, Blockchain)은 구조 예시용으로 표기되었습니다.
 
 ---
 
