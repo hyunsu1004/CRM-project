@@ -13,17 +13,6 @@
 
 ---
 
-!free-icon-crm-414119.png
-
-# CLODGE CRM
-
-**VC를 위한 스타트업 투자 관리 CRM 플랫폼**
-
-SW 저작권 등록
-
-Team
-
-시연 영상 보기
 
 ---
 
@@ -49,13 +38,15 @@ Team
 
 Top 10 스타트업 및 투자자를 실시간으로 보여줘 어떤 기업과 투자자에게 투자를 하고 받을 수 있는지 한눈에 파악할 수 있도록 구현했습니다. 최근 사용자 활동과 스타트업 뉴스도 함께 제공해 최신 투자 정세를 파악할 수 있습니다.
 
-!image.png
+<img width="1909" height="876" alt="image" src="https://github.com/user-attachments/assets/d07578f5-7a4a-49ff-a006-70821d15e1ef" />
+
 
 ### 2. 기업 정보 상세 보기
 
 검색량이 많은 Top 10 기업·투자자의 주요 카테고리, 총 투자금, 투자 단계, 최근 편당 일자 등 상세 정보를 모달로 확인할 수 있습니다.
 
-!종프1-메인페이지 상세 기능.png
+<img width="1656" height="863" alt="image" src="https://github.com/user-attachments/assets/8e760f1a-7af2-493a-a0bc-4c4620d81d58" />
+
 
 ### 3. 딜(회사·투자자) 정보 관리
 
@@ -64,25 +55,28 @@ Top 10 스타트업 및 투자자를 실시간으로 보여줘 어떤 기업과 
 - 그리드 화면에서 속성 값을 바로 수정(editable)할 수 있습니다.
 - 
 
-!image.png
+<img width="1668" height="417" alt="image" src="https://github.com/user-attachments/assets/385b2cb4-f648-4a81-8e61-1adfc8708941" />
 
 ### 4. 커스텀 속성(EAV) 추가
 
 회사명 같은 기본 정보 외에도 사용자가 원하는 정보를 **속성(Attribute)** 형태로 자유롭게 추가할 수 있습니다. 속성은 이름과 데이터 타입(Text, Number, Currency, Date, Select, Multi Select, Checkbox 등)을 가지며, 동일 이름의 속성은 허용하지 않고 Select/Multi Select 옵션 삭제 시 해당 옵션이 사용 중인지 검증하는 로직을 포함합니다.다.
 
-!image.png
+<img width="529" height="644" alt="image" src="https://github.com/user-attachments/assets/5c771cb2-593b-429c-b511-21245625c7ce" />
+
 
 ### 5. 딜 상세 화면 & 노트
 
 딜 목록에서 Row를 hover하면 나타나는 '열기' 버튼으로 상세 화면에 진입할 수 있고, 상세 화면에서는 노트를 작성·수정·삭제하며 미팅·협상 히스토리를 기록할 수 있습니다.
 
-!image.png
+<img width="523" height="645" alt="image" src="https://github.com/user-attachments/assets/a931935e-659d-4045-a174-af6c0b0fec8b" />
+
 
 ---
 
 ## 시스템 아키텍처
 
-!CRM 프로젝트 시스템 구조도.jpg
+<img width="1024" height="522" alt="image" src="https://github.com/user-attachments/assets/6afb55ce-30c3-42a7-8faf-7d183ff8e8ff" />
+
 
 ---
 
@@ -124,7 +118,8 @@ CLODGE CRM의 핵심 차별점은 **EAV(Entity-Attribute-Value) 모델**을 도�
 
 **문제**: EAV 구조에서 모든 값을 문자열로만 저장하면 통화 계산, 날짜 정렬, 다중 선택 필터링 등에서 타입 안정성이 깨지는 문제가 있었습니다. 또한 Select/Multi Select 옵션을 삭제할 때 이미 해당 옵션을 사용 중인 데이터가 있는지 확인하지 않으면 참조 무결성이 깨질 위험이 있었습니다.
 
-!image.png
+<img width="411" height="376" alt="image" src="https://github.com/user-attachments/assets/54798e72-92f4-4447-bb16-8565ed1f8be9" />
+
 
 **해결**: 속성 생성 시 Data Type(Text, Number, Date, Currency, Select, Multi Select, Checkbox 등)을 명시적으로 지정하도록 하고, 값 저장·조회 로직에서 타입별로 분기 처리했습니다. 또한 동일 이름의 속성 중복 생성을 막고, Select/Multi Select의 옵션을 삭제하려 할 때 해당 옵션이 기존 값에 포함되어 있는지 사전에 체크해 경고(alert)를 띄우도록 해 데이터 정합성을 확보했습니다.
 
